@@ -1,6 +1,6 @@
 {
   "name": "warden-layout",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "this layout component is  base antd",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
@@ -38,7 +38,7 @@
     "@babel/runtime": "^7.18.0",
     "@umijs/plugins": "^4.3.33",
     "copy-to-clipboard": "^3.3.3",
-    "umi": "^4.3.36",
+    "umi": "^4.3.6",
     "react-intl": "^3.12.1",
     "react-svg": "^16.2.0"
   },

@@ -1,0 +1,122 @@
+.wardenSettingLabelBox{
+    padding-bottom: 14px;
+}
+.wardenSettingLabelBox>label{
+    display: block;
+    margin:8px 0px;
+}
+.wardenSettingSwitchBox{
+    display: flex;
+    justify-content: space-between;
+    margin:8px 0px;
+}
+
+.wardenSettingColorBoxGroup {
+    display: flex;
+    align-items: center;
+}
+  
+.wardenSettingColorBoxItem {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    margin-right: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.2);
+}
+.wardenSettingColorBoxItem:hover {
+    opacity: 0.9;
+}
+.wardenSettingColorBoxItem svg {
+    fill: transparent;
+}
+.wardenSettingColorBoxItem:active {
+    box-shadow: none;
+}
+.wardenSettingColorBoxSelected svg {
+    fill: white;
+}
+
+.wardenSettingLayoutBoxGroup {
+    display: flex;
+    align-items: center;
+}
+.wardenSettingLayoutBoxItem {
+    position: relative;
+    width: 50px;
+    height: 38px;
+    background-color: #f3f4f9;
+    margin-right: 18px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2.5px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+.wardenSettingLayoutBoxItem:active {
+    box-shadow: none;
+}
+.wardenSettingLayoutBoxItem:active svg {
+    transform: scale(0.9);
+    fill: currentColor;
+}
+.wardenSettingLayoutBoxItem svg {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    fill: transparent;
+}
+
+.wardenSettingLayoutBoxItem:hover svg {
+    fill: #a1a3a6;
+}
+
+.wardenSettingItemChecked svg {
+    fill: currentColor;
+}
+  
+.wardenSettingLayoutHeadMenu::after {
+    position: absolute;
+    top: 10px;
+    width: 16px;
+    height: 28px;
+    background-color: #d2d5e2;
+    border-bottom-left-radius: 4px;
+    line-height: 0px;
+    content: '';
+}
+
+.wardenSettingLayoutHeadMenu::before {
+    position: absolute;
+    background-color: #60626b;
+    height: 10px;
+    width: 100%;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    line-height: 0px;
+    content: '';
+}
+  
+.wardenSettingLayoutLeftMenu::after {
+    position: absolute;
+    width: 16px;
+    height: 38px;
+    background-color: #60626b;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    line-height: 0px;
+    content: '';
+}
+
+.wardenSettingLayoutLeftMenu::before {
+    position: absolute;
+    background-color: #d2d5e2;
+    left: 16px;
+    height: 10px;
+    width: 34px;
+    border-top-right-radius: 4px;
+    line-height: 0px;
+    content: '';
+}

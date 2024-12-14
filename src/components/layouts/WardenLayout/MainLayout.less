@@ -1,0 +1,175 @@
+:root{
+    color-scheme: light dark;
+}
+html,body,#root{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    ::-webkit-scrollbar{
+        width:8px;
+        height:8px;
+        border-radius: 4px;
+    }  
+    ::-webkit-scrollbar-thumb{
+        background: rgba(200,200,200,.2);
+        border-radius: 2px;
+        box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-track{
+        background: rgba(200,200,200,.1);
+        border-radius: 2px;
+        box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+        border-radius: 4px;
+    }
+}
+@media (prefers-color-scheme: light) {
+    ::-webkit-scrollbar{
+        width:8px;
+        height:8px;
+        border-radius: 4px;
+    }      
+    ::-webkit-scrollbar-thumb{
+        background: rgba(0,0,0,.2);
+        border-radius: 4px;
+        box-shadow: inset 0 0 5px rgb(0 21 41 / 5%)
+    }    
+    ::-webkit-scrollbar-track{
+        background: rgba(0,0,0,.1);
+        border-radius: 4px;
+        box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+    }
+}
+
+input::-ms-clear, input::-ms-reveal {
+    display: none;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    -ms-overflow-style: scrollbar;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.warden-layout-box {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.warden-layout-body {
+    width: 100%;
+    min-height: 100%;
+    background: transparent;
+}
+
+.warden-layout-background {
+    pointer-events: none;
+    position: fixed;
+    overflow: hidden;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    // background: linear-gradient(#ffffff, #f5f5f5 28%);
+}
+
+.warden-layout-left-box,.warden-layout-left-box-dark{
+    flex: 1 1 0%;
+    overflow: hidden auto;  
+}
+/** sider **/
+.warden-layout-sider{
+    background:'transparent';
+}
+.warden-layout-body .warden-layout-sider .ant-layout-sider-children {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+/** menu **/
+.warden-layout-body .warden-layout-sider-menu{
+    position: relative;
+    min-height: 100%;
+}
+
+/** header **/
+.warden-layout-header{
+    z-index: 19;
+    width: 100%;
+    padding-block: 0;
+    padding-inline: 0;
+    // border-block-end: 1px solid rgba(5, 5, 5, 0.06);
+    // background-color: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.warden-layout-header-fixed{
+    position:sticky;
+    position: -webkit-sticky;
+    width: 100%;
+    z-index: 100;
+    top:0;
+}
+.warden-layout-header-fixed-full{
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+}
+
+.warden-layout-header-box{
+    display: flex;
+    justify-content: space-between;
+}
+.warden-layout-header-menu{
+    min-width: 0;
+    flex: 1;
+}
+
+.warden-layout-left-box::-webkit-scrollbar, .warden-layout-left-box-dark::-webkit-scrollbar{
+    width:4px;
+    height:4px;
+    border-radius: 2px;
+    background:transparent;
+}
+  
+.warden-layout-left-box::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.12);
+    border-radius: 2px;
+}
+
+.warden-layout-left-box::-webkit-scrollbar-track{
+    background: rgba(0,0,0,.06);
+    border-radius: 2px;
+}
+
+.warden-layout-left-box-dark::-webkit-scrollbar-thumb{
+    background: rgba(200,200,200,.15);
+    border-radius: 2px;
+}
+
+.warden-layout-left-box-dark::-webkit-scrollbar-track{
+    background: rgba(200,200,200,.1);
+    border-radius: 2px;
+}
+
+.warden-layout-header .ant-menu-horizontal >.ant-menu-item::after , .warden-layout-header .ant-menu-horizontal >.ant-menu-submenu::after {    
+    border-radius: 4px;
+}

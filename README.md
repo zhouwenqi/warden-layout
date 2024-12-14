@@ -27,3 +27,40 @@ $ npm publish
 ## LICENSE
 
 MIT
+
+# 直接使用
+1. 项目已发布到npm，可以直接下载最新版使用，项目包需要依赖 umi 和 antd，请先安装它们：
+```bash
+"dependencies": {
+  "antd": "^5.21.0",
+  "umi": "^4.3.36",
+  ...
+}
+```
+注意：需要禁用umi的mfsu
+export default defineConfig({
+  ...
+  mfsu:false
+});
+```
+2.然后安装warden-layout到项目中：
+```bash
+$ yarn add warden-layout
+```
+3.安装成功能后，就可使用了，替换或增加umi布局即可
+```bash
+export default ()=>{
+    // layout config
+    const config:Warden.IConfig = {
+        "theme":"dark",
+        "systemTheme":true,
+        "layoutType":"HeadMenu",
+        "primaryColor":"#417ffb",
+        ...
+    }
+    return(
+        <WardenLayout config={config} />
+    )
+}
+```
+4.更多配置信息，请参阅：

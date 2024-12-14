@@ -128,4 +128,4 @@ sub子菜单背景透明。
   
 logo导航路由，默认是当然布局路由
 
-> 更多信息请参考demo：[https://github.com/zhouwenqi/warden-layout-demo/](https://github.com/zhouwenqi/warden-layout-demo/)
+> 更多信息请参考demo：[https://github.com/zhouwenqi/warden-layout-demo](https://github.com/zhouwenqi/warden-layout-demo)

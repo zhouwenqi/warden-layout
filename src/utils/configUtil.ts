@@ -2,7 +2,7 @@ import {Warden} from '@/typings';
 const defaultKeyName = "default-warden-layout-config"
 
 /**
- * 获取存在storage中的配置
+ * Retrieve the configuration stored in the storage
  * @param name key
  * @returns 
  */
@@ -22,8 +22,8 @@ const getStorageConfig = (name?:string):Warden.IConfig | undefined => {
 
 
 /**
- * 保存配置到storage
- * @param config 配置
+ * Save configuration to storage
+ * @param config configuration
  * @param name key
  */
 const setStorageConfig=(config:Warden.IConfig,name?:string)=>{

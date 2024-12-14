@@ -15,8 +15,10 @@ const {useToken} = theme;
 
 
 /**
- * 布局主体
+ * Main layout
  * @returns 
+ * @author zhouwenqi
+ * @description The main framework of the layout
  */
 export default function () {
     const location = useLocation()
@@ -24,16 +26,19 @@ export default function () {
     const {config} = useConfigContext()
     const configKey= getAppRoutePathKey(useRouteData().route)
     const menuKeys = matchPathKeys(location.pathname,configKey) 
-    // 获取面包屑数据
+
+    // Obtain breadcrumb data
     const breadMenuKeys = matchPathAllKeys(location.pathname,configKey)
     const breadcrumbData = getMapMenus(breadMenuKeys)
-    // 获取菜单和路由选中数据
+
+    // Retrieve menu and route selection data
     let selectLeftKeys:string[] = []
     let selectTopKeys:string[] = []
     const antdMenuData = getAntdMenus(WardenGlobalThis.menuData[configKey])
     let headMenus:IAntMenuData[] = []
     let leftMenus:IAntMenuData[] = []
-    // 按布局分配菜单数据
+
+    // Allocate menu data according to layout
     switch(config.layoutType){
         case "LeftMenu":
             leftMenus = antdMenuData || []
@@ -46,7 +51,7 @@ export default function () {
             break
     }
 
-    // 分隔菜单数据
+    // Separate menu data
     if(config.menuSplit && menuKeys.length > 0){
         selectTopKeys = [menuKeys[0]]        
         const {rootMenus,childMenus} = getSplitAntdMenus(antdMenuData, menuKeys)
@@ -57,16 +62,16 @@ export default function () {
         }
     }
 
-    // 设置标题
+    // Set Title
     const currentTitle = breadcrumbData.length > 0 ? breadcrumbData[breadcrumbData.length-1].name : ''
     document.title = currentTitle
 
-    // 左边菜单展开key
+    // Expand the key on the left menu
     const operLeftKeys = selectLeftKeys
 
     const {token} = useToken()
 
-    // 自动隐藏左侧栏
+    // Automatically hide the left sidebar
     const leftPanelHidden:boolean = leftMenus.length <= 0 && (config.layoutType == "HeadMenu" || (config.leftEmptyHidden==true && config.layoutType == "LeftMenu"))
  
 

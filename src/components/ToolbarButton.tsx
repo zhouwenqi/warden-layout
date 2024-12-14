@@ -3,10 +3,13 @@ import { useConfigContext } from "@/context"
 import { ToolbarButtonProps } from "@/typings"
 import SvgIcon from "./SvgIcon"
 
+
 /**
- * 布局头部toolbar中的button
+ * ToolbarButton
  * @param props 
  * @returns 
+ * @author zhouwenqi
+ * @description Button encapsulation component for the head toolbar
  */
 const ToolbarButton = (props:ToolbarButtonProps) => {
     const {config} = useConfigContext()  

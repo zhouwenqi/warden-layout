@@ -1,5 +1,11 @@
 import { ReactSVG } from "react-svg"
 import { SvgIconProps } from "@/typings"
+
+/**
+ * SvgIcon components
+ * @author zhouwenqi
+ * @description This is a component for loading SVG files. Please note that the fill or color attribute value of the loaded SVG file should be "current Color"
+ */
 const SvgIcon=(props:SvgIconProps)=>{
     const {src,width,height,fill,color,style} = props
     const loadHandler =(svg: SVGSVGElement)=>{

@@ -1,5 +1,10 @@
 import React from 'react';
 import {AppIconProps} from '@/typings'
+/**
+ * AppIcon components
+ * @author zhouwenqi
+ * @description This is an SVG built-in component
+ */
 const iconData: { [key: string]: React.ReactElement[] } = {
     logo: [
       <g key="logo-1">

@@ -1,10 +1,11 @@
 import { IntlShape } from "react-intl"
 import {IMenuData} from '../typings';
 import { WardenGlobalThis } from '../context';
+
 /**
- * 路由转换成菜单数据
- * @param routes 路由数据
- * @returns 菜单数据
+ * Convert routing into menu data
+ * @param routes route data
+ * @returns menu data
  */
 function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
     let menuItemDatas:IMenuData[]=[]
@@ -34,10 +35,10 @@ function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
 }
 
 /**
- * 获取布局根路由
- * @param routes 
- * @param path 
- * @returns 
+ * Get layout root route
+ * @param routes route data
+ * @param path path
+ * @returns root route
  */
 function getLayoutRootRoutes(routes:any[], path:string){
     let children:any[] = []
@@ -54,15 +55,20 @@ function getLayoutRootRoutes(routes:any[], path:string){
 }
 
 /**
- * 根据路由获取菜单key
- * @param path 路由
+ * Get layout root route
+ * @param path route
  * @returns 
  */
 function getPathToKey(path:string){
     return "menu"+path.replaceAll("/",".");
 }
 
-
+/**
+ * Convert matching path to key
+ * @param path path
+ * @param rootPath root path
+ * @returns key array
+ */
 function matchPathAllKeys(path:string,rootPath:string){
     let keys:string[] = []
     if(path==rootPath){
@@ -86,10 +92,10 @@ function matchPathAllKeys(path:string,rootPath:string){
 }
 
 /**
- * 分隔路径中的路由key
- * @param path 路径
- * @param rootPath 根路由
- * @returns 路由key
+ * Separate routing keys in the path
+ * @param path path
+ * @param rootPath root path
+ * @returns route key
  */
 function matchPathKeys(path:string,rootPath:string){  
     let keys:string[] = []
@@ -113,9 +119,9 @@ function matchPathKeys(path:string,rootPath:string){
     return keys
 }
 /**
- * 获取路由中的真实路径
- * @param route 路由
- * @returns 真实路径
+ * Obtain the true path in the route
+ * @param route route
+ * @returns Real path
  */
 function getAppRoutePathKey(route:any){
     return route.path == '' || route.path == undefined ? route.originPath : route.path

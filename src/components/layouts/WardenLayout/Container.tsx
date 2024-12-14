@@ -6,10 +6,13 @@ import {LayoutProps} from '@/typings';
 const {useToken} = theme;  
 const {Content,Footer} = Layout
 /**
- * 全局容器
- * 尽量在每个页面中都使用
- * @param props 容器属性
+ * Global Container
+ * 
+ * Try to use it on every page as much as possible
+ * @param props Container Properties
  * @returns 
+ * @author zhouwenqi
+ * @description Container component used for laying out sub routing component packages
  */
 const Container=(props:LayoutProps.ContainerProps)=>{    
     const {config,footer} = useConfigContext()    
@@ -21,10 +24,9 @@ const Container=(props:LayoutProps.ContainerProps)=>{
     let titlePanel = <></>
     if(!props.hideTitle && !config.hideTitleBar){
         titlePanel = (<h3 style={{margin:config.compact ? "0px 0px 14px" : "0px 0px 16px",lineHeight:"1em"}}>{title}</h3>)
-    }
+    }    
     
-    
-    // 面包屑导航栏
+    // Breadcrumb navigation bar
     const hideBreadcrumb = props.hideBreadcrumb || config.hideBreadcrumb
 
     let BreadcrumbPanel = <></>
@@ -49,7 +51,7 @@ const Container=(props:LayoutProps.ContainerProps)=>{
     }
    
 
-    // 页脚
+    // footer
     const footerElement =  footer || WardenGlobalThis.footerMap[configKey]
     const hideFooter = props.hideFooter || config.hideFooter
     let FooterPanel = <></>
@@ -60,12 +62,12 @@ const Container=(props:LayoutProps.ContainerProps)=>{
         </Footer>)
     }
 
-    // 容器内部样式
+    // Internal style of container
     let contentStyle:React.CSSProperties = {        
         borderRadius: token.borderRadiusLG
     }  
 
-    // 容器外部样式
+    // Container exterior style
     let layoutStyle:React.CSSProperties = {}
 
     if(props.mode == "Box" || props.mode == "Panel"){

@@ -16,9 +16,9 @@ const matchArray = (matchArray: string[], userArray: string[]) => {
 }
 
 /**
- * 匹配权限列表
- * @param matchAuth 所需权限列表
- * @param userAuth  用户拥有权限列表
+ * Match permission list
+ * @param matchAuth List of required permissions
+ * @param userAuth  User has permission list
  * @returns
  */
 const matchAuthority = (matchAuth: string[], userAuth: string[]) => {
@@ -26,8 +26,8 @@ const matchAuthority = (matchAuth: string[], userAuth: string[]) => {
 };
 
 /**
- * 匹配当前用户权限
- * @param authoriths 路由所需权限列表
+ * Match current user permissions
+ * @param authoriths List of required permissions for routing
  * @returns
  */
 const hasAuthority = (authoriths: string[]) => {
@@ -42,9 +42,9 @@ const hasAuthority = (authoriths: string[]) => {
 };
 
 /**
- * 匹配角色列表
- * @param matchRole 所需角色列表
- * @param userRole  用户拥有角色列表
+ * Match Role List
+ * @param matchRole List of required roles
+ * @param userRole  The user has a list of roles
  * @returns
  */
 const matchRole = (matchRole: string[], userRole: string[]) => {
@@ -52,8 +52,8 @@ const matchRole = (matchRole: string[], userRole: string[]) => {
 };
 
 /**
- * 匹配当前用户角色
- * @param authoriths 路由所需角色列表
+ * Match the current user role
+ * @param authoriths List of roles required for routing
  * @returns
  */
 const hasRole = (roles: string[]) => {

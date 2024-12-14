@@ -13,6 +13,13 @@ import { getAppRoutePathKey } from "@/utils/routeUtil";
 const {Sider} = Layout;
 const {useToken} = theme;
 
+/**
+ * Layout left panel
+ * @param props 
+ * @returns 
+ * @author zhouwenqi
+ * @description Layout of the left side panel
+ */
 const LeftPanel=(props:LayoutProps.LeftProps)=>{    
   const{token}=useToken()
   const {config,getDynamicProps} = useConfigContext()
@@ -23,12 +30,14 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   
   const configKey= getAppRoutePathKey(useRouteData().route)  
   const dynamicProps = getDynamicProps()
-  // 滑动菜单栏宽度
+
+  // Sliding menu bar width
   const sliderWidth = dynamicProps.leftWidth
-  // 折叠后的宽度
+
+  // Folding width
   const collapsedWidth = config.compact ? 46 : 50;
 
-  // 菜单折叠切换
+  // Menu folding and switching
   const collapsedToggle=(clientWidth:number)=>{
 
     if(WardenGlobalThis.handFoldMap[configKey]){
@@ -54,7 +63,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
     })
   }
 
-  // 手动折叠
+  // Manual folding
   const onHandCollapse=(value:boolean)=>{
       setCollapsed(value)    
       WardenGlobalThis.handFoldMap[configKey] = value
@@ -72,11 +81,11 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
 
   },[openKeys])
   
-  // 菜单点击事件
+  // menu click event
   const onMenuClick: MenuProps['onClick'] = (e) => {   
       history.push(e.key) 
   } 
-  // window改变大小事件
+  // window change size event
   const windowResizeHandler=()=>{    
     collapsedToggle(document.body.clientWidth)       
   }
@@ -87,7 +96,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
     }
   },[collapsed])
 
-  // 滑动菜单栏风格
+  // Sliding menu bar style
   let silderTheme = config.theme
   const collapseBtnStyle = config.compact ? {fontSize:"16px"} : {fontSize:"18px"}
 
@@ -115,7 +124,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
     collapseStyle = {...collapseStyle, background:primaryColros[5], borderRight:"0"}
   }
   
-  // 菜单缩进按钮
+  // Menu indentation button
   const collapsedMenu: JSX.Element = (
       <div style={collapseStyle}>
         {collapsed ? <Icon component={IconLeft} style={collapseBtnStyle} />: <Icon component={IconRight} style={collapseBtnStyle} />}

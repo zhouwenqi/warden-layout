@@ -9,9 +9,9 @@ import { WardenGlobalThis } from '../context';
 import SvgIcon from '@/components/SvgIcon';
 
 /**
- * 转换整个Antd菜单数据
- * @param menuData 菜单数据
- * @returns 
+ * Convert the entire Antd menu data
+ * @param menuData menu data
+ * @returns ant menu
  */
 const getAntdMenus=(menuData:IMenuData[])=>{ 
   let antdMenuItemDatas:IAntMenuData[]=[]
@@ -34,9 +34,9 @@ const getAntdMenus=(menuData:IMenuData[])=>{
 }
 
 /**
-* 转换单个Antd菜单数据
-* @param menuData 单个菜单数据
-* @returns 
+* Convert individual Antd menu data
+* @param menuData Single menu data
+* @returns ant menu
 */
 const getAntdMenuItem=(menuData:IMenuData) => {   
   let menuItem:any = menuData.name;
@@ -55,10 +55,10 @@ const getAntdMenuItem=(menuData:IMenuData) => {
 }
 
 /**
-* 分隔菜单
-* @param antdMenus 原始菜单
-* @param selectdKeys 菜单选中key值
-* @returns 
+* splie menu
+* @param antdMenus Original menu
+* @param selectdKeys Select the key value in the menu
+* @returns Main menu, submenu
 */
 const getSplitAntdMenus=(antdMenus?:IAntMenuData[],selectdKeys?:string[])=>{    
   let rootMenus:IAntMenuData[]=[]
@@ -77,68 +77,77 @@ const getSplitAntdMenus=(antdMenus?:IAntMenuData[],selectdKeys?:string[])=>{
   }
 }
 
+/**
+ * Get a path menu data
+ * @param keys keys
+ * @returns menu data
+ */
 const getMapMenus=(keys:string[])=>{  
-let menus:IMenuData[]=[]
-if(keys && keys.length>0){
-  keys.forEach((k)=>{      
-    const menu:IMenuData = WardenGlobalThis.menuMap[getPathToKey(k)]     
-    if(menu) {
-      menus.push(menu)
-    }      
-  })
-}
-return menus
-}
-
-const getBreadcrumbData=(keys:string[])=>{
-let data:any[]=[]
-if(keys && keys.length>0){
-  keys.forEach((k,index)=>{
-    
-    const menu:IAntMenuData = WardenGlobalThis.menuMap[k]
-    if(menu){
-      data.push({
-        label:menu.label,
-        key:'breadcrumb'+index
-      })
-    }
-  })
-}
-return data
+  let menus:IMenuData[]=[]
+  if(keys && keys.length>0){
+    keys.forEach((k)=>{      
+      const menu:IMenuData = WardenGlobalThis.menuMap[getPathToKey(k)]     
+      if(menu) {
+        menus.push(menu)
+      }      
+    })
+  }
+  return menus
 }
 
 /**
-* 获取菜单图标组件
-* @param item 单个数单数据
-* @returns 
+ * Obtain breadcrumb data
+ * @param keys keys
+ * @returns menu data
+ */
+const getBreadcrumbData=(keys:string[])=>{
+  let data:any[]=[]
+  if(keys && keys.length>0){
+    keys.forEach((k,index)=>{    
+      const menu:IAntMenuData = WardenGlobalThis.menuMap[k]
+      if(menu){
+        data.push({
+          label:menu.label,
+          key:'breadcrumb'+index
+        })
+      }
+    })
+  }
+  return data
+}
+
+/**
+* Get menu icon component
+* @param item menu item
+* @returns icon
 */
 const getMenuIcon=(item:IMenuData)=> {
-const iconArr: string[] = item.iconName ? item.iconName.split('_') : [];
-let iconName: string = '';
-let iconPrefix: IconType = 'ant';
-if (iconArr.length > 1) {
-  iconPrefix = iconArr[0] as IconType;
-  iconName = iconArr[1];
-} else if (iconArr.length == 1) {
-  iconName = iconArr[0];
-}
-let icon: React.ReactNode = undefined;
-if (iconName) {
-  switch (iconPrefix) {
-    default:
-    case 'ant':
-      icon = React.createElement(AntIcon && (AntIcon as any)[iconName], {
-        style: { fontSize: '16px' },
-      });
-      break;
-    case 'warden':    
-      icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><AppIcon size={16} name={iconName} color="currentColor" /></span>)
-      break;
-    case 'svg':
-      icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )
-      break;
+  const iconArr: string[] = item.iconName ? item.iconName.split('_') : [];
+  let iconName: string = '';
+  let iconPrefix: IconType = 'ant';
+  if (iconArr.length > 1) {
+    iconPrefix = iconArr[0] as IconType;
+    iconName = iconArr[1];
+  } else if (iconArr.length == 1) {
+    iconName = iconArr[0];
   }
-}
-return icon
+  let icon: React.ReactNode = undefined;
+  if (iconName) {
+    switch (iconPrefix) {
+      default:
+      case 'ant':
+        icon = React.createElement(AntIcon && (AntIcon as any)[iconName], {
+          style: { fontSize: '16px' },
+        });
+        break;
+      case 'warden':    
+        icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><AppIcon size={16} name={iconName} color="currentColor" /></span>)
+        break;
+      case 'svg':
+        icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )
+        break;
+    }
+  }
+  return icon
 }
 export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData}

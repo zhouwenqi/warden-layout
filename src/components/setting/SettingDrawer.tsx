@@ -2,25 +2,29 @@ import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Bu
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
 import { useState } from "react"
 import {useIntl} from 'react-intl'
-import {getLocale,setLocale,useRouteData} from 'umi'
+import {getLocale,setLocale} from 'umi'
 import './SettingDrawer.less'
 import AppIcon from "../AppIcon";
 import { Languages, ThemeColors } from "./ConfigData";
 import { useConfigContext,WardenGlobalThis } from "@/context";
-import { getAppRoutePathKey } from "@/utils/routeUtil";
 import {Warden,ColorBoxGroupProps,ColorBoxProps,LayoutGroupProps} from '@/typings';
 import copy from 'copy-to-clipboard';
 
 const {useToken} = theme
 
+/**
+ * Setting drawer
+ * @returns component
+ * @author zhouwenqi
+ * @description Components used to configure the entire layout in a development environment
+ */
 const SettingDrawer=()=>{
   const intl = useIntl()
-  const configKey = getAppRoutePathKey(useRouteData().route)
   const locale = getLocale()
   const [open,setOpen] = useState(false)
   const {config,setConfig} = useConfigContext()
 
-  // 选择主题
+  // select theme event
   const onChangeTheme = (value:string)=>{
       if(value=='auto'){
         setConfig({...config,systemTheme:true})   
@@ -30,22 +34,22 @@ const SettingDrawer=()=>{
   }
 
   
-  // 选择布局
+  // select layout event
   const onChangeMainLayoutHandler=(layoutType:Warden.LayoutType)=>{
     setConfig({...config,layoutType:layoutType})
   }
 
-  // 选择颜色
+  // select color event
   const onSelectColorHandler=(color:string)=>{
     setConfig({...config,primaryColor:color})
   }
 
-  // 选择语言
+  // select lanages event
   const onChnageLanguageHandler=(value:string)=>{      
     WardenGlobalThis.menuData={}
     setLocale(value,false)
   }
-  // 拷贝配置
+  // copy configuration
   const onCopyHandler = () => {
     copy(JSON.stringify(config))
     message.success(intl.formatMessage({ id: 'config.setting.copy.success' }))
@@ -212,14 +216,14 @@ const MainLayoutGroup = (props: LayoutGroupProps) => {
 };
 
 /**
-* 主题颜色选择器
-* @param props 颜色选择参数
+* Theme color selector
+* @param props Color parameters
 * @returns
 */
 const ColorBoxGroup = (props: ColorBoxGroupProps) => {
   let elements: JSX.Element[] = []   
   const intl = useIntl() 
-  // 初始化主题
+  // init colors
   ThemeColors.forEach((item, index) => {
     item.name = intl.formatMessage({ id: item.id });
     elements.push(
@@ -242,7 +246,7 @@ const ColorBoxGroup = (props: ColorBoxGroupProps) => {
 }
 
 /**
-* 颜色组件
+* color component
 * @param props 
 * @returns 
 */

@@ -12,11 +12,19 @@ import ToolbarUserPanel from '@/components/ToolbarUserPanel';
 const { Header} = Layout;
 const {useToken} = theme;  
 
+/**
+ * Layout head panel
+ * @param props 
+ * @returns 
+ * @author zhouwenqi
+ * @descriptionThe head surface of the layout
+ */
 const HeadPanel=(props:LayoutProps.HeadProps)=>{  
     
   const {config,getDynamicProps} = useConfigContext()
   const menuTheme:MenuTheme = config.menuByPrimary && config.layoutType=="HeadMenu" ? "dark" : "light"
-  // 菜单点击事件
+
+  // menu click event
   const onMenuClick: MenuProps['onClick'] = (e) => {
       history.push(e.key) 
   } 
@@ -24,7 +32,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   const borderBottom = menuTheme == "light" ? ("solid 1px " + (config.hideBorder ? token.colorBgContainer : token.colorBorderSecondary)) : " 0"
   const headerHeight = getDynamicProps().headerHeight;
 
-  // header背景根据不同的布局设置样式
+  // Set the header background style according to different layouts
   let headMaskElement = <></>  
   let headMaskClassName = "warden-layout-header"
 

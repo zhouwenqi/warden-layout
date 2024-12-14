@@ -35,19 +35,19 @@ type BadgeDispatcher = {
     setCount:(count:number) => void
 }
 export type SchemeConfig = {
-    // 当前用户
+    // current user
     currentUser:Warden.IUser | undefined;
-    // 菜单数据
+    // menu data
     menuData:Record<string,IMenuData[]>;
-    // 菜单路径
+    // menu path
     menuMap:Record<string,any>;
-    // 布局配置数据
+    // config data
     configMap:Record<string,Warden.IConfig>;
-    // 布局页角内容
+    // footer
     footerMap:Record<string,JSX.Element>;
-    // 布局头部用户弹出面版
+    // user popover
     popoverUserMap:Record<string,JSX.Element>;
-    // 布局左侧栏是否手动折叠
+    // Manual folding
     handFoldMap:Record<string,boolean>;
 }
 export type ContainerType = "Normal" | "None"

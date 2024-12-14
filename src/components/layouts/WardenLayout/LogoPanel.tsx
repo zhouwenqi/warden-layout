@@ -8,7 +8,12 @@ import SvgIcon from '@/components/SvgIcon';
 import React from 'react';
 const {useToken} = theme;
 
-// 顶部Logo
+/**
+ * Top logo panel
+ * @returns 
+ * @author zhouwenqi
+ * @description Logo component at the top
+ */
 const TopLogo=()=>{    
     const intl = useIntl()
     const {config,getDynamicProps} = useConfigContext()
@@ -26,9 +31,8 @@ const TopLogo=()=>{
         txtStyle = {...txtStyle,color:"white"}
     }
 
-    // logo导航事件
-    const onNavigateHandler=()=>{
-        
+    // logo navigate event
+    const onNavigateHandler=()=>{        
         if(config.logoNavigateRoute){
             history.push(config.logoNavigateRoute)
         }
@@ -53,7 +57,14 @@ const TopLogo=()=>{
         </div>
     )
 }
-// 左侧Logo
+
+/**
+ * left logo panel
+ * @param props 
+ * @returns 
+ * @author zhouwenqi
+ * @description The larger logo on the left
+ */
 const LeftLogo=(props:LayoutProps.LogoProps)=>{
     const {config,getDynamicProps} = useConfigContext()
     const {token}  = useToken()    
@@ -87,7 +98,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         const primaryColros = generate(config.primaryColor)
         boxStyle = {...boxStyle,color:"white",borderRight:"0",background:primaryColros[5]}
     }
-    // logo导航事件
+    // logo navigate event
     const onNavigateHandler=()=>{
         if(config.logoNavigateRoute){
             history.push(config.logoNavigateRoute)

@@ -10,9 +10,11 @@ import {LayoutProps,Warden} from '@/typings';
 import MainLayout from './MainLayout';
 
 /**
- * 布局入口
- * @param props 配置
+ * Layout main
+ * @param props configuration
  * @returns 
+ * @author zhouwenqi
+ * @description The unified entrance for the entire layout, where information is initialized
  */
 export default function IndexPanel(props:LayoutProps.IndexProps) {
   const configKey= getAppRoutePathKey(useRouteData().route)  
@@ -20,7 +22,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   const ConfigContext = createConfigContext()
   const intl = useIntl()
 
-  // 获取布局配置
+  // Get layout configuration
   let layoutConfig = getStorageConfig(configKey) || props.config 
   if(!layoutConfig){
     layoutConfig = WardenGlobalThis.configMap[configKey] || defaultConfig
@@ -29,17 +31,16 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
 
   const [config,setConfig] = useState<Warden.IConfig>(layoutConfig)
 
-  // 获取菜单数据
+  // Retrieve menu data
   if(!WardenGlobalThis.menuData[configKey] || WardenGlobalThis.menuData[configKey].length <= 0){
     const menuRoutes = getLayoutRootRoutes(clientRoutes,configKey!)
     WardenGlobalThis.menuData[configKey] = getMenuData(menuRoutes, config.localeEnabled? intl : undefined)
-  } 
-  
+  }   
 
-  // 全局气泡
+  // Global Bubble
   const [badge,setBadge] = useState(0)
 
-  // 监听系统主题变化
+  // Monitoring system theme change
   const scheme = window.matchMedia("(prefers-color-scheme: dark)")
   scheme.onchange=(event)=>{
     setConfig({...config, theme:event.matches ? 'dark' : 'light'})
@@ -67,9 +68,10 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   },[])
 
-  // 布局头部高度
+  // Layout Head Height
   const headerHeight = config.compact ? 48 : 56
-  // 布局左侧宽度
+
+  // Layout left width
   const leftWidth = config.compact ? 240 : 260
   
   // antd token 主题和算法
@@ -78,12 +80,12 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     algorithm.push(theme.compactAlgorithm)
   }
 
-  // 菜单样式
+  // menu style
   var menuStyle:any = {
     "activeBarHeight": config.compact ? 2 : 4,
   }
 
-  // 布局样式(只定义header)
+  // Layout style (only defining headers)
   var layoutStyle:any = {
     "headerHeight": headerHeight,
     "headerBg":"transparent"
@@ -142,7 +144,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   }
 
-  // 布局配置修改
+  // Layout configuration modification event
   const onConfigChange=(value:Warden.IConfig)=>{
     if(value.systemTheme && value.systemTheme != config.systemTheme){
       value.theme = scheme.matches ? 'dark' : 'light'

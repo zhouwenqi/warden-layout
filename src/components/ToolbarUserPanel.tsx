@@ -5,9 +5,11 @@ import { useConfigContext, WardenGlobalThis } from "@/context";
 const {useToken} = theme;  
 
 /**
- * 布局toolbar中的用户信息
+ * ToolbarUserPanel
  * @param props 
  * @returns 
+ * @author zhouwenqi
+ * @description Component for displaying head user information
  */
 const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
     const{token} = useToken()

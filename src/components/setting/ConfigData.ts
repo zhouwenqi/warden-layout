@@ -1,7 +1,7 @@
 import { Warden } from "@/typings"
 /**
- * 主题颜色配置
- * id：国际化key
+ * Theme color configuration
+ * id：locale key
  */
 const ThemeColors: Warden.IColor[] = [
   { color: '#417ffb', id: 'config.theme.color.blue' },

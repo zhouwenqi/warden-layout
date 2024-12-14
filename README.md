@@ -37,19 +37,21 @@ MIT
   ...
 }
 ```
-注意：需要禁用umi的mfsu
+🎈注意：需要禁用umi的mfsu
 ```bash
 export default defineConfig({
   ...
   mfsu:false
 });
 ```
-2.然后安装warden-layout到项目中：
+2. 然后安装warden-layout到项目中：
 ```bash
 $ yarn add warden-layout
 ```
-3.安装成功能后，就可使用了，替换或增加umi布局即可
+3. 安装成功能后，就可使用了，替换或增加umi布局即可
 ```bash
+import WardenLayout,{ Warden } from 'warden-layout'
+
 export default ()=>{
     // layout config
     const config:Warden.IConfig = {
@@ -64,4 +66,4 @@ export default ()=>{
     )
 }
 ```
-4.更多配置信息，请参阅：
+4. 更多配置信息，请参阅：

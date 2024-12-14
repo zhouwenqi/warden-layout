@@ -38,6 +38,7 @@ MIT
 }
 ```
 注意：需要禁用umi的mfsu
+```bash
 export default defineConfig({
   ...
   mfsu:false

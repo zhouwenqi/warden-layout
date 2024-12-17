@@ -63,7 +63,8 @@ export default function () {
     }
 
     // Set Title
-    const currentTitle = breadcrumbData.length > 0 ? breadcrumbData[breadcrumbData.length-1].name : ''
+    const breadcrumbMenu = breadcrumbData.length > 0 ? breadcrumbData[breadcrumbData.length-1] : undefined
+    const currentTitle = breadcrumbMenu ? breadcrumbMenu.title || breadcrumbMenu.name : ''
     document.title = currentTitle
 
     // Expand the key on the left menu

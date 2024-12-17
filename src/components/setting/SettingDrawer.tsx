@@ -1,4 +1,4 @@
-import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,message } from "antd"
+import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,message,App } from "antd"
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
 import { useState } from "react"
 import {useIntl} from 'react-intl'
@@ -21,6 +21,7 @@ const {useToken} = theme
 const SettingDrawer=()=>{
   const intl = useIntl()
   const locale = getLocale()
+  const  appStatic = App.useApp()
   const [open,setOpen] = useState(false)
   const {config,setConfig} = useConfigContext()
 
@@ -52,7 +53,7 @@ const SettingDrawer=()=>{
   // copy configuration
   const onCopyHandler = () => {
     copy(JSON.stringify(config))
-    message.success(intl.formatMessage({ id: 'config.setting.copy.success' }))
+    appStatic.message.success(intl.formatMessage({ id: 'config.setting.copy.success' }))
   }
 
   const selectThemeValue = config.systemTheme ? 'auto' : config.theme

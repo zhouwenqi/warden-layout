@@ -133,7 +133,7 @@ const FullscreenButton=(props:{items?:JSX.Element[]})=>{
         document.documentElement.requestFullscreen()
       }
     }
-    let btnStyle:React.CSSProperties = {padding:"8px"}
+    let btnStyle:React.CSSProperties = {padding:"8px",height:"inital","lineHeight":"inital"}
     if(config.menuByPrimary && (config.theme == "dark" || config.layoutType == "HeadMenu")){
       btnStyle = {...btnStyle,"color":"white"}
     }

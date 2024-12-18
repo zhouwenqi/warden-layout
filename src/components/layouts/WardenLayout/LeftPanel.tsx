@@ -171,6 +171,9 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
           trigger={collapsedMenu} 
           theme={silderTheme}          
           style={silderStyle}>
+              {collapsed && leftExpandPanel ? <></> : <div className="warden-layout-left-expand-panel" style={{padding:config.compact ? "12px" : "16px"}}>
+                  {leftExpandPanel}
+                </div>  } 
               {config.layoutType == "LeftMenu" ? <LeftLogo collapsed={collapsed} /> : <></>}
               <div className={menuTheme == "dark" ? "warden-layout-left-box-dark" : "warden-layout-left-box"} style={leftBoxStyle}>
                 <Menu onClick={onMenuClick}

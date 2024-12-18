@@ -113,7 +113,8 @@ export declare namespace LayoutProps {
     userPopover?:JSX.Element, 
     toolbarUserPanel?:JSX.Element,
     toolbarButtons?:JSX.Element[],
-    screenIcons?:JSX.Element[]
+    screenIcons?:JSX.Element[],
+    leftExpandPanel?:JSX.Element
   }
   type MainLayoutProps = {
     children: React.ReactElement

@@ -11,6 +11,7 @@ export default {
   'config.layout.main.dark.left':'左侧主菜单',
   'config.theme.color.blue': '蓝色',
   'config.theme.color.red': '红色',
+  'config.theme.color.brown': '褐色',
   'config.theme.color.orange': '橙色',
   'config.theme.color.yellow': '黄色',
   'config.theme.color.cyan': '青色',

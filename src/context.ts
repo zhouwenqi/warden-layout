@@ -29,6 +29,7 @@ type ConfigDispatcher = {
     toolbarUserPanel?:JSX.Element
     toolbarButtons?:JSX.Element[]
     screenIcons?:JSX.Element[]
+    leftExpandPanel?:JSX.Element
 }
 type BadgeDispatcher = {
     count:number

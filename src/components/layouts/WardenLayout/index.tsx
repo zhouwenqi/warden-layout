@@ -175,6 +175,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           toolbarButtons:props.toolbarButtons,
           userPopover:props.userPopover,
           toolbarUserPanel:props.toolbarUserPanel,
+          leftExpandPanel:props.leftExpandPanel,
           screenIcons:props.screenIcons}}>           
             <MainLayout />
             {settingDrawer}

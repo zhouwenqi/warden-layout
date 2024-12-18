@@ -11,6 +11,7 @@ export default {
   'config.layout.main.dark.left':'Left menu',
   'config.theme.color.blue': 'Blue',
   'config.theme.color.red': 'Red',
+  'config.theme.color.brown': 'Brown',
   'config.theme.color.orange': 'Orange',
   'config.theme.color.yellow': 'Yellow',
   'config.theme.color.cyan': 'Cyan',

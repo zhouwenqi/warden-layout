@@ -1,6 +1,6 @@
 {
   "name": "warden-layout",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "this layout component is  base antd",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
@@ -13,7 +13,8 @@
   },
   "keywords": [
     "warden-layout",
-    "antd-layout"
+    "antd-layout",
+    "react-layout"
   ],
   "authors": [
     "zhouwenqi <zhouwenqi1982@live.com>"

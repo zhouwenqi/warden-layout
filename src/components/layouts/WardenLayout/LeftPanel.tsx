@@ -22,7 +22,7 @@ const {useToken} = theme;
  */
 const LeftPanel=(props:LayoutProps.LeftProps)=>{    
   const{token}=useToken()
-  const {config,getDynamicProps} = useConfigContext()
+  const {config,getDynamicProps,leftExpandPanel} = useConfigContext()
   const defaultOpenKeysRef = useRef<string[]>([]);
   defaultOpenKeysRef.current = props.openerKeys;
   const [openKeys, setOpenKeys] = useState(props.openerKeys);

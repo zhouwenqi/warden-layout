@@ -10,6 +10,7 @@ import {LeftLogo} from "./LogoPanel";
 import { generate } from '@ant-design/colors';
 import {LayoutProps} from '@/typings'
 import { getAppRoutePathKey } from "@/utils/routeUtil";
+import {hexToRgbaString} from '@/utils/stringUtil';
 const {Sider} = Layout;
 const {useToken} = theme;
 
@@ -31,8 +32,8 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   const configKey= getAppRoutePathKey(useRouteData().route)  
   const dynamicProps = getDynamicProps()
 
-  // Sliding menu bar width
-  const sliderWidth = dynamicProps.leftWidth
+  // Silding menu bar width
+  const siderWidth = dynamicProps.leftWidth
 
   // Folding width
   const collapsedWidth = config.compact ? 46 : 50;
@@ -97,31 +98,45 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   },[collapsed])
 
   // Sliding menu bar style
-  let silderTheme = config.theme
+  let siderTheme = config.theme
   const collapseBtnStyle = config.compact ? {fontSize:"16px"} : {fontSize:"18px"}
 
   // silder style
-  const silderHeight = config.layoutType == "HeadMenu" ? "calc(100% - " + dynamicProps.headerHeight + "px)" : "100%"
-  const silderBlockStart = config.layoutType == "HeadMenu" ? dynamicProps.headerHeight : 0
+  const siderHeight = config.layoutType == "HeadMenu" ? "calc(100% - " + dynamicProps.headerHeight + "px)" : "100%"
+  const siderBlockStart = config.layoutType == "HeadMenu" ? dynamicProps.headerHeight + 1 : 0
+  let siderClass="warden-layout-sider"
 
-  let silderStyle:React.CSSProperties = {
+
+  let siderBgColor = token.colorBgContainer
+
+  let siderStyle:React.CSSProperties = {
     position: 'fixed',
-    width:sliderWidth + 'px',
-    height:silderHeight,
-    insetBlockStart:silderBlockStart + 'px',
-    background: 'transparent'
+    width:siderWidth + 'px',
+    height:siderHeight,
+    insetBlockStart:siderBlockStart + 'px'    
   }
 
   // menu style
-  let collapseStyle:React.CSSProperties = { display: 'block', textAlign: 'right', paddingRight: '16px', borderRight:'solid 1px '+ (config.hideBorder ? token.colorBgContainer : token.colorBorderSecondary), background: token.colorBgContainer }
+  let collapseStyle:React.CSSProperties = { display: 'block', textAlign: 'right', paddingRight: '16px', borderRight:'solid 1px '+ (config.hideBorder ? hexToRgbaString(token.colorBgContainer,0.06) : hexToRgbaString(token.colorBorderSecondary,0.06)), background: "transparent"}
   let menuTheme:MenuTheme = config.menuByPrimary && config.layoutType == "LeftMenu" ? "dark" : "light"
-  let menuStyle:React.CSSProperties = {border:"0"}
+  let menuStyle:React.CSSProperties = {border:"0",background:"transparent"}
+  let borderRight = menuTheme == "light" ? ( !config.hideBorder ? "solid 1px " +  hexToRgbaString(token.colorBorder,0.4) : "0") : " 0"
 
   if(menuTheme == "dark"){
     const primaryColros = generate(config.primaryColor)
-    menuStyle = {background:primaryColros[5]}
-    silderTheme="dark"
-    collapseStyle = {...collapseStyle, background:primaryColros[5], borderRight:"0"}
+    siderTheme="dark"
+    siderBgColor = primaryColros[5]      
+    collapseStyle = {...collapseStyle, borderRight:"0"}
+  }
+
+  siderStyle = {
+    ...siderStyle,
+    background:config.menuTransparent ? hexToRgbaString(siderBgColor,0.6) : siderBgColor,
+    borderRight
+  }
+
+  if(config.backgroundBlur){
+    siderClass += " warden-layout-blur"
   }
   
   // Menu indentation button
@@ -131,51 +146,33 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
       </div>
   )
 
-  let leftBoxStyle:React.CSSProperties = {
-    borderRight:"solid 1px " + (config.hideBorder ? token.colorBgContainer : token.colorBorderSecondary)
-  }
-  if(config.menuByPrimary && config.layoutType=="LeftMenu"){
-    leftBoxStyle = {
-      borderRight:"solid 1px "+ config.primaryColor
-    }
-  }
-  if(config.hideBorder){
-    leftBoxStyle = {
-      borderRight:"0"
-    }
-    if(!config.menuByPrimary && config.layoutType == "HeadMenu"){
-      leftBoxStyle = {
-        marginTop:"1px"
-      }
-    }
-  }
   
   return(      
       <>    
         <div
-          style={{
-          width: collapsed ? collapsedWidth : sliderWidth,
-          overflow: 'hidden',
-          flex: `0 0 ${collapsed ? collapsedWidth : sliderWidth}px`,
-          maxWidth: collapsed ? collapsedWidth : sliderWidth,
-          minWidth: collapsed ? collapsedWidth : sliderWidth,
-          transition:
-              'background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)',
-          }}
-          ></div>
+            style={{
+            width: collapsed ? collapsedWidth : siderWidth,
+            overflow: 'hidden',
+            flex: `0 0 ${collapsed ? collapsedWidth : siderWidth}px`,
+            maxWidth: collapsed ? collapsedWidth : siderWidth,
+            minWidth: collapsed ? collapsedWidth : siderWidth,
+            transition:
+                'background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)',
+            }}
+            ></div>
         <Sider className="warden-layout-sider"
-          width={sliderWidth}
+          width={siderWidth}
           collapsedWidth={collapsedWidth} 
           collapsible collapsed={collapsed} 
           onCollapse={onHandCollapse}
           trigger={collapsedMenu} 
-          theme={silderTheme}          
-          style={silderStyle}>
-              {collapsed && leftExpandPanel ? <></> : <div className="warden-layout-left-expand-panel" style={{padding:config.compact ? "12px" : "16px"}}>
+          theme={siderTheme}          
+          style={siderStyle}>
+              {collapsed || !leftExpandPanel ? <></> : <div className="warden-layout-left-expand-panel" style={{padding:config.compact ? "12px" : "16px"}}>
                   {leftExpandPanel}
-                </div>  } 
+                </div>  }
               {config.layoutType == "LeftMenu" ? <LeftLogo collapsed={collapsed} /> : <></>}
-              <div className={menuTheme == "dark" ? "warden-layout-left-box-dark" : "warden-layout-left-box"} style={leftBoxStyle}>
+              <div className={menuTheme == "dark" ? "warden-layout-left-box-dark" : "warden-layout-left-box"}>
                 <Menu onClick={onMenuClick}
                   onOpenChange={(e) => {   
                     setOpenKeys(e);

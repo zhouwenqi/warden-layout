@@ -50,6 +50,8 @@ export type SchemeConfig = {
     popoverUserMap:Record<string,JSX.Element>;
     // Manual folding
     handFoldMap:Record<string,boolean>;
+    // menu skin data
+    skinsMap:Record<string,Warden.IMenuSkin[]>
 }
 export type ContainerType = "Normal" | "None"
 
@@ -73,7 +75,8 @@ var WardenGlobalThis:SchemeConfig = {
     configMap:{},
     footerMap:{},
     popoverUserMap:{},
-    handFoldMap:{}
+    handFoldMap:{},
+    skinsMap:{}
 }
 
 const BadgeContext = createContext<BadgeDispatcher>({count:0,setCount:()=>{}})

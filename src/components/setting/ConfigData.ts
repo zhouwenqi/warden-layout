@@ -6,6 +6,7 @@ import { Warden } from "@/typings"
 const ThemeColors: Warden.IColor[] = [
   { color: '#417ffb', id: 'config.theme.color.blue' },
   { color: '#f21934', id: 'config.theme.color.red' },
+  { color: '#99572b', id: 'config.theme.color.brown' },
   { color: '#f8512a', id: 'config.theme.color.orange' },
   { color: '#f8ac2f', id: 'config.theme.color.yellow' },
   { color: '#25c3c1', id: 'config.theme.color.cyan' },

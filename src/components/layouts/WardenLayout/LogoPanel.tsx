@@ -88,15 +88,13 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         textAlign:"center",
         alignItems:"center", 
         padding:boxPd,
-        minHeight:getDynamicProps().headerHeight + "px",
-        borderRight:"solid 1px " + (config.hideBorder ? "transparent" : token.colorBorderSecondary),
-        background:token.colorBgContainer,
-        color: token.colorPrimary}
+        minHeight:getDynamicProps().headerHeight + "px",   
+        color: token.colorPrimary
+    }
 
     if(config.menuByPrimary){
         txtStyle = {...txtStyle,color:"white"}
-        const primaryColros = generate(config.primaryColor)
-        boxStyle = {...boxStyle,color:"white",borderRight:"0",background:primaryColros[5]}
+        boxStyle = {...boxStyle,color:"white",borderRight:"0"}
     }
     // logo navigate event
     const onNavigateHandler=()=>{

@@ -8,6 +8,7 @@ import { useConfigContext } from '@/context';
 import { generate } from '@ant-design/colors';
 import {LayoutProps} from '@/typings';
 import ToolbarUserPanel from '@/components/ToolbarUserPanel';
+import {hexToRgbaString} from '@/utils/stringUtil';
 
 const { Header} = Layout;
 const {useToken} = theme;  
@@ -29,7 +30,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
       history.push(e.key) 
   } 
   const {token} = useToken()
-  const borderBottom = menuTheme == "light" ? ("solid 1px " + (config.hideBorder ? token.colorBgContainer : token.colorBorderSecondary)) : " 0"
+  const borderBottom = menuTheme == "light" ? ( !config.hideBorder ? "solid 1px " +  hexToRgbaString(token.colorBorder,0.4) : "0") : " 0"
   const headerHeight = getDynamicProps().headerHeight;
 
   // Set the header background style according to different layouts
@@ -37,7 +38,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   let headMaskClassName = "warden-layout-header"
 
   // logo    
-  let logoElement = props.leftSilderHidden || config.layoutType=="HeadMenu" ? (<div style={{borderBottom}}><TopLogo /></div>) : <></>   
+  let logoElement = props.leftSilderHidden || config.layoutType=="HeadMenu" ? (<div><TopLogo /></div>) : <></>   
   
   if(config.layoutType == "HeadMenu"){      
     headMaskElement = <Header style={{height:headerHeight+"px", lineHeight:headerHeight+"px"}}></Header>  
@@ -46,18 +47,27 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
     headMaskClassName += " warden-layout-header-fixed"
   }
   
-  let boxStyle:any = {background:token.colorBgContainer}
+  let boxStyle:any = {background:token.colorBgContainer,borderBottom}
   
   // menu style        
-  let menuStyle:React.CSSProperties = {}
+  let boxBgColor = token.colorBgContainer
   if(menuTheme == "dark"){
     const primaryColors = generate(config.primaryColor)
-    boxStyle = {...boxStyle, color:"white",background:primaryColors[5]}      
-    menuStyle = {...menuStyle,background:primaryColors[5]}
+    boxBgColor = primaryColors[5]
+    boxStyle = {...boxStyle, color:"white"}   
   }
   
   if(config.hideBorder && !config.menuByPrimary){
     boxStyle = {...boxStyle,marginLeft:"1px"}
+  }
+
+  boxStyle = {
+    ...boxStyle,
+    background: config.menuTransparent ? hexToRgbaString(boxBgColor,0.6) : boxBgColor
+  }
+  
+  if(config.backgroundBlur){
+    headMaskClassName += " warden-layout-blur"
   }
 
   return(     
@@ -69,7 +79,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
               <Menu
                   onClick={onMenuClick}
                   theme={menuTheme}
-                  style={menuStyle}
+                  style={{background:"transparent",border:"0"}}
                   selectedKeys={props.selectedKeys} 
                   defaultSelectedKeys={props.selectedKeys}                  
                   items={props.menuData}                    

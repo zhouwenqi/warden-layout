@@ -1,4 +1,4 @@
-import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,message,App } from "antd"
+import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,App } from "antd"
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
 import { useState } from "react"
 import {useIntl} from 'react-intl'
@@ -89,6 +89,13 @@ const SettingDrawer=()=>{
               ]}
               />            
       </div>
+      <div  className="wardenSettingLabelBox">            
+          <label>{intl.formatMessage({id:"config.setting.main.layout.title"})}</label>
+          <MainLayoutGroup
+            layout={config.layoutType}
+            onSelect={onChangeMainLayoutHandler}
+          />
+      </div>
       <div className="wardenSettingLabelBox">
       <label>{intl.formatMessage({id:"config.setting.theme.color.title"})}</label>
           <Space>
@@ -98,14 +105,8 @@ const SettingDrawer=()=>{
           />  
           </Space>         
       </div>
-      <div  className="wardenSettingLabelBox">            
-          <label>{intl.formatMessage({id:"config.setting.main.layout.title"})}</label>
-          <MainLayoutGroup
-            layout={config.layoutType}
-            onSelect={onChangeMainLayoutHandler}
-          />
-      </div>
-      <div  className="wardenSettingLabelBox">            
+      <SkinGroupBox />      
+      <div className="wardenSettingLabelBox">            
           <label>{intl.formatMessage({id:"config.setting.language.title"})}</label>
           <Segmented
               defaultValue={locale}
@@ -272,6 +273,54 @@ const ColorBox = (props: ColorBoxProps) => {
       </label>
     </Tooltip>
   )
+}
+/**
+ * skin group
+ * @returns 
+ */
+const SkinGroupBox=()=>{
+  const intl = useIntl()
+  const {config,setConfig} = useConfigContext()
+  const onSelectHandler=(e:Warden.IMenuSkin)=>{
+    setConfig({...config,
+      menuSkin:e.name,
+      systemTheme:false,
+      theme:e.theme!
+    })
+  }
+
+  const menuSkins:Warden.IMenuSkin[] = WardenGlobalThis.skinsMap[config.primaryColor]
+  let items:JSX.Element[]=[]
+  if(menuSkins && menuSkins.length>0){
+    menuSkins.forEach((item,index)=>{
+      items.push(<SkinBox onSelect={onSelectHandler} key={"skin"+index} skin={item} selected={item.name == config.menuSkin} />)
+    })
+  }
+  const panel = items.length>0 ? (<div className="wardenSettingLabelBox">
+    <label>
+      {intl.formatMessage({id:"config.setting.skin.title"})}
+    </label>
+  <Space wrap>
+    {items}
+  </Space>
+</div>) : <></> 
+  return(
+    panel
+  )
+}
+
+/**
+ * skin
+ * @param props 
+ * @returns 
+ */
+const SkinBox=(props:{skin:Warden.IMenuSkin,selected:boolean,onSelect:(value:Warden.IMenuSkin)=>void})=>{
+  const borderStyle = "1px solid " + (props.selected ? useToken().token.colorPrimary : useToken().token.colorBorderSecondary)
+  return(
+    <div onClick={()=>{props.onSelect(props.skin)}} style={{border:borderStyle,padding:"8px",borderRadius:"8px",display:"inline-block",textAlign:"center",cursor:"pointer"}}>
+      <img src={props.skin.icon} style={{display:"inline-block",width:"70px",height:"45px",borderRadius:"4px"}} alt={props.skin.name} /><br />
+      <span style={{whiteSpace:"nowrap",marginTop:"4px",overflow:"hidden",width:"70px",display:"inline-block"}}>{props.skin.name}</span>
+    </div>)
 }
 
 export default SettingDrawer

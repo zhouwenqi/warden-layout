@@ -9,6 +9,7 @@ import {Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,Sv
 import type {ContainerMode} from './typings'
 import { WardenGlobalThis,useBadgeContext,useContainerContext,useConfigContext } from './context'
 import type {SchemeConfig} from './context'
+import {hexToRgb,hexToRgbaString} from './utils/stringUtil'
 
 export default WardenLayout
-export {AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarUserPanel,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,SchemeConfig,SvgIconProps,ToolbarButtonProps,useBadgeContext,useContainerContext,useConfigContext}
+export {AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarUserPanel,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,SchemeConfig,SvgIconProps,ToolbarButtonProps,useBadgeContext,useContainerContext,useConfigContext,hexToRgb,hexToRgbaString}

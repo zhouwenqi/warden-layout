@@ -4,7 +4,7 @@ import { getPathToKey } from './routeUtil';
 import AppIcon from '@/components/AppIcon';
 import { hasAuthority } from './securityUtil';
 import { Badge,Tag } from 'antd';
-import {IMenuData,IAntMenuData,IconType} from '../typings';
+import {IMenuData,IAntMenuData,IconType,Warden} from '../typings';
 import { WardenGlobalThis } from '../context';
 import SvgIcon from '@/components/SvgIcon';
 
@@ -150,4 +150,22 @@ const getMenuIcon=(item:IMenuData)=> {
   }
   return icon
 }
-export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData}
+
+/**
+ * get menu skin
+ * @param name skin name
+ * @param primaryColor color
+ * @returns 
+ */
+const getMenuSkin=(name:string,primaryColor:string):Warden.IMenuSkin | undefined =>  {
+  const items:Warden.IMenuSkin[] = WardenGlobalThis.skinsMap[primaryColor];
+  if(items && items.length>0){
+      for(var i=0;i<items.length;i++){
+          if(items[i].name == name){
+              return items[i]
+          }
+      }
+  }
+  return undefined
+}
+export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData,getMenuSkin}

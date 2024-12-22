@@ -8,6 +8,9 @@ export declare namespace Warden {
         primaryColor:string
         compact?:boolean
         menuByPrimary?:boolean
+        menuTransparent?:boolean
+        menuSkin?:string     
+        backgroundBlur?:boolean
         menuSplit?:boolean
         leftEmptyHidden?:boolean
         leftMenuInline?:boolean
@@ -57,6 +60,13 @@ export declare namespace Warden {
         roles?:string[];        
         createDate?:string;
         modifyDate?:string;
+    }
+    interface IMenuSkin {
+        name:string
+        theme?:Theme    
+        icon?:string
+        primaryColor?:string
+        content?:JSX.Element
     }
 }
 /** 主体布局参数类型 */

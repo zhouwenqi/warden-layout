@@ -91,6 +91,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     "headerHeight": headerHeight,
     "headerBg":"transparent"
   }
+  const primaryColors = generate(config.primaryColor)
 
   if(config.hideBorder){
     menuStyle = {...menuStyle, "colorSplit":"transparent"}
@@ -109,7 +110,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
 
   if(config.menuByPrimary) {    
-    const primaryColors = generate(config.primaryColor)
+    
     layoutStyle = {...layoutStyle, headerColor:"white"}
     if(config.layoutType=="LeftMenu"){
       menuStyle = {

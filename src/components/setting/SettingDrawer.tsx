@@ -44,7 +44,7 @@ const SettingDrawer=()=>{
 
   // select color event
   const onSelectColorHandler=(color:string)=>{
-    setConfig({...config,primaryColor:color})
+    setConfig({...config,primaryColor:color,menuSkin:undefined})
   }
 
   // select lanages event
@@ -304,6 +304,8 @@ const SkinGroupBox=()=>{
       menuSkin:e.name,
       primaryColor:e.primaryColor,
       systemTheme:false,      
+      menuTransparent:true,
+      containerTransparent:true,
       theme:e.theme!,
       layoutType:e.layoutType!,
       menuByPrimary:e.menuByPrimary!

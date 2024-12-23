@@ -1,5 +1,6 @@
-import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,App } from "antd"
+import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,Radio,App } from "antd"
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
+import type {RadioChangeEvent} from 'antd'
 import { useState } from "react"
 import {useIntl} from 'react-intl'
 import {getLocale,setLocale} from 'umi'
@@ -24,6 +25,7 @@ const SettingDrawer=()=>{
   const  appStatic = App.useApp()
   const [open,setOpen] = useState(false)
   const {config,setConfig} = useConfigContext()
+  const [colorMode,setColorMode]=useState(config.menuSkin ? "skin" : "color")
 
   // select theme event
   const onChangeTheme = (value:string)=>{
@@ -65,6 +67,12 @@ const SettingDrawer=()=>{
       value:region.language
     })
   })
+
+  const skinKeys:string[] = Object.keys(WardenGlobalThis.skinsMap)
+    const colorModePanel = colorMode == "skin" ? (<SkinGroupBox />) : (<Space><ColorBoxGroup
+      color={config.primaryColor}
+      onSelect={onSelectColorHandler}
+    /></Space>)
   
 
   return(
@@ -89,7 +97,7 @@ const SettingDrawer=()=>{
               ]}
               />            
       </div>
-      <div  className="wardenSettingLabelBox">            
+      <div className="wardenSettingLabelBox">            
           <label>{intl.formatMessage({id:"config.setting.main.layout.title"})}</label>
           <MainLayoutGroup
             layout={config.layoutType}
@@ -97,16 +105,15 @@ const SettingDrawer=()=>{
           />
       </div>
       <div className="wardenSettingLabelBox">
-      <label>{intl.formatMessage({id:"config.setting.theme.color.title"})}</label>
-          <Space>
-          <ColorBoxGroup
-            color={config.primaryColor}
-            onSelect={onSelectColorHandler}
-          />  
-          </Space>         
-      </div>
-      <SkinGroupBox />      
-      <div className="wardenSettingLabelBox">            
+          <Space style={{marginBottom:"8px"}}>
+            <Radio.Group onChange={(e:RadioChangeEvent)=>{setColorMode(e.target.value)}} value={colorMode}>
+              <Radio value="color">{intl.formatMessage({id:"config.setting.theme.color.title"})}</Radio>
+              <Radio value="skin" disabled={skinKeys.length < 1}>{intl.formatMessage({id:"config.setting.skin.title"})}</Radio>
+            </Radio.Group>              
+          </Space>            
+          {colorModePanel}       
+      </div>    
+      <div className="wardenSettingLabelBox" style={{paddingBottom:"0px"}}>            
           <label>{intl.formatMessage({id:"config.setting.language.title"})}</label>
           <Segmented
               defaultValue={locale}
@@ -118,6 +125,18 @@ const SettingDrawer=()=>{
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.menuPrimaryColor.title"})}</label>
             <Switch defaultChecked={config.menuByPrimary} onChange={(value:boolean)=>{setConfig({...config,menuByPrimary:value})}} />   
+        </Space>
+        <Space className="wardenSettingSwitchBox">
+            <label>{intl.formatMessage({id:"config.setting.menuTransparent.title"})}</label>
+            <Switch defaultChecked={config.menuTransparent} onChange={(value:boolean)=>{setConfig({...config,menuTransparent:value})}} />   
+        </Space>
+        <Space className="wardenSettingSwitchBox">
+            <label>{intl.formatMessage({id:"config.setting.containerTransparent.title"})}</label>
+            <Switch defaultChecked={config.containerTransparent} onChange={(value:boolean)=>{setConfig({...config,containerTransparent:value})}} />   
+        </Space>
+        <Space className="wardenSettingSwitchBox">
+            <label>{intl.formatMessage({id:"config.setting.backgroundBlur.title"})}</label>
+            <Switch defaultChecked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
         </Space>
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.splitmenu.title"})}</label>
@@ -279,33 +298,28 @@ const ColorBox = (props: ColorBoxProps) => {
  * @returns 
  */
 const SkinGroupBox=()=>{
-  const intl = useIntl()
   const {config,setConfig} = useConfigContext()
   const onSelectHandler=(e:Warden.IMenuSkin)=>{
     setConfig({...config,
       menuSkin:e.name,
-      systemTheme:false,
-      theme:e.theme!
+      primaryColor:e.primaryColor,
+      systemTheme:false,      
+      theme:e.theme!,
+      layoutType:e.layoutType!,
+      menuByPrimary:e.menuByPrimary!
     })
   }
 
-  const menuSkins:Warden.IMenuSkin[] = WardenGlobalThis.skinsMap[config.primaryColor]
+  const keys:string[] = Object.keys(WardenGlobalThis.skinsMap)
   let items:JSX.Element[]=[]
-  if(menuSkins && menuSkins.length>0){
-    menuSkins.forEach((item,index)=>{
-      items.push(<SkinBox onSelect={onSelectHandler} key={"skin"+index} skin={item} selected={item.name == config.menuSkin} />)
-    })
-  }
-  const panel = items.length>0 ? (<div className="wardenSettingLabelBox">
-    <label>
-      {intl.formatMessage({id:"config.setting.skin.title"})}
-    </label>
-  <Space wrap>
-    {items}
-  </Space>
-</div>) : <></> 
+  keys.forEach((k,i)=>{
+    const item = WardenGlobalThis.skinsMap[k]
+    items.push(<SkinBox onSelect={onSelectHandler} key={"skin"+i} skin={item} selected={item.name == config.menuSkin} />)
+  })
   return(
-    panel
+    <Space>
+      {items}
+    </Space>
   )
 }
 
@@ -315,11 +329,19 @@ const SkinGroupBox=()=>{
  * @returns 
  */
 const SkinBox=(props:{skin:Warden.IMenuSkin,selected:boolean,onSelect:(value:Warden.IMenuSkin)=>void})=>{
-  const borderStyle = "1px solid " + (props.selected ? useToken().token.colorPrimary : useToken().token.colorBorderSecondary)
+  const borderStyle = "2px solid " + (props.selected ? useToken().token.colorPrimary : useToken().token.colorBgLayout)
+
+  let boxStyle:React.CSSProperties ={
+    background: useToken().token.colorBgLayout,
+    border:borderStyle    
+  }  
+
   return(
-    <div onClick={()=>{props.onSelect(props.skin)}} style={{border:borderStyle,padding:"8px",borderRadius:"8px",display:"inline-block",textAlign:"center",cursor:"pointer"}}>
-      <img src={props.skin.icon} style={{display:"inline-block",width:"70px",height:"45px",borderRadius:"4px"}} alt={props.skin.name} /><br />
-      <span style={{whiteSpace:"nowrap",marginTop:"4px",overflow:"hidden",width:"70px",display:"inline-block"}}>{props.skin.name}</span>
+    <div onClick={()=>{props.onSelect(props.skin)}} style={boxStyle} className="layoutSkinBoxItem">
+      <img src={props.skin.icon} alt={props.skin.name} /><br />
+      <span>
+        {props.skin.label || props.skin.name}
+      </span>
     </div>)
 }
 

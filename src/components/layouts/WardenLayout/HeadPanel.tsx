@@ -85,7 +85,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
                   items={props.menuData}                    
                   className="warden-layout-header-menu warden-layout-base-menu-horizontal" 
                   mode="horizontal" />
-              <div style={{borderBottom:borderBottom,padding:"0px 12px",display:"flex",justifyContent:"flex-end"}}>                    
+              <div style={{padding:"0px 12px",display:"flex",justifyContent:"flex-end"}}>                    
                   <HeaderRight />
               </div> 
           </div>

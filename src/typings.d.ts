@@ -9,6 +9,7 @@ export declare namespace Warden {
         compact?:boolean
         menuByPrimary?:boolean
         menuTransparent?:boolean
+        containerTransparent?:boolean
         menuSkin?:string     
         backgroundBlur?:boolean
         menuSplit?:boolean
@@ -62,10 +63,13 @@ export declare namespace Warden {
         modifyDate?:string;
     }
     interface IMenuSkin {
-        name:string
-        theme?:Theme    
+        name:string        
+        primaryColor:string
+        label?:string
+        theme?:Theme
+        layoutType?:LayoutType
+        menuByPrimary?:boolean        
         icon?:string
-        primaryColor?:string
         content?:JSX.Element
     }
 }
@@ -151,7 +155,8 @@ export declare namespace LayoutProps {
       mode?:ContainerMode,
       hideTitle?:boolean,
       hideBreadcrumb?:boolean,
-      hideFooter?:boolean
+      hideFooter?:boolean,
+      transparent?:boolean
   }
 }
 export declare type ContainerMode = "None" | "Box" | "Panel"

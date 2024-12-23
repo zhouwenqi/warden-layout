@@ -160,7 +160,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
                 'background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)',
             }}
             ></div>
-        <Sider className="warden-layout-sider"
+        <Sider className={siderClass}
           width={siderWidth}
           collapsedWidth={collapsedWidth} 
           collapsible collapsed={collapsed} 

@@ -8,6 +8,7 @@ import { getStorageConfig, setStorageConfig } from '@/utils/configUtil';
 import { generate } from '@ant-design/colors';
 import {LayoutProps,Warden} from '@/typings';
 import MainLayout from './MainLayout';
+import { hexToRgbaString } from '@/utils/stringUtil';
 
 /**
  * Layout main
@@ -101,6 +102,10 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
         "itemSelectedColor": "white",
         "itemColor": "rgba(255,255,255,0.6)"
     }
+  }else{
+    menuStyle = {...menuStyle,
+        "itemSelectedBg": hexToRgbaString(config.primaryColor,0.1)
+    }    
   }
 
   if(config.menuByPrimary) {    

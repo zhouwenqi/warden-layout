@@ -151,21 +151,4 @@ const getMenuIcon=(item:IMenuData)=> {
   return icon
 }
 
-/**
- * get menu skin
- * @param name skin name
- * @param primaryColor color
- * @returns 
- */
-const getMenuSkin=(name:string,primaryColor:string):Warden.IMenuSkin | undefined =>  {
-  const items:Warden.IMenuSkin[] = WardenGlobalThis.skinsMap[primaryColor];
-  if(items && items.length>0){
-      for(var i=0;i<items.length;i++){
-          if(items[i].name == name){
-              return items[i]
-          }
-      }
-  }
-  return undefined
-}
-export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData,getMenuSkin}
+export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData}

@@ -1,6 +1,5 @@
 import { theme } from 'antd'
-import { useConfigContext } from "@/context"
-import { getMenuSkin } from '@/utils/menuUtil';
+import { useConfigContext,WardenGlobalThis } from "@/context"
 
 const {useToken} = theme;
 
@@ -9,8 +8,7 @@ const BackgroundPanel=()=>{
     const {config} = useConfigContext()
     let bgContent:JSX.Element = <></>
     if(config.menuSkin){
-        let menuSkin = getMenuSkin(config.menuSkin,config.primaryColor)
-        console.log(menuSkin)
+        let menuSkin = WardenGlobalThis.skinsMap[config.menuSkin]      
         if(menuSkin){
             bgContent = menuSkin.content!
         }

@@ -51,7 +51,7 @@ export type SchemeConfig = {
     // Manual folding
     handFoldMap:Record<string,boolean>;
     // menu skin data
-    skinsMap:Record<string,Warden.IMenuSkin[]>
+    skinsMap:Record<string,Warden.IMenuSkin>
 }
 export type ContainerType = "Normal" | "None"
 

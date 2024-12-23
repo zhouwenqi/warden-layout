@@ -57,7 +57,7 @@ const Container=(props:LayoutProps.ContainerProps)=>{
     let FooterPanel = <></>
     if(!hideFooter && footerElement){
         FooterPanel = (
-        <Footer style={{paddingBottom:"0px",color:token.colorTextTertiary,fontSize:token.fontSize}}>                            
+        <Footer style={{paddingBottom:"0px",color:token.colorTextTertiary,fontSize:token.fontSize,background:"transparent"}}>                            
             {footerElement}
         </Footer>)
     }
@@ -84,6 +84,12 @@ const Container=(props:LayoutProps.ContainerProps)=>{
                 ...contentStyle,
                 background:token.colorBgContainer
             }
+        }
+    }
+
+    if(config.containerTransparent || props.transparent){
+        layoutStyle = {
+            ...layoutStyle,background:"transparent"
         }
     }
 

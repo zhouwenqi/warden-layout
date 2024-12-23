@@ -9,6 +9,7 @@ import {IAntMenuData} from '@/typings';
 
 
 import { useConfigContext,WardenGlobalThis } from '@/context';
+import BackgroundPanel from './BackgroundPanel';
 
 
 const {useToken} = theme;
@@ -70,18 +71,17 @@ export default function () {
     // Expand the key on the left menu
     const operLeftKeys = selectLeftKeys
 
-    const {token} = useToken()
-
     // Automatically hide the left sidebar
     const leftPanelHidden:boolean = leftMenus.length <= 0 && (config.layoutType == "HeadMenu" || (config.leftEmptyHidden==true && config.layoutType == "LeftMenu"))
  
+    const containerStyle:React.CSSProperties={position:'relative',background:"transparent"}
 
     return(
         <div className='warden-layout-box'>
-            <div className='warden-layout-background' style={{background:token.colorBgLayout}}></div>
+            <BackgroundPanel />
             <Layout className='warden-layout-body'>
                 {leftPanelHidden ? <></> : <LeftPanel selectedKeys={selectLeftKeys} menuData={leftMenus} openerKeys={operLeftKeys} />}                
-                <Layout style={{position:'relative'}}>
+                <Layout style={containerStyle}>
                     <HeadPanel menuData={headMenus} selectedKeys={selectTopKeys} leftSilderHidden = {leftPanelHidden} />
                     <Outlet context={{title:currentTitle,breadcrumbData}} />
                 </Layout>

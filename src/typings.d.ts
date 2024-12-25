@@ -125,6 +125,7 @@ export declare namespace LayoutProps {
     config?:Warden.IConfig,
     footer?:JSX.Element,
     userPopover?:JSX.Element, 
+    logoPopover?:JSX.Element,
     toolbarUserPanel?:JSX.Element,
     toolbarButtons?:JSX.Element[],
     screenIcons?:JSX.Element[],
@@ -156,7 +157,8 @@ export declare namespace LayoutProps {
       hideTitle?:boolean,
       hideBreadcrumb?:boolean,
       hideFooter?:boolean,
-      transparent?:boolean
+      transparent?:boolean,
+      menuByBackground?:boolean
   }
 }
 export declare type ContainerMode = "None" | "Box" | "Panel"
@@ -191,5 +193,12 @@ export declare type ToolbarButtonProps = {
     icon?:string
     children?:JSX.Element
     onClick?:Function
+    toolTipop?:string
+}
+declare type ToolbarLinkProps = {
+    icon?:string
+    children:JSX.Element | string
+    href?:string
+    target?:HTMLAttributeAnchorTarget | undefined;
     toolTipop?:string
 }

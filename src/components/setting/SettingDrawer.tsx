@@ -44,7 +44,13 @@ const SettingDrawer=()=>{
 
   // select color event
   const onSelectColorHandler=(color:string)=>{
-    setConfig({...config,primaryColor:color,menuSkin:undefined})
+    setConfig({
+      ...config,
+      primaryColor:color,
+      menuSkin:undefined,
+      menuTransparent:false,
+      backgroundBlur:false
+    })  
   }
 
   // select lanages event
@@ -113,7 +119,7 @@ const SettingDrawer=()=>{
           </Space>            
           {colorModePanel}       
       </div>    
-      <div className="wardenSettingLabelBox" style={{paddingBottom:"0px"}}>            
+      <div className="wardenSettingLabelBox">            
           <label>{intl.formatMessage({id:"config.setting.language.title"})}</label>
           <Segmented
               defaultValue={locale}
@@ -121,30 +127,30 @@ const SettingDrawer=()=>{
               options={languages}
               />            
       </div>
-      <Divider />
-        <Space className="wardenSettingSwitchBox">
-            <label>{intl.formatMessage({id:"config.setting.menuPrimaryColor.title"})}</label>
-            <Switch defaultChecked={config.menuByPrimary} onChange={(value:boolean)=>{setConfig({...config,menuByPrimary:value})}} />   
-        </Space>
-        <Space className="wardenSettingSwitchBox">
+      <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.menuTransparent.title"})}</label>
-            <Switch defaultChecked={config.menuTransparent} onChange={(value:boolean)=>{setConfig({...config,menuTransparent:value})}} />   
+            <Switch defaultChecked={config.menuTransparent} checked={config.menuTransparent} onChange={(value:boolean)=>{setConfig({...config,menuTransparent:value})}} />   
         </Space>
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.containerTransparent.title"})}</label>
-            <Switch defaultChecked={config.containerTransparent} onChange={(value:boolean)=>{setConfig({...config,containerTransparent:value})}} />   
+            <Switch defaultChecked={config.containerTransparent} checked={config.containerTransparent} onChange={(value:boolean)=>{setConfig({...config,containerTransparent:value})}} />   
         </Space>
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.backgroundBlur.title"})}</label>
-            <Switch defaultChecked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
+            <Switch defaultChecked={config.backgroundBlur} checked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
         </Space>
+      <Divider />
+        <Space className="wardenSettingSwitchBox">
+            <label>{intl.formatMessage({id:"config.setting.menuPrimaryColor.title"})}</label>
+            <Switch defaultChecked={config.menuByPrimary} checked={config.menuByPrimary} onChange={(value:boolean)=>{setConfig({...config,menuByPrimary:value})}} />   
+        </Space>        
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.splitmenu.title"})}</label>
             <Switch checked={config.menuSplit} defaultChecked={config.menuSplit} onChange={(value:boolean)=>{setConfig({...config,menuSplit:value})}} />   
         </Space>
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.compactLayout.title"})}</label>
-            <Switch defaultChecked={config.compact} onChange={(value:boolean)=>{setConfig({...config,compact:value})}} />   
+            <Switch defaultChecked={config.compact} checked={config.compact} onChange={(value:boolean)=>{setConfig({...config,compact:value})}} />   
         </Space>          
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.hideBorder.title"})}</label>
@@ -303,12 +309,12 @@ const SkinGroupBox=()=>{
     setConfig({...config,
       menuSkin:e.name,
       primaryColor:e.primaryColor,
-      systemTheme:false,      
+      systemTheme:false,
+      theme:e.theme || config.theme,
+      layoutType:e.layoutType || config.layoutType,
       menuTransparent:true,
       containerTransparent:true,
-      theme:e.theme!,
-      layoutType:e.layoutType!,
-      menuByPrimary:e.menuByPrimary!
+      menuByPrimary:e.menuByPrimary ?? config.menuByPrimary
     })
   }
 
@@ -319,7 +325,7 @@ const SkinGroupBox=()=>{
     items.push(<SkinBox onSelect={onSelectHandler} key={"skin"+i} skin={item} selected={item.name == config.menuSkin} />)
   })
   return(
-    <Space>
+    <Space wrap>
       {items}
     </Space>
   )

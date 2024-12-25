@@ -57,7 +57,7 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
     boxStyle = {...boxStyle, color:"white"}   
   }
   
-  if(config.hideBorder && !config.menuByPrimary){
+  if(config.hideBorder && !config.menuByPrimary && config.layoutType=="LeftMenu"){
     boxStyle = {...boxStyle,marginLeft:"1px"}
   }
 

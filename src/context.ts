@@ -24,8 +24,11 @@ type ConfigDispatcher = {
     getDynamicProps:() => LayoutProps.DynamicProps
     badgeCount:number
     setBadgeCount:(count:number)=>void
+    logoPopoverOpen:boolean
+    setLogoPopoverOpen:(open:boolean)=>void
     footer?:JSX.Element
     userPopover?:JSX.Element
+    logoPopover?:JSX.Element
     toolbarUserPanel?:JSX.Element
     toolbarButtons?:JSX.Element[]
     screenIcons?:JSX.Element[]
@@ -65,7 +68,9 @@ const WardenContext= createContext<ConfigDispatcher>({
     setConfig:()=>{},
     getDynamicProps:()=>({headerHeight:56,leftWidth:260}),
     badgeCount:0,
-    setBadgeCount:(count:number)=>{}
+    setBadgeCount:(count:number)=>{},
+    logoPopoverOpen:false,
+    setLogoPopoverOpen:(open:boolean)=>{}
 })
 
 var WardenGlobalThis:SchemeConfig = {

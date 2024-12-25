@@ -1,6 +1,6 @@
 {
   "name": "warden-layout",
-  "version": "1.6.2",
+  "version": "1.7.6",
   "description": "this layout component is  base antd",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",

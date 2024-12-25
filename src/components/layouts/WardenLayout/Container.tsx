@@ -3,6 +3,7 @@ import {theme,Breadcrumb,Layout} from 'antd';
 import {Link,useRouteData} from 'umi';
 import { getAppRoutePathKey } from '@/utils/routeUtil';
 import {LayoutProps} from '@/typings';
+import { hexToRgbaString } from '@/utils/stringUtil';
 const {useToken} = theme;  
 const {Content,Footer} = Layout
 /**
@@ -14,11 +15,11 @@ const {Content,Footer} = Layout
  * @author zhouwenqi
  * @description Container component used for laying out sub routing component packages
  */
-const Container=(props:LayoutProps.ContainerProps)=>{    
+const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{    
     const {config,footer} = useConfigContext()    
     const {title, breadcrumbData} = useContainerContext()
     const {token} = useToken()
-    
+    const {menuByBackground=true} = props
     const configKey= getAppRoutePathKey(useRouteData().route)  
 
     let titlePanel = <></>
@@ -69,6 +70,7 @@ const Container=(props:LayoutProps.ContainerProps)=>{
 
     // Container exterior style
     let layoutStyle:React.CSSProperties = {}
+    let clsName = props.className || ""
 
     if(props.mode == "Box" || props.mode == "Panel"){
         layoutStyle = {
@@ -82,10 +84,11 @@ const Container=(props:LayoutProps.ContainerProps)=>{
         if(props.mode == "Panel"){
             contentStyle = {
                 ...contentStyle,
-                background:token.colorBgContainer
+                background: menuByBackground && config.menuTransparent ? hexToRgbaString(token.colorBgContainer,0.6) : token.colorBgContainer
             }
+            clsName += (menuByBackground && config.backgroundBlur ? " warden-layout-blur" : "")
         }
-    }
+    }    
 
     if(config.containerTransparent || props.transparent){
         layoutStyle = {
@@ -98,13 +101,12 @@ const Container=(props:LayoutProps.ContainerProps)=>{
         ...props.style
     }
 
-
     return(
         <>
         <Layout style={layoutStyle}>
             {BreadcrumbPanel}
             {titlePanel}
-            <Content style={contentStyle}>
+            <Content style={contentStyle} className={clsName}>
                 {props.children}
             </Content>
             {FooterPanel}

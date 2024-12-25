@@ -29,17 +29,18 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     layoutConfig = WardenGlobalThis.configMap[configKey] || defaultConfig
     setStorageConfig(layoutConfig)
   }
-
+  // global config
   const [config,setConfig] = useState<Warden.IConfig>(layoutConfig)
+  // global logo popover
+  const [logoPopoverOpen,setLogoPopoverOpen] = useState<boolean>(false)
+  // global bubble
+  const [badge,setBadge] = useState(0)
 
   // Retrieve menu data
   if(!WardenGlobalThis.menuData[configKey] || WardenGlobalThis.menuData[configKey].length <= 0){
     const menuRoutes = getLayoutRootRoutes(clientRoutes,configKey!)
     WardenGlobalThis.menuData[configKey] = getMenuData(menuRoutes, config.localeEnabled? intl : undefined)
   }   
-
-  // Global Bubble
-  const [badge,setBadge] = useState(0)
 
   // Monitoring system theme change
   const scheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -99,7 +100,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   
   if(config.theme == "dark"){
     menuStyle = {...menuStyle,
-        "itemSelectedBg": config.primaryColor,
+        "itemSelectedBg": config.menuTransparent ? hexToRgbaString(config.primaryColor,0.7) : config.primaryColor,
         "itemSelectedColor": "white",
         "itemColor": "rgba(255,255,255,0.6)"
     }
@@ -177,9 +178,12 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           getDynamicProps,
           badgeCount:badge,
           setBadgeCount:setBadge,
+          logoPopoverOpen,
+          setLogoPopoverOpen,
           footer:props.footer,
           toolbarButtons:props.toolbarButtons,
           userPopover:props.userPopover,
+          logoPopover:props.logoPopover,
           toolbarUserPanel:props.toolbarUserPanel,
           leftExpandPanel:props.leftExpandPanel,
           screenIcons:props.screenIcons}}>           

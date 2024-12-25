@@ -1,8 +1,7 @@
-import {Avatar, theme} from 'antd'
+import {Avatar, theme,Popover} from 'antd'
 import {Link,history,useIntl} from 'umi'
 import { useConfigContext } from '@/context';
 import AppIcon from '@/components/AppIcon';
-import { generate } from '@ant-design/colors';
 import {LayoutProps} from '@/typings';
 import SvgIcon from '@/components/SvgIcon';
 import React from 'react';
@@ -16,9 +15,9 @@ const {useToken} = theme;
  */
 const TopLogo=()=>{    
     const intl = useIntl()
-    const {config,getDynamicProps} = useConfigContext()
+    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen} = useConfigContext()
     const {token}  = useToken()
-    let imgStyle:React.CSSProperties = {cursor:"pointer",marginLeft:"10px",fill:"currentcolor",color:"currentcolor"}
+    let imgStyle:React.CSSProperties = {cursor:"pointer",marginLeft:"8px",fill:"currentcolor",color:"currentcolor"}
     let txtStyle:React.CSSProperties = {fontSize:"18px",fontWeight:"500",color:token.colorTextBase,margin:"0px 8px"}
     let imgSize = 36
     if(config.compact){
@@ -31,28 +30,23 @@ const TopLogo=()=>{
         txtStyle = {...txtStyle,color:"white"}
     }
 
-    // logo navigate event
-    const onNavigateHandler=()=>{        
-        if(config.logoNavigateRoute){
-            history.push(config.logoNavigateRoute)
-        }
-    }
-
     let logoImage = <></>    
     if(config.brandLogo.indexOf("warden_") > -1){
         const iconName = config.brandLogo.split("warden_")[1]
-        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} onClick={()=>{onNavigateHandler()}} style={imgStyle} />
+        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
     }else if(config.brandLogo.indexOf("svg_") > -1){     
         const svgSrc = config.brandLogo.split("svg_")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }
     else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} onClick={()=>{onNavigateHandler()}}  />
+        logoImage = <Avatar src={config.brandLogo} size={imgSize} />
     }
     const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
         <div style={{display:"flex",color:topDark ? "white" : token.colorPrimary,alignItems:"center", alignContent:"center", width: getDynamicProps().leftWidth + "px"}}>            
-            {logoImage}
+            <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
+            <a style={{color:"currentcolor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
+            </Popover>
             <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>           
         </div>
     )
@@ -66,7 +60,7 @@ const TopLogo=()=>{
  * @description The larger logo on the left
  */
 const LeftLogo=(props:LayoutProps.LogoProps)=>{
-    const {config,getDynamicProps} = useConfigContext()
+    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen} = useConfigContext()
     const {token}  = useToken()    
     const intl = useIntl()
     let boxPd = "46px 0px"
@@ -96,12 +90,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         txtStyle = {...txtStyle,color:"white"}
         boxStyle = {...boxStyle,color:"white",borderRight:"0"}
     }
-    // logo navigate event
-    const onNavigateHandler=()=>{
-        if(config.logoNavigateRoute){
-            history.push(config.logoNavigateRoute)
-        }
-    }
+
     let imgStyle:React.CSSProperties={
         cursor:"pointer"
     }
@@ -109,17 +98,19 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
     let logoImage = <></>
     if(config.brandLogo.indexOf("warden_") > -1){
         const iconName = config.brandLogo.split("warden_")[1]
-        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} onClick={()=>{onNavigateHandler()}} style={imgStyle} />
+        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
     }else if(config.brandLogo.indexOf("svg_") > -1){     
         const svgSrc = config.brandLogo.split("svg_")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} onClick={()=>{onNavigateHandler()}}  />
+        logoImage = <Avatar src={config.brandLogo} size={imgSize} />
     }
     const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
         <div style={boxStyle}>            
-            {logoImage}
+            <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
+            <a style={{color:"currentcolor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
+            </Popover>
             {props.collapsed ? <></> : <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>}
         </div>
     )

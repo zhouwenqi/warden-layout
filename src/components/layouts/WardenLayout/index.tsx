@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import {ConfigProvider,App,theme} from 'antd';
-import {useIntl,getLocale, useRouteData,useAppData} from 'umi';
+import {ConfigProvider,App,Spin,theme} from 'antd';
+import {useIntl,getLocale, useRouteData,useAppData,useModel} from 'umi';
 import { createConfigContext, defaultConfig,WardenGlobalThis} from '@/context';
 import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData } from '@/utils/routeUtil';
 import SettingDrawer from '@/components/setting/index';
@@ -22,6 +22,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   const {clientRoutes} = useAppData()
   const ConfigContext = createConfigContext()
   const intl = useIntl()
+  const [load,setLoad]=useState<boolean>(true)
+  const {initialState} = useModel('@@initialState')
 
   // Get layout configuration
   let layoutConfig = getStorageConfig(configKey) || props.config 
@@ -62,13 +64,35 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }  
 
   useEffect(()=>{
+    // init userinfo and skins
+    (async()=>{  
+      setLoad(true)    
+      WardenGlobalThis.currentUser =  await initialState?.getUserInfo!()
+      if(initialState?.skins && initialState.skins.length > 0){
+        initialState.skins.forEach((item,index)=>{
+          WardenGlobalThis.skinsMap[item.name] = item
+        })
+      }
+      setLoad(false)
+    })()
+    
     const schemeTheme = scheme.matches ? 'dark' : 'light'
     if(config.systemTheme && schemeTheme != config.theme){
       setConfig({
         ...config, theme:schemeTheme
       })      
-    }
+    }    
   },[])
+
+  // refresh skins locale...
+  const refreshSkinsLocale=()=>{
+    const keys = Object.keys(WardenGlobalThis.skinsMap)
+    console.log("refresh skin locale...")
+    keys.forEach((k)=>{      
+      const itemSkin = WardenGlobalThis.skinsMap[k]
+      itemSkin.label =  config.localeEnabled ? intl.formatMessage({id: 'skin.'+ itemSkin.name+".label"}) : itemSkin.name
+    })
+  }
 
   // Layout Head Height
   const headerHeight = config.compact ? 48 : 56
@@ -168,6 +192,16 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
 
   const settingDrawer = process.env.NODE_ENV == "development" || process.env.ENABLE_SETTING ? <SettingDrawer /> : <></>
+
+  // loading status...
+  if(load){
+      const spinPanel = initialState?.spin || <Spin delay={500} fullscreen />
+      return(
+        spinPanel
+      )
+  }
+  
+  refreshSkinsLocale()
 
   return (    
     <ConfigProvider theme={themeConfig} locale={getLocale()}>

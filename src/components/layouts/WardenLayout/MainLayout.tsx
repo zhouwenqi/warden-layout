@@ -1,4 +1,4 @@
-import { Layout,theme } from 'antd';
+import { Layout } from 'antd';
 import { useLocation,useRouteData,Outlet} from 'umi';
 import './MainLayout.less';
 import LeftPanel from './LeftPanel';
@@ -6,14 +6,8 @@ import HeadPanel from './HeadPanel';
 import { getAppRoutePathKey,matchPathKeys,matchPathAllKeys } from '@/utils/routeUtil';
 import { getAntdMenus, getMapMenus, getSplitAntdMenus } from '@/utils/menuUtil';
 import {IAntMenuData} from '@/typings';
-
-
 import { useConfigContext,WardenGlobalThis } from '@/context';
 import BackgroundPanel from './BackgroundPanel';
-
-
-const {useToken} = theme;
-
 
 /**
  * Main layout
@@ -21,7 +15,7 @@ const {useToken} = theme;
  * @author zhouwenqi
  * @description The main framework of the layout
  */
-export default function () {
+const MainLayout=()=>{
     const location = useLocation()
     
     const {config} = useConfigContext()
@@ -89,3 +83,4 @@ export default function () {
         </div>
     )
 }
+export default MainLayout

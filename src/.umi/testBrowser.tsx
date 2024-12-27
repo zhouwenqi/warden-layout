@@ -3,14 +3,14 @@
 // DO NOT CHANGE IT MANUALLY!
 import React, { useEffect, useState } from 'react';
 import { ApplyPluginsType } from 'umi';
-import { renderClient, RenderClientOpts } from 'E:/project/web/umi-plugin-warden-layout/node_modules/@umijs/renderer-react';
+import { renderClient, RenderClientOpts } from 'E:/project/web/warden-layout/node_modules/@umijs/renderer-react';
 import { createHistory } from './core/history';
 import { createPluginManager } from './core/plugin';
 import { getRoutes } from './core/route';
 import type { Location } from 'history';
 
 
-import 'E:/project/web/umi-plugin-warden-layout/src/global.ts';
+
 const publicPath = '/';
 const runtimePublicPath = false;
 

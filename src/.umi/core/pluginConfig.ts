@@ -216,7 +216,8 @@ interface IConfigTypes {
     imports?: (Array<string> | undefined);
 };
     routePrefetch: {
-
+    defaultPrefetch?: ("none" | "intent" | "render" | "viewport" | undefined);
+    defaultPrefetchTimeout?: (number | undefined);
 };
     terminal: {
 
@@ -307,20 +308,6 @@ interface IConfigTypes {
 };
     run: {
     globals?: (Array<string> | undefined);
-};
-    initialState: {
-    loading?: (string | undefined);
-};
-    model: {
-    extraModels?: (Array<string> | undefined);
-};
-    locale: {
-    default?: (string | undefined);
-    useLocalStorage?: (boolean | undefined);
-    baseNavigator?: (boolean | undefined);
-    title?: (boolean | undefined);
-    antd?: (boolean | undefined);
-    baseSeparator?: (string | undefined);
 };
 };
 

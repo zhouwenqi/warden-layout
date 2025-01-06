@@ -1,14 +1,16 @@
 
 export declare namespace Warden {
     type Theme = 'light' | 'dark'
-    type LayoutType = 'HeadMenu' | 'LeftMenu'
+    type LayoutType = 'headMenu' | 'leftMenu'
+    type IconSuffix = 'Outlined' | 'Filled' | 'TwoTone'
     interface IConfig {
         theme:Theme        
         layoutType:LayoutType
         primaryColor:string
         compact?:boolean
         menuByPrimary?:boolean
-        menuTransparent?:boolean
+        leftTransparent?:boolean
+        headTransparent?:boolean
         containerTransparent?:boolean
         menuSkin?:string     
         backgroundBlur?:boolean
@@ -26,6 +28,11 @@ export declare namespace Warden {
         brandLogo:string
         brandTitle?:string
         logoNavigateRoute?:string
+        menuIconToggle?:boolean
+        menuIconSuffix?:IconSuffix
+        page403?:string
+        page404?:string
+        pageLogin?:string
     }
 
 
@@ -39,9 +46,7 @@ export declare namespace Warden {
         ico?: string;
     }
     interface IColor extends ILocal {
-        /** 颜色名称 */
         name?: string;
-        /** 颜色值 */
         color: string;
     } 
     interface IUser {
@@ -51,13 +56,9 @@ export declare namespace Warden {
         dept?:string;
         post?:string;
         email?:string;
-        /** 最终校验的权限（为了兼容Umi之类的权限插件) */        
-        access:string[];
         userType?:string;
         nickName?:string;
-        /** 从后端取得的权限 */
-        authoritys?:string[];
-        /** 从后端取得的角色 */
+        authorities:string[];
         roles?:string[];        
         createDate?:string;
         modifyDate?:string;
@@ -161,7 +162,7 @@ export declare namespace LayoutProps {
       menuByBackground?:boolean
   }
 }
-export declare type ContainerMode = "None" | "Box" | "Panel"
+export declare type ContainerMode = "none" | "box" | "panel"
 /** menu - model */
 export declare interface IMenuData {
     key:string;
@@ -172,7 +173,8 @@ export declare interface IMenuData {
     icon?: React.ReactNode;
     items?: IMenuData[];
     title?:string;
-    access?:string[];
+    access?:string;
+    authorities?:string[];
     badge?:any;
     tag?:string;
 }
@@ -187,7 +189,7 @@ export declare interface IAntMenuData {
     title?:string;
 }
 /** icon type */
-export declare type IconType = 'ant' | 'warden' | 'svg' | 'img';
+export declare type IconType = 'ant' | 'warden' | 'svg' | 'umi';
 
 export declare type ToolbarButtonProps = {
     icon?:string

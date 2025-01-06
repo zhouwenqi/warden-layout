@@ -1,4 +1,5 @@
 import { WardenGlobalThis } from '../context';
+import { useAccess } from 'umi';
 
 const matchArray = (matchArray: string[], userArray: string[]) => {
   if (!matchArray || matchArray.length < 1) {
@@ -36,9 +37,36 @@ const hasAuthority = (authoriths: string[]) => {
   }
   const currentUser = WardenGlobalThis.currentUser
   if(currentUser){
-    return matchAuthority(authoriths, currentUser.access);
+    return matchAuthority(authoriths, currentUser.authorities);
   }
   return false;
+};
+
+/**
+ * Match umi access
+ * @param accessObject umi access object
+ * @param access  menu access
+ * @returns
+ */
+const matchAccess=(accessObject:any,access?:string)=>{
+  if(!access || access.length < 1){
+    return true
+  }
+  const keys = Object.keys(accessObject);
+  if(keys.length < 1){
+    return false
+  }
+  return accessObject[access] == true
+}
+
+/**
+ * Match current user permissions(umi)
+ * @param authoriths List of required permissions for routing
+ * @returns
+ */
+const hasAccess = (access?: string) => {
+  const umiAccess = useAccess()
+  return matchAccess(umiAccess,access)
 };
 
 /**
@@ -70,6 +98,8 @@ const hasRole = (roles: string[]) => {
 export {
   matchAuthority,
   hasAuthority,
+  matchAccess,
+  hasAccess,
   matchRole,
   hasRole,
 }

@@ -1,6 +1,4 @@
-import { Avatar, Button, Divider, Flex, Space, Tag, theme, Tooltip,Popover } from "antd"
-import {EditOutlined,EllipsisOutlined,LogoutOutlined} from '@ant-design/icons'
-import {useIntl} from 'umi'
+import { Avatar, Space,  theme, Popover } from "antd"
 import { useConfigContext, WardenGlobalThis } from "@/context";
 const {useToken} = theme;  
 
@@ -19,7 +17,7 @@ const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
 
     const user = WardenGlobalThis.currentUser
 
-    const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "HeadMenu")
+    const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")
     return(
         <Popover placement="bottomRight" content={popoverPanel}>
             <Space align="baseline">

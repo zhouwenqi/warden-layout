@@ -23,7 +23,7 @@ const {useToken} = theme;
 const HeadPanel=(props:LayoutProps.HeadProps)=>{  
     
   const {config,getDynamicProps} = useConfigContext()
-  const menuTheme:MenuTheme = config.menuByPrimary && config.layoutType=="HeadMenu" ? "dark" : "light"
+  const menuTheme:MenuTheme = config.menuByPrimary && config.layoutType=="headMenu" ? "dark" : "light"
 
   // menu click event
   const onMenuClick: MenuProps['onClick'] = (e) => {
@@ -38,9 +38,9 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   let headMaskClassName = "warden-layout-header"
 
   // logo    
-  let logoElement = props.leftSilderHidden || config.layoutType=="HeadMenu" ? (<div><TopLogo /></div>) : <></>   
+  let logoElement = props.leftSilderHidden || config.layoutType=="headMenu" ? (<div><TopLogo /></div>) : <></>   
   
-  if(config.layoutType == "HeadMenu"){      
+  if(config.layoutType == "headMenu"){      
     headMaskElement = <Header style={{height:headerHeight+"px", lineHeight:headerHeight+"px"}}></Header>  
     headMaskClassName += " warden-layout-header-fixed-full"
   }else{
@@ -57,13 +57,13 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
     boxStyle = {...boxStyle, color:"white"}   
   }
   
-  if(config.hideBorder && !config.menuByPrimary && config.layoutType=="LeftMenu"){
+  if(config.hideBorder && !config.menuByPrimary && config.layoutType=="leftMenu"){
     boxStyle = {...boxStyle,marginLeft:"1px"}
   }
 
   boxStyle = {
     ...boxStyle,
-    background: config.menuTransparent ? hexToRgbaString(boxBgColor,0.6) : boxBgColor
+    background: config.headTransparent ? hexToRgbaString(boxBgColor,0.6) : boxBgColor
   }
   
   if(config.backgroundBlur){
@@ -144,7 +144,7 @@ const FullscreenButton=(props:{items?:JSX.Element[]})=>{
       }
     }
     let btnStyle:React.CSSProperties = {padding:"8px",height:"inital","lineHeight":"inital"}
-    if(config.menuByPrimary && (config.theme == "dark" || config.layoutType == "HeadMenu")){
+    if(config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")){
       btnStyle = {...btnStyle,"color":"white"}
     }
 

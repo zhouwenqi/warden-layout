@@ -102,8 +102,8 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   const collapseBtnStyle = config.compact ? {fontSize:"16px"} : {fontSize:"18px"}
 
   // silder style
-  const siderHeight = config.layoutType == "HeadMenu" ? "calc(100% - " + dynamicProps.headerHeight + "px)" : "100%"
-  const siderBlockStart = config.layoutType == "HeadMenu" ? (config.menuByPrimary ? dynamicProps.headerHeight : dynamicProps.headerHeight + 1) : 0
+  const siderHeight = config.layoutType == "headMenu" ? "calc(100% - " + dynamicProps.headerHeight + "px)" : "100%"
+  const siderBlockStart = config.layoutType == "headMenu" ? (config.menuByPrimary ? dynamicProps.headerHeight : dynamicProps.headerHeight + 1) : 0
   let siderClass="warden-layout-sider"
 
 
@@ -118,7 +118,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
 
   // menu style
   let collapseStyle:React.CSSProperties = { display: 'block', textAlign: 'right', paddingRight: '16px', borderRight:'solid 1px '+ (config.hideBorder ? hexToRgbaString(token.colorBgContainer,0.06) : hexToRgbaString(token.colorBorderSecondary,0.06)), background: "transparent"}
-  let menuTheme:MenuTheme = config.menuByPrimary && config.layoutType == "LeftMenu" ? "dark" : "light"
+  let menuTheme:MenuTheme = config.menuByPrimary && config.layoutType == "leftMenu" ? "dark" : "light"
   let menuStyle:React.CSSProperties = {border:"0",background:"transparent"}
   let borderRight = menuTheme == "light" ? ( !config.hideBorder ? "solid 1px " +  hexToRgbaString(token.colorBorder,0.4) : "0") : " 0"
 
@@ -131,7 +131,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
 
   siderStyle = {
     ...siderStyle,
-    background:config.menuTransparent ? hexToRgbaString(siderBgColor,0.6) : siderBgColor,
+    background:config.leftTransparent ? hexToRgbaString(siderBgColor,0.6) : siderBgColor,
     borderRight
   }
 
@@ -171,7 +171,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
               {collapsed || !leftExpandPanel ? <></> : <div className="warden-layout-left-expand-panel" style={{padding:config.compact ? "12px" : "16px"}}>
                   {leftExpandPanel}
                 </div>  }
-              {config.layoutType == "LeftMenu" ? <LeftLogo collapsed={collapsed} /> : <></>}
+              {config.layoutType == "leftMenu" ? <LeftLogo collapsed={collapsed} /> : <></>}
               <div className={menuTheme == "dark" ? "warden-layout-left-box-dark" : "warden-layout-left-box"}>
                 <Menu onClick={onMenuClick}
                   onOpenChange={(e) => {   

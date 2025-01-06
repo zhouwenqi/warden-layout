@@ -22,6 +22,8 @@ export default {
   'config.setting.menuPrimaryColor.title':'菜单主题色背景',
   'config.setting.backgroundBlur.title':'背景模糊',
   'config.setting.menuTransparent.title':'菜单透明',
+  'config.setting.headTransparent.title':'头部菜单透明',
+  'config.setting.leftTransparent.title':'侧滑菜单透明',
   'config.setting.containerTransparent.title':'容器透明',
   'config.setting.skin.title':'主题皮肤',
   'config.setting.splitmenu.title': '分隔菜单',

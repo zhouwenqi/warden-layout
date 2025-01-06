@@ -25,7 +25,7 @@ const TopLogo=()=>{
         imgStyle = {...imgStyle,marginLeft:"6px"}
         txtStyle = {...txtStyle,fontSize:"16px",margin:"0px 8px 0px 6px"}
     }
-    const topDark = config.menuByPrimary && config.layoutType == "HeadMenu"
+    const topDark = config.menuByPrimary && config.layoutType == "headMenu"
     if(topDark){
         txtStyle = {...txtStyle,color:"white"}
     }

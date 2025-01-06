@@ -35,11 +35,11 @@ const MainLayout=()=>{
 
     // Allocate menu data according to layout
     switch(config.layoutType){
-        case "LeftMenu":
+        case "leftMenu":
             leftMenus = antdMenuData || []
             selectLeftKeys = menuKeys
             break;
-        case "HeadMenu":
+        case "headMenu":
         default:
             headMenus = antdMenuData || []            
             selectTopKeys = menuKeys
@@ -66,15 +66,17 @@ const MainLayout=()=>{
     const operLeftKeys = selectLeftKeys
 
     // Automatically hide the left sidebar
-    const leftPanelHidden:boolean = leftMenus.length <= 0 && (config.layoutType == "HeadMenu" || (config.leftEmptyHidden==true && config.layoutType == "LeftMenu"))
+    const leftPanelHidden:boolean = leftMenus.length <= 0 && (config.layoutType == "headMenu" || (config.leftEmptyHidden==true && config.layoutType == "leftMenu"))
  
     const containerStyle:React.CSSProperties={position:'relative',background:"transparent"}
+    // sidebar menu
+    const SiderPanel = leftPanelHidden ? <></> : <LeftPanel selectedKeys={selectLeftKeys} menuData={leftMenus} openerKeys={operLeftKeys} />
 
     return(
         <div className='warden-layout-box'>
             <BackgroundPanel />
             <Layout className='warden-layout-body'>
-                {leftPanelHidden ? <></> : <LeftPanel selectedKeys={selectLeftKeys} menuData={leftMenus} openerKeys={operLeftKeys} />}                
+                {SiderPanel}                
                 <Layout style={containerStyle}>
                     <HeadPanel menuData={headMenus} selectedKeys={selectTopKeys} leftSilderHidden = {leftPanelHidden} />
                     <Outlet context={{title:currentTitle,breadcrumbData}} />

@@ -72,7 +72,7 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
     let layoutStyle:React.CSSProperties = {}
     let clsName = props.className || ""
 
-    if(props.mode == "Box" || props.mode == "Panel"){
+    if(props.mode == "box" || props.mode == "panel"){
         layoutStyle = {
             ...layoutStyle,
             padding: config.compact ? '18px' : '24px'
@@ -81,10 +81,10 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
             ...contentStyle,
             padding:config.compact ? 16 : 20,
         }
-        if(props.mode == "Panel"){
+        if(props.mode == "panel"){
             contentStyle = {
                 ...contentStyle,
-                background: menuByBackground && config.menuTransparent ? hexToRgbaString(token.colorBgContainer,0.6) : token.colorBgContainer
+                background: menuByBackground && (config.headTransparent || config.leftTransparent) ? hexToRgbaString(token.colorBgContainer,0.6) : token.colorBgContainer
             }
             clsName += (menuByBackground && config.backgroundBlur ? " warden-layout-blur" : "")
         }

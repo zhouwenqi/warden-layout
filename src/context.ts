@@ -5,7 +5,7 @@ import {Warden,LayoutProps,IMenuData} from './typings';
 const defaultConfig:Warden.IConfig = {
     theme:'light',
     systemTheme:true,
-    layoutType:'HeadMenu',
+    layoutType:'headMenu',
     primaryColor:"#417ffb",
     compact:false,
     leftMenuInline:true,

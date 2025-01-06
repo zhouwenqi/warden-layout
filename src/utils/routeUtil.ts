@@ -23,8 +23,9 @@ function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
                 path:path,                
                 key:mkey,
                 title:route.title,
-                iconName:route.icon,
+                iconName: route.icon,
                 access:route.access,
+                authorities:route.authorities
             } 
             WardenGlobalThis.menuMap[mkey] = menuItemData
             menuItemData.items = getMenuData(route.routes,intl)
@@ -126,4 +127,13 @@ function matchPathKeys(path:string,rootPath:string){
 function getAppRoutePathKey(route:any){
     return route.path == '' || route.path == undefined ? route.originPath : route.path
 }
-export {getMenuData,getPathToKey,matchPathKeys,matchPathAllKeys,getLayoutRootRoutes,getAppRoutePathKey}
+/**
+ * Get the menu data that matches the current path
+ * @param path path
+ * @returns menu data
+ */
+function getCurrentPathMenuData(path:string):IMenuData{
+    const pathKey = getPathToKey(path)
+    return WardenGlobalThis.menuMap[pathKey]
+}
+export {getMenuData,getPathToKey,matchPathKeys,matchPathAllKeys,getLayoutRootRoutes,getAppRoutePathKey,getCurrentPathMenuData}

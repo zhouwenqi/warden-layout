@@ -22,6 +22,8 @@ export default {
   'config.setting.menuPrimaryColor.title':'Menu Theme Color Background',
   'config.setting.backgroundBlur.title':'Background blur',
   'config.setting.menuTransparent.title':'Menu transparent',
+  'config.setting.headTransparent.title':'Head menu transparent',
+  'config.setting.leftTransparent.title':'Sider menu transparent',
   'config.setting.containerTransparent.title':'Container transparent',
   'config.setting.skin.title':'Theme skin',
   'config.setting.splitmenu.title': 'Split menu',

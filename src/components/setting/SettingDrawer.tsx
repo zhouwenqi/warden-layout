@@ -48,7 +48,8 @@ const SettingDrawer=()=>{
       ...config,
       primaryColor:color,
       menuSkin:undefined,
-      menuTransparent:false,
+      headTransparent:false,
+      leftTransparent:false,
       backgroundBlur:false
     })  
   }
@@ -128,17 +129,21 @@ const SettingDrawer=()=>{
               />            
       </div>
       <Space className="wardenSettingSwitchBox">
-            <label>{intl.formatMessage({id:"config.setting.menuTransparent.title"})}</label>
-            <Switch defaultChecked={config.menuTransparent} checked={config.menuTransparent} onChange={(value:boolean)=>{setConfig({...config,menuTransparent:value})}} />   
-        </Space>
-        <Space className="wardenSettingSwitchBox">
-            <label>{intl.formatMessage({id:"config.setting.containerTransparent.title"})}</label>
-            <Switch defaultChecked={config.containerTransparent} checked={config.containerTransparent} onChange={(value:boolean)=>{setConfig({...config,containerTransparent:value})}} />   
-        </Space>
-        <Space className="wardenSettingSwitchBox">
-            <label>{intl.formatMessage({id:"config.setting.backgroundBlur.title"})}</label>
-            <Switch defaultChecked={config.backgroundBlur} checked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
-        </Space>
+          <label>{intl.formatMessage({id:"config.setting.headTransparent.title"})}</label>
+          <Switch defaultChecked={config.headTransparent} checked={config.headTransparent} onChange={(value:boolean)=>{setConfig({...config,headTransparent:value})}} />    
+      </Space>
+      <Space className="wardenSettingSwitchBox">
+        <label>{intl.formatMessage({id:"config.setting.leftTransparent.title"})}</label>
+        <Switch defaultChecked={config.leftTransparent} checked={config.leftTransparent} onChange={(value:boolean)=>{setConfig({...config,leftTransparent:value})}} />   
+      </Space>
+      <Space className="wardenSettingSwitchBox">
+          <label>{intl.formatMessage({id:"config.setting.containerTransparent.title"})}</label>
+          <Switch defaultChecked={config.containerTransparent} checked={config.containerTransparent} onChange={(value:boolean)=>{setConfig({...config,containerTransparent:value})}} />   
+      </Space>
+      <Space className="wardenSettingSwitchBox">
+          <label>{intl.formatMessage({id:"config.setting.backgroundBlur.title"})}</label>
+          <Switch defaultChecked={config.backgroundBlur} checked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
+      </Space>
       <Divider />
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.menuPrimaryColor.title"})}</label>
@@ -199,10 +204,10 @@ const MainLayoutGroup = (props: LayoutGroupProps) => {
   let itemStyle1 = 'wardenSettingLayoutBoxItem' + ' ' + 'wardenSettingLayoutHeadMenu';
   let itemStyle2 = 'wardenSettingLayoutBoxItem' + ' ' + 'wardenSettingLayoutLeftMenu';
   switch (props.layout) {
-    case 'LeftMenu':
+    case 'leftMenu':
       itemStyle2 += ' ' + 'wardenSettingItemChecked';
       break;
-    case 'HeadMenu':
+    case 'headMenu':
     default:
       itemStyle1 += ' ' + 'wardenSettingItemChecked';
       break;
@@ -218,7 +223,7 @@ const MainLayoutGroup = (props: LayoutGroupProps) => {
             className={itemStyle1}
             style={{color:useToken().token.colorPrimary}}
             onClick={() => {
-              props.onSelect('HeadMenu');
+              props.onSelect('headMenu');
             }}
           >
             <AppIcon name="checked" size={14} key="topchecked" />
@@ -231,7 +236,7 @@ const MainLayoutGroup = (props: LayoutGroupProps) => {
             className={itemStyle2}
             style={{color:useToken().token.colorPrimary}}
             onClick={() => {
-              props.onSelect('LeftMenu');
+              props.onSelect('leftMenu');
             }}
           >
             <AppIcon name="checked" size={14} key="leftchecked" />
@@ -312,7 +317,8 @@ const SkinGroupBox=()=>{
       systemTheme:false,
       theme:e.theme || config.theme,
       layoutType:e.layoutType || config.layoutType,
-      menuTransparent:true,
+      headTransparent:true,
+      leftTransparent:true,
       containerTransparent:true,
       menuByPrimary:e.menuByPrimary ?? config.menuByPrimary
     })

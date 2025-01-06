@@ -2,9 +2,10 @@ import React from 'react';
 import * as AntIcon from '@ant-design/icons';
 import { getPathToKey } from './routeUtil';
 import AppIcon from '@/components/AppIcon';
-import { hasAuthority } from './securityUtil';
+import { hasAuthority,hasAccess } from './securityUtil';
 import { Badge,Tag } from 'antd';
-import {IMenuData,IAntMenuData,IconType,Warden} from '../typings';
+import {Icon} from 'umi';
+import {IMenuData,IAntMenuData,IconType} from '../typings';
 import { WardenGlobalThis } from '../context';
 import SvgIcon from '@/components/SvgIcon';
 
@@ -19,16 +20,16 @@ const getAntdMenus=(menuData:IMenuData[])=>{
     return undefined
   }
   menuData.forEach((item)=>{
-    let access = true
-    if(item.access){
-      access = hasAuthority(item.access)
-    }
-    
-    if(access){ 
-      const menuItemData = getAntdMenuItem(item)
-      menuItemData.children = getAntdMenus(item.items!)
-      antdMenuItemDatas.push(menuItemData)
-    }
+    const access = hasAccess(item.access)
+      let authory= true    
+      if(item.authorities){
+        authory = hasAuthority(item.authorities)
+      }
+      if(access && authory){ 
+        const menuItemData = getAntdMenuItem(item)
+        menuItemData.children = getAntdMenus(item.items!)
+        antdMenuItemDatas.push(menuItemData)
+      }
   })
   return antdMenuItemDatas
 }
@@ -121,33 +122,51 @@ const getBreadcrumbData=(keys:string[])=>{
 * @param item menu item
 * @returns icon
 */
+/**
+ * 获取菜单图标组件
+ * @param item 单个菜单数据
+ * @returns 
+ */
 const getMenuIcon=(item:IMenuData)=> {
-  const iconArr: string[] = item.iconName ? item.iconName.split('_') : [];
-  let iconName: string = '';
+  let icon: React.ReactNode = undefined;
+  if(!item || !item.iconName){
+    return icon
+  }
+  const iconArr: string[] = item.iconName ? item.iconName.split('@') : [];
+ 
   let iconPrefix: IconType = 'ant';
+  let iconName: string = '';
+  // let prefix = item.iconName?.substring(0,item.iconName?.indexOf(":"))  
+  // let iconType: IconType = prefix == '' ? 'ant' : (prefix as IconType)
   if (iconArr.length > 1) {
     iconPrefix = iconArr[0] as IconType;
     iconName = iconArr[1];
   } else if (iconArr.length == 1) {
     iconName = iconArr[0];
   }
-  let icon: React.ReactNode = undefined;
+  
   if (iconName) {
     switch (iconPrefix) {
       default:
       case 'ant':
-        icon = React.createElement(AntIcon && (AntIcon as any)[iconName], {
-          style: { fontSize: '16px' },
-        });
+        if((AntIcon as any)[iconName]){
+            icon = React.createElement(AntIcon && (AntIcon as any)[iconName], {
+              style: { fontSize: '16px' },
+            });  
+        } 
         break;
+      case 'umi':        
+        icon = (<Icon icon={`local:${iconName}`} width="16" height="16" />)
+        break
       case 'warden':    
-        icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><AppIcon size={16} name={iconName} color="currentColor" /></span>)
+        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><AppIcon size={16} name={iconName} color="currentColor" /></span>)
         break;
       case 'svg':
-        icon = (<span className='anticon anticon-setting ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )
+        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )
         break;
     }
   }
+  
   return icon
 }
 

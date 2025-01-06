@@ -9,11 +9,13 @@ import { SvgIconProps } from "@/typings"
 const SvgIcon=(props:SvgIconProps)=>{
     const {src,width,height,fill,color,style} = props
     const loadHandler =(svg: SVGSVGElement)=>{
-        svg.setAttribute("width",width+"px")
-        svg.setAttribute("height",height+"px")
+        if(width)
+            svg.setAttribute("width",width as string)
+        if(height)
+            svg.setAttribute("height",height as string)
     }
     return(
-        <ReactSVG style={props.style} src={src} fill={fill} color={color} afterInjection={loadHandler} />
+        <ReactSVG style={style} src={src} fill={fill} color={color} afterInjection={loadHandler} />
     )
 }
 const IconLeft=()=>(

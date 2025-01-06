@@ -8,6 +8,9 @@ import ToolbarLink from "./components/ToolbarLink"
 import Container from './components/layouts/WardenLayout/Container'
 import { WardenGlobalThis,useBadgeContext,useContainerContext,useConfigContext } from './context'
 import {hexToRgb,hexToRgbaString} from './utils/stringUtil'
+import MainLayout from "./components/layouts/WardenLayout/MainLayout"
+import LeftPanel from "./components/layouts/WardenLayout/LeftPanel"
+import HeadPanel from "./components/layouts/WardenLayout/HeadPanel"
 
 export default WardenLayout
-export {AppIcon,SvgIcon,SettingDrawer,Container,useBadgeContext,useContainerContext,useConfigContext,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,hexToRgb,hexToRgbaString}
+export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,useBadgeContext,useContainerContext,useConfigContext,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,hexToRgb,hexToRgbaString}

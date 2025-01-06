@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import {ConfigProvider,App,Spin,theme} from 'antd';
-import {useIntl,getLocale, useRouteData,useAppData,useModel} from 'umi';
+import {useIntl,getLocale, useRouteData,useAppData,useModel,useLocation,Navigate,useAccess} from 'umi';
 import { createConfigContext, defaultConfig,WardenGlobalThis} from '@/context';
-import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData } from '@/utils/routeUtil';
+import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData,getCurrentPathMenuData } from '@/utils/routeUtil';
 import SettingDrawer from '@/components/setting/index';
 import { getStorageConfig, setStorageConfig } from '@/utils/configUtil';
 import { generate } from '@ant-design/colors';
 import {LayoutProps,Warden} from '@/typings';
 import MainLayout from './MainLayout';
 import { hexToRgbaString } from '@/utils/stringUtil';
+import { hasAuthority,matchAccess } from '@/utils/securityUtil';
 
 /**
  * Layout main
@@ -23,7 +24,9 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   const ConfigContext = createConfigContext()
   const intl = useIntl()
   const [load,setLoad]=useState<boolean>(true)
+  const [authorize,setAuthorize]=useState<boolean>(true)
   const {initialState} = useModel('@@initialState')
+  const umiAccess = useAccess()
 
   // Get layout configuration
   let layoutConfig = getStorageConfig(configKey) || props.config 
@@ -63,6 +66,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   }  
 
+  const currentMenuData = getCurrentPathMenuData(useLocation().pathname)
   useEffect(()=>{
     // init userinfo and skins
     (async()=>{  
@@ -81,13 +85,16 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
       setConfig({
         ...config, theme:schemeTheme
       })      
-    }    
+    } 
+
+    if(currentMenuData && (!hasAuthority(currentMenuData.authorities!) || (currentMenuData.access && !matchAccess(umiAccess,currentMenuData.access)))){
+      setAuthorize(false)
+    } 
   },[])
 
   // refresh skins locale...
   const refreshSkinsLocale=()=>{
     const keys = Object.keys(WardenGlobalThis.skinsMap)
-    console.log("refresh skin locale...")
     keys.forEach((k)=>{      
       const itemSkin = WardenGlobalThis.skinsMap[k]
       itemSkin.label =  config.localeEnabled ? intl.formatMessage({id: 'skin.'+ itemSkin.name+".label"}) : itemSkin.name
@@ -100,7 +107,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   // Layout left width
   const leftWidth = config.compact ? 240 : 260
   
-  // antd token 主题和算法
+  // antd token theme and algorithm
   let algorithm = config.theme == "dark" ? [theme.darkAlgorithm] : [theme.defaultAlgorithm] 
   if(config.compact){
     algorithm.push(theme.compactAlgorithm)
@@ -124,7 +131,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   
   if(config.theme == "dark"){
     menuStyle = {...menuStyle,
-        "itemSelectedBg": config.menuTransparent ? hexToRgbaString(config.primaryColor,0.7) : config.primaryColor,
+        "itemSelectedBg": config.headTransparent ? hexToRgbaString(config.primaryColor,0.7) : config.primaryColor,        
         "itemSelectedColor": "white",
         "itemColor": "rgba(255,255,255,0.6)"
     }
@@ -137,7 +144,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   if(config.menuByPrimary) {    
     
     layoutStyle = {...layoutStyle, headerColor:"white"}
-    if(config.layoutType=="LeftMenu"){
+    if(config.layoutType=="leftMenu"){
       menuStyle = {
         ...menuStyle,
         darkItemBg:primaryColors[1],
@@ -202,6 +209,17 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
   
   refreshSkinsLocale()
+
+  if(!authorize){
+    console.warn("not match authority...")
+    if(config.page403){
+      return <Navigate to={config.page403} />
+    }else{
+      return (
+        <></>
+      )
+    }
+  }
 
   return (    
     <ConfigProvider theme={themeConfig} locale={getLocale()}>

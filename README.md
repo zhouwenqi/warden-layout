@@ -41,22 +41,21 @@ MIT
 ```
 2. 启用相关插件(initinal-state/access/model等)：
 ```ts
-plugins: [
-  '@umijs/plugins/dist/initial-state',
-  '@umijs/plugins/dist/model',
-  '@umijs/plugins/dist/access',
-  '@umijs/plugins/dist/locale'
-],
-initialState: {},
-model: {},
-access:{},
+export default defineConfig({
+  plugins: [
+    '@umijs/plugins/dist/initial-state',
+    '@umijs/plugins/dist/model',
+    '@umijs/plugins/dist/access',
+    '@umijs/plugins/dist/locale'
+  ],
+  initialState: {},
+  model: {},
+  access:{},
+});
 ```
 🎈注意：需要禁用umi的mfsu
 ```ts
-export default defineConfig({
-  ...
-  mfsu:false
-});
+mfsu:false
 ```
 3. 然后安装warden-layout到项目中：
 ```bash

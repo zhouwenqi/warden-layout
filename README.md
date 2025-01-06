@@ -79,4 +79,4 @@ export default ()=>{
     )
 }
 ```
-5. 更多配置信息，请参阅：[https://github.com/zhouwenqi/warden-layout/docs/config.md](https://github.com/zhouwenqi/warden-layout/docs/config.md)
+5. 更多配置信息，请参阅：[https://github.com/zhouwenqi/warden-layout/docs/config.md](https://github.com/zhouwenqi/warden-layout/blob/main/docs/config.md)

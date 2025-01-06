@@ -23,6 +23,48 @@
   
 是否采用系统主题模式。
 
+### primaryColor
+
+- 类型：`string`
+- 默认值：`#417ffb`
+  
+主题颜色。
+
+### menuSkin
+
+- 类型：`string`
+- 默认值：`undefined`
+  
+主题皮肤（自定义皮肤请参考：[https://github.com/zhouwenqi/warden-layout/edit/main/docs/skins.md](https://github.com/zhouwenqi/warden-layout/edit/main/docs/skins.md))。
+
+### leftTransparent
+
+- 类型：`boolean`
+- 默认值：`false`
+  
+侧边栏菜单背景透明。
+
+### headTransparent
+
+- 类型：`boolean`
+- 默认值：`false`
+  
+顶部菜单背景透明。
+
+### containerTransparent
+
+- 类型：`boolean`
+- 默认值：`false`
+  
+自带conainter容器背景透明。
+
+### backgroundBlur
+
+- 类型：`boolean`
+- 默认值：`false`
+  
+菜单背景模糊（毛玻璃效果，菜单背景透明才生效）。
+
 ### compact
 
 - 类型：`boolean`
@@ -127,5 +169,12 @@ sub子菜单背景透明。
 - 默认值：`/{currentRoute}`
   
 logo导航路由，默认是当然布局路由
+
+### page403
+
+- 类型：`string`
+- 默认值：`undefined`
+  
+路由鉴权失败跳转地址
 
 > 更多信息请参考demo：[https://github.com/zhouwenqi/warden-layout-demo](https://github.com/zhouwenqi/warden-layout-demo)

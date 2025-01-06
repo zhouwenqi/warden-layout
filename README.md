@@ -39,6 +39,18 @@ MIT
   ...
 }
 ```
+2. 启用相关插件(initinal-state/access/model等)：
+```ts
+plugins: [
+  '@umijs/plugins/dist/initial-state',
+  '@umijs/plugins/dist/model',
+  '@umijs/plugins/dist/access',
+  '@umijs/plugins/dist/locale'
+],
+initialState: {},
+model: {},
+access:{},
+```
 🎈注意：需要禁用umi的mfsu
 ```ts
 export default defineConfig({
@@ -46,11 +58,11 @@ export default defineConfig({
   mfsu:false
 });
 ```
-2. 然后安装warden-layout到项目中：
+3. 然后安装warden-layout到项目中：
 ```bash
 $ yarn add warden-layout
 ```
-3. 安装成功能后，就可使用了，替换或增加umi布局即可
+4. 安装成功能后，就可使用了，替换或增加umi布局即可
 ```ts
 import WardenLayout,{ Warden } from 'warden-layout'
 
@@ -68,4 +80,4 @@ export default ()=>{
     )
 }
 ```
-4. 更多配置信息，请参阅：[https://github.com/zhouwenqi/warden-layout/docs/config.md](https://github.com/zhouwenqi/warden-layout/docs/config.md)
+5. 更多配置信息，请参阅：[https://github.com/zhouwenqi/warden-layout/docs/config.md](https://github.com/zhouwenqi/warden-layout/docs/config.md)

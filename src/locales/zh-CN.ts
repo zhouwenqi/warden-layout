@@ -32,6 +32,7 @@ export default {
   'config.setting.hideBorder.title':'隐藏线条',  
   'config.setting.hideTitle.title':'隐藏标题栏',
   'config.setting.compactLayout.title':'紧凑布局',
+  'config.setting.avatarReplaceBrand.title':'用户形象替换标志',
   'config.setting.leftEmptyHidden.title':'左侧菜单为空隐藏',
   'config.setting.leftItemTransparent.title':'子菜单背景透明',
   'config.setting.leftMenuInline.title':'左侧菜单内联模式',

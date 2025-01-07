@@ -141,9 +141,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }    
   }
 
-  if(config.menuByPrimary) {    
-    
-    layoutStyle = {...layoutStyle, headerColor:"white"}
+  if(config.menuByPrimary) {
     if(config.layoutType=="leftMenu"){
       menuStyle = {
         ...menuStyle,
@@ -153,6 +151,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
         darkPopupBg:primaryColors[5]
       } 
     }else{
+      layoutStyle = {...layoutStyle, headerColor:"white"}
       menuStyle = {
         ...menuStyle,
         darkItemBg:primaryColors[1],
@@ -236,7 +235,6 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           toolbarButtons:props.toolbarButtons,
           userPopover:props.userPopover,
           logoPopover:props.logoPopover,
-          toolbarUserPanel:props.toolbarUserPanel,
           leftExpandPanel:props.leftExpandPanel,
           screenIcons:props.screenIcons}}>           
             <MainLayout />

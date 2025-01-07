@@ -28,7 +28,6 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   defaultOpenKeysRef.current = props.openerKeys;
   const [openKeys, setOpenKeys] = useState(props.openerKeys);
   const [collapsed, setCollapsed] = useState(false);
-  
   const configKey= getAppRoutePathKey(useRouteData().route)  
   const dynamicProps = getDynamicProps()
 

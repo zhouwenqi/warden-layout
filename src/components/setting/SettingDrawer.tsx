@@ -162,6 +162,10 @@ const SettingDrawer=()=>{
             <Switch checked={config.hideBorder} defaultChecked={config.hideBorder} onChange={(value:boolean)=>{setConfig({...config,hideBorder:value})}} />   
         </Space>
         <Space className="wardenSettingSwitchBox">
+            <label>{intl.formatMessage({id:"config.setting.avatarReplaceBrand.title"})}</label>
+            <Switch disabled={config.layoutType=="headMenu"} checked={config.avatarReplaceBrand} defaultChecked={config.avatarReplaceBrand} onChange={(value:boolean)=>{setConfig({...config,avatarReplaceBrand:value})}} />     
+        </Space>
+        <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.leftEmptyHidden.title"})}</label>
             <Switch checked={config.leftEmptyHidden} defaultChecked={config.leftEmptyHidden} onChange={(value:boolean)=>{setConfig({...config,leftEmptyHidden:value})}} />   
         </Space>

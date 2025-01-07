@@ -28,6 +28,7 @@ export declare namespace Warden {
         brandLogo:string
         brandTitle?:string
         logoNavigateRoute?:string
+        avatarReplaceBrand?:boolean
         menuIconToggle?:boolean
         menuIconSuffix?:IconSuffix
         page403?:string

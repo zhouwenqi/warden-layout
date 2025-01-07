@@ -54,7 +54,6 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   if(menuTheme == "dark"){
     const primaryColors = generate(config.primaryColor)
     boxBgColor = primaryColors[5]
-    boxStyle = {...boxStyle, color:"white"}   
   }
   
   if(config.hideBorder && !config.menuByPrimary && config.layoutType=="leftMenu"){
@@ -95,14 +94,14 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
 }
 
 /**
- * 布局头部右侧内容
+ * layout header right panel
  * @returns 
  */
 const HeaderRight=()=>{
-  const {toolbarUserPanel,toolbarButtons,screenIcons} = useConfigContext()  
+  const {toolbarButtons,screenIcons,config} = useConfigContext()
   return(
     <>
-      {toolbarUserPanel || <ToolbarUserPanel />}
+      { config.avatarReplaceBrand ? <></> : <ToolbarUserPanel /> }
       <div style={{display:"flex",alignItems:"center",marginLeft:"10px"}}>
           {toolbarButtons}
           <FullscreenButton items={screenIcons} />                
@@ -111,15 +110,15 @@ const HeaderRight=()=>{
   )
 }
 
-/** 全屏切换Button */
+/** fullscreen change button */
 const FullscreenButton=(props:{items?:JSX.Element[]})=>{
     const {config} = useConfigContext()
     const [fullScreen,setFullScreen] = useState(false)
-    // 全屏模式切换
+    // fullscreen change mode
     const handleChangeFullscreen=()=>{
       setFullScreen(!!document.fullscreenElement)
     }
-    // F11按键事件
+    // F11 keypress event
     const handlerF11Key=(e:KeyboardEvent)=>{
       if(e.code==="F11"){
         e.preventDefault()
@@ -135,7 +134,7 @@ const FullscreenButton=(props:{items?:JSX.Element[]})=>{
       }
     },[])
   
-    // 全屏按钮点击事件
+    // fullscreen click event
     const onFullScreenHandler=()=>{
       if(fullScreen){
         document.exitFullscreen()

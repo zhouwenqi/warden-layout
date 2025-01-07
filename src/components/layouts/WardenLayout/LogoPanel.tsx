@@ -1,6 +1,6 @@
 import {Avatar, theme,Popover} from 'antd'
 import {Link,history,useIntl} from 'umi'
-import { useConfigContext } from '@/context';
+import { useConfigContext,WardenGlobalThis } from '@/context';
 import AppIcon from '@/components/AppIcon';
 import {LayoutProps} from '@/typings';
 import SvgIcon from '@/components/SvgIcon';
@@ -17,8 +17,8 @@ const TopLogo=()=>{
     const intl = useIntl()
     const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen} = useConfigContext()
     const {token}  = useToken()
-    let imgStyle:React.CSSProperties = {cursor:"pointer",marginLeft:"8px",fill:"currentcolor",color:"currentcolor"}
-    let txtStyle:React.CSSProperties = {fontSize:"18px",fontWeight:"500",color:token.colorTextBase,margin:"0px 8px"}
+    let imgStyle:React.CSSProperties = {cursor:"pointer",marginLeft:"8px",fill:"currentColor",color:"currentColor"}
+    let txtStyle:React.CSSProperties = {fontSize:"18px",fontWeight:"500",color:token.colorTextBase,margin:"0px 8px",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}
     let imgSize = 36
     if(config.compact){
         imgSize = 30
@@ -60,11 +60,12 @@ const TopLogo=()=>{
  * @description The larger logo on the left
  */
 const LeftLogo=(props:LayoutProps.LogoProps)=>{
-    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen} = useConfigContext()
+    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen,userPopover} = useConfigContext()
     const {token}  = useToken()    
     const intl = useIntl()
+    const user = WardenGlobalThis.currentUser
     let boxPd = "46px 0px"
-    let txtStyle = {fontSize:"18px",fontWeight:"500", color:token.colorTextBase}
+    let txtStyle = {maxWidth:(getDynamicProps().leftWidth - 30)+"px",fontSize:"18px",fontWeight:"500", color:token.colorTextBase,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}    
 
     if(config.compact){
         txtStyle = {...txtStyle, fontSize:"16px"}
@@ -106,12 +107,26 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         logoImage = <Avatar src={config.brandLogo} size={imgSize} />
     }
     const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
+
+    // user panel
+    let avatarPanel = (
+        <>        
+        <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={userPopover}>
+            <Avatar src={user?.headImgUrl} size={imgSize} style={{cursor:"pointer"}} />
+        </Popover>
+        {props.collapsed ? <></> : <><label style={txtStyle}>{user?.username}</label><label style={{...txtStyle,fontSize:token.fontSizeSM,fontWeight:"initial",opacity:"0.8"}}>{user?.createDate}</label></>}
+        </>
+    )
+
+    // logo panel
+    const panel = (<><Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
+        <a style={{color:"currentColor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
+    </Popover>
+    {props.collapsed ? <></> : <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>}</>)
+
     return(
         <div style={boxStyle}>            
-            <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
-            <a style={{color:"currentcolor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
-            </Popover>
-            {props.collapsed ? <></> : <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>}
+            { config.avatarReplaceBrand ? avatarPanel : panel}
         </div>
     )
 }

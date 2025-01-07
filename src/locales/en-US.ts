@@ -32,6 +32,7 @@ export default {
   'config.setting.hideBorder.title':'Hide border',  
   'config.setting.hideTitle.title':'Hide title bar',
   'config.setting.compactLayout.title':'Compact layout',
+  'config.setting.avatarReplaceBrand.title':'Avatar replace logo',
   'config.setting.leftEmptyHidden.title':'The left menu is empty and hidden',
   'config.setting.leftItemTransparent.title':'Submenu background transparent',
   'config.setting.leftMenuInline.title':'Left menu inline mode',

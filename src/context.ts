@@ -29,7 +29,6 @@ type ConfigDispatcher = {
     footer?:JSX.Element
     userPopover?:JSX.Element
     logoPopover?:JSX.Element
-    toolbarUserPanel?:JSX.Element
     toolbarButtons?:JSX.Element[]
     screenIcons?:JSX.Element[]
     leftExpandPanel?:JSX.Element

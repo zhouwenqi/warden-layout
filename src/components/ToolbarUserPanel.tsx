@@ -20,12 +20,12 @@ const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
     const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")
     return(
         <Popover placement="bottomRight" content={popoverPanel}>
-            <Space align="baseline">
-                <Avatar style={{verticalAlign:'middle',background:token.colorBgLayout}} src={user?.headImgUrl} >
+            <div style={{display:"flex",alignItems:"center",cursor:"pointer"}}>
+                <Avatar style={{verticalAlign:'middle',background:token.colorBgLayout,lineHeight:"1rem"}} src={user?.headImgUrl} >
                     {user?.username}
                 </Avatar>
-                <label style={{color:topDark ? 'white' : token.colorTextTertiary}}>{user?.username}</label>
-            </Space> 
+                <label style={{color:topDark ? 'white' : token.colorTextTertiary,lineHeight:"1rem",marginLeft:"10px"}}>{user?.username}</label>
+            </div> 
       </Popover>
     )
 }

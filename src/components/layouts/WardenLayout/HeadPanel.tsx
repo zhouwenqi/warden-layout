@@ -113,7 +113,8 @@ const HeaderRight=()=>{
 /** fullscreen change button */
 const FullscreenButton=(props:{items?:JSX.Element[]})=>{
     const {config} = useConfigContext()
-    const [fullScreen,setFullScreen] = useState(false)
+    const fullScreenStatus = !!document.fullscreenElement    
+    const [fullScreen,setFullScreen] = useState(fullScreenStatus)
     // fullscreen change mode
     const handleChangeFullscreen=()=>{
       setFullScreen(!!document.fullscreenElement)

@@ -1,4 +1,4 @@
-import { Avatar, Space,  theme, Popover } from "antd"
+import { Avatar, theme, Popover } from "antd"
 import { useConfigContext, WardenGlobalThis } from "@/context";
 const {useToken} = theme;  
 
@@ -11,15 +11,15 @@ const {useToken} = theme;
  */
 const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
     const{token} = useToken()
-    const {config,userPopover} = useConfigContext()
+    const {config,avatarPopover,avatarPopoverOpen,setAvatarPopoverOpen} = useConfigContext()
     
-    const popoverPanel = userPopover || props.popover
+    const popoverPanel = avatarPopover || props.popover
 
     const user = WardenGlobalThis.currentUser
 
     const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")
     return(
-        <Popover placement="bottomRight" content={popoverPanel}>
+        <Popover placement="bottomRight" open={avatarPopoverOpen} onOpenChange={setAvatarPopoverOpen} content={popoverPanel}>
             <div style={{display:"flex",alignItems:"center",cursor:"pointer"}}>
                 <Avatar style={{verticalAlign:'middle',background:token.colorBgLayout,lineHeight:"1rem"}} src={user?.headImgUrl} >
                     {user?.username}

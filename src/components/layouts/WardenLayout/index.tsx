@@ -38,6 +38,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   const [config,setConfig] = useState<Warden.IConfig>(layoutConfig)
   // global logo popover
   const [logoPopoverOpen,setLogoPopoverOpen] = useState<boolean>(false)
+  // global avatar popover
+  const [avatarPopoverOpen,setAvatarPopoverOpen] = useState<boolean>(false)
   // global bubble
   const [badge,setBadge] = useState(0)
 
@@ -231,9 +233,11 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           setBadgeCount:setBadge,
           logoPopoverOpen,
           setLogoPopoverOpen,
+          avatarPopoverOpen,
+          setAvatarPopoverOpen,
           footer:props.footer,
           toolbarButtons:props.toolbarButtons,
-          userPopover:props.userPopover,
+          avatarPopover:props.avatarPopover,
           logoPopover:props.logoPopover,
           leftExpandPanel:props.leftExpandPanel,
           screenIcons:props.screenIcons}}>           

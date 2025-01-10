@@ -2,6 +2,11 @@
 import SvgIcon from "./SvgIcon"
 import { ToolbarLinkProps } from "@/typings"
 
+/**
+ * ToolbarLink
+ * @param props 
+ * @returns 
+ */
 const ToolbarLink=(props:ToolbarLinkProps)=>{
     let linkStyle:React.CSSProperties={
         display:"inline-block",

@@ -60,7 +60,7 @@ const TopLogo=()=>{
  * @description The larger logo on the left
  */
 const LeftLogo=(props:LayoutProps.LogoProps)=>{
-    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen,userPopover} = useConfigContext()
+    const {config,getDynamicProps,logoPopover,logoPopoverOpen,setLogoPopoverOpen,avatarPopover,avatarPopoverOpen,setAvatarPopoverOpen} = useConfigContext()
     const {token}  = useToken()    
     const intl = useIntl()
     const user = WardenGlobalThis.currentUser
@@ -111,7 +111,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
     // user panel
     let avatarPanel = (
         <>        
-        <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={userPopover}>
+        <Popover open={avatarPopoverOpen} onOpenChange={setAvatarPopoverOpen} placement="rightTop" content={avatarPopover}>
             <Avatar src={user?.headImgUrl} size={imgSize} style={{cursor:"pointer"}} />
         </Popover>
         {props.collapsed ? <></> : <><label style={txtStyle}>{user?.username}</label><label style={{...txtStyle,fontSize:token.fontSizeSM,fontWeight:"initial",opacity:"0.8"}}>{user?.createDate}</label></>}

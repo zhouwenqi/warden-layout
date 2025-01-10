@@ -2,7 +2,6 @@
 export declare namespace Warden {
     type Theme = 'light' | 'dark'
     type LayoutType = 'headMenu' | 'leftMenu'
-    type IconSuffix = 'Outlined' | 'Filled' | 'TwoTone'
     interface IConfig {
         theme:Theme        
         layoutType:LayoutType
@@ -28,9 +27,8 @@ export declare namespace Warden {
         brandLogo:string
         brandTitle?:string
         logoNavigateRoute?:string
+        avatarNavigateRoute?:string
         avatarReplaceBrand?:boolean
-        menuIconToggle?:boolean
-        menuIconSuffix?:IconSuffix
         page403?:string
         page404?:string
         pageLogin?:string
@@ -126,9 +124,8 @@ export declare namespace LayoutProps {
   type IndexProps = {
     config?:Warden.IConfig,
     footer?:JSX.Element,
-    userPopover?:JSX.Element, 
+    avatarPopover?:JSX.Element, 
     logoPopover?:JSX.Element,
-    toolbarUserPanel?:JSX.Element,
     toolbarButtons?:JSX.Element[],
     screenIcons?:JSX.Element[],
     leftExpandPanel?:JSX.Element

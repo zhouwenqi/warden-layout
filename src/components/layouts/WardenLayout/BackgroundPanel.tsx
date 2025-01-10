@@ -8,8 +8,8 @@ const BackgroundPanel=()=>{
     const {config} = useConfigContext()
     let bgContent:JSX.Element = <></>
     if(config.menuSkin){
-        let menuSkin = WardenGlobalThis.skinsMap[config.menuSkin]      
-        if(menuSkin){
+        const menuSkin = WardenGlobalThis.skinsMap[config.menuSkin]      
+        if(menuSkin && (menuSkin.theme == config.theme || !menuSkin.theme)){
             bgContent = menuSkin.content!
         }
     }

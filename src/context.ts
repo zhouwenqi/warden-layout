@@ -26,8 +26,10 @@ type ConfigDispatcher = {
     setBadgeCount:(count:number)=>void
     logoPopoverOpen:boolean
     setLogoPopoverOpen:(open:boolean)=>void
+    avatarPopoverOpen:boolean
+    setAvatarPopoverOpen:(open:boolean)=>void
     footer?:JSX.Element
-    userPopover?:JSX.Element
+    avatarPopover?:JSX.Element
     logoPopover?:JSX.Element
     toolbarButtons?:JSX.Element[]
     screenIcons?:JSX.Element[]
@@ -55,7 +57,6 @@ export type SchemeConfig = {
     // menu skin data
     skinsMap:Record<string,Warden.IMenuSkin>
 }
-export type ContainerType = "Normal" | "None"
 
 export type OutletContainer = {
     title:string
@@ -69,7 +70,9 @@ const WardenContext= createContext<ConfigDispatcher>({
     badgeCount:0,
     setBadgeCount:(count:number)=>{},
     logoPopoverOpen:false,
-    setLogoPopoverOpen:(open:boolean)=>{}
+    setLogoPopoverOpen:(open:boolean)=>{},
+    avatarPopoverOpen:false,
+    setAvatarPopoverOpen:(open:boolean)=>{}
 })
 
 var WardenGlobalThis:SchemeConfig = {

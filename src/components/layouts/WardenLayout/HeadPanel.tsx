@@ -36,18 +36,22 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   // Set the header background style according to different layouts
   let headMaskElement = <></>  
   let headMaskClassName = "warden-layout-header"
+  const layoutStyle:React.CSSProperties = {
+    height:headerHeight+"px",
+    lineHeight:headerHeight+"px"
+  }
 
   // logo    
   let logoElement = props.leftSilderHidden || config.layoutType=="headMenu" ? (<div><TopLogo /></div>) : <></>   
   
   if(config.layoutType == "headMenu"){      
-    headMaskElement = <Header style={{height:headerHeight+"px", lineHeight:headerHeight+"px"}}></Header>  
+    headMaskElement = <Header style={layoutStyle}></Header>  
     headMaskClassName += " warden-layout-header-fixed-full"
   }else{
     headMaskClassName += " warden-layout-header-fixed"
   }
   
-  let boxStyle:any = {background:token.colorBgContainer,borderBottom}
+  let boxStyle:any = {background:token.colorBgContainer,borderBottom,...layoutStyle}
   
   // menu style        
   let boxBgColor = token.colorBgContainer

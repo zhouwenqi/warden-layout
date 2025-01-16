@@ -150,7 +150,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
         darkItemBg:primaryColors[1],
         darkSubMenuItemBg:primaryColors[7],
         darkItemSelectedBg:primaryColors[6],
-        darkPopupBg:primaryColors[5]
+        darkPopupBg:primaryColors[5],
+        subMenuItemSelectedColor:"white"
       } 
     }else{
       layoutStyle = {...layoutStyle, headerColor:"white"}

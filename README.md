@@ -70,7 +70,7 @@ export default ()=>{
     const config:Warden.IConfig = {
         "theme":"dark",
         "systemTheme":true,
-        "layoutType":"HeadMenu",
+        "layoutType":"headMenu",
         "primaryColor":"#417ffb",
         ...
     }

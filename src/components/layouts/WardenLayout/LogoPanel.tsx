@@ -31,15 +31,15 @@ const TopLogo=()=>{
     }
 
     let logoImage = <></>    
-    if(config.brandLogo.indexOf("warden_") > -1){
-        const iconName = config.brandLogo.split("warden_")[1]
+    if(config.brandLogo.indexOf("warden@") > -1){
+        const iconName = config.brandLogo.split("warden@")[1]
         logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
-    }else if(config.brandLogo.indexOf("svg_") > -1){     
-        const svgSrc = config.brandLogo.split("svg_")[1]
+    }else if(config.brandLogo.indexOf("svg@") > -1){     
+        const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }
     else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} />
+        logoImage = <Avatar src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
     const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
@@ -93,18 +93,19 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
     }
 
     let imgStyle:React.CSSProperties={
-        cursor:"pointer"
+        cursor:"pointer",
+        marginBottom: props.collapsed ? "0px" : (config.compact ? "6px" : "10px")
     }
     const imgSize = props.collapsed ? 30 : 90
     let logoImage = <></>
-    if(config.brandLogo.indexOf("warden_") > -1){
-        const iconName = config.brandLogo.split("warden_")[1]
+    if(config.brandLogo.indexOf("warden@") > -1){
+        const iconName = config.brandLogo.split("warden@")[1]
         logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
-    }else if(config.brandLogo.indexOf("svg_") > -1){     
-        const svgSrc = config.brandLogo.split("svg_")[1]
+    }else if(config.brandLogo.indexOf("svg@") > -1){     
+        const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} />
+        logoImage = <Avatar src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
     const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
 

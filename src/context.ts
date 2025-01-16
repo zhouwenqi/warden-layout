@@ -14,7 +14,7 @@ const defaultConfig:Warden.IConfig = {
     hideBreadcrumb:false,
     hideTitleBar:true,
     hideFooter:false,
-    brandLogo:"warden_logo",
+    brandLogo:"warden@logo",
     brandTitle:"Warden layout"
 }
 

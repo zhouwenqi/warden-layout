@@ -10,8 +10,9 @@ function DrawerBox() {
         "zh-CN":zhCN
     }
     const locale = getLocale()
+    const message = messages[locale] || messages["en-US"]
     return (
-        <IntlProvider locale={locale} messages={messages[locale]}>
+        <IntlProvider locale={locale} messages={message}>
             <SettingDrawer />
         </IntlProvider>
     )

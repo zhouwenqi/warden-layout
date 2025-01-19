@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {ConfigProvider,App,Spin,theme} from 'antd';
-import {useIntl,getLocale, useRouteData,useAppData,useModel,useLocation,Navigate,useAccess} from 'umi';
+import {useIntl, getLocale, useRouteData,useAppData,useModel,useLocation,Navigate,useAccess} from 'umi';
 import { createConfigContext, defaultConfig,WardenGlobalThis} from '@/context';
 import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData,getCurrentPathMenuData } from '@/utils/routeUtil';
 import SettingDrawer from '@/components/setting/index';
@@ -10,6 +10,7 @@ import {LayoutProps,Warden} from '@/typings';
 import MainLayout from './MainLayout';
 import { hexToRgbaString } from '@/utils/stringUtil';
 import { hasAuthority,matchAccess } from '@/utils/securityUtil';
+import dayjs from 'dayjs';
 
 /**
  * Layout main
@@ -223,8 +224,17 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   }
 
+  // antd locale config
+  const locale = getLocale()
+  const antdLocale = require("antd/locale/"+locale.replace("-","_")).default
+  require("dayjs/locale/"+antdLocale.locale)
+  // date-time component locale
+  dayjs.locale(antdLocale.locale)
+  // global context direction
+  const direction =  ['he', 'ar', 'fa', 'ku'].filter(lng => locale.startsWith(lng)).length ? 'rtl' : 'ltr';
+
   return (    
-    <ConfigProvider theme={themeConfig} locale={getLocale()}>
+    <ConfigProvider theme={themeConfig} locale={antdLocale} direction={direction}>
       <App> 
       <ConfigContext.Provider value={{
           config,

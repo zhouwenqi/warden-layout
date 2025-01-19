@@ -102,7 +102,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
 
   // silder style
   const siderHeight = config.layoutType == "headMenu" ? "calc(100% - " + dynamicProps.headerHeight + "px)" : "100%"
-  const siderBlockStart = config.layoutType == "headMenu" ? (config.menuByPrimary ? dynamicProps.headerHeight : dynamicProps.headerHeight + 1) : 0
+  const siderBlockStart = config.layoutType == "headMenu" ? (config.hideBorder ? dynamicProps.headerHeight + 1 : dynamicProps.headerHeight) : 0
   let siderClass="warden-layout-sider"
 
 

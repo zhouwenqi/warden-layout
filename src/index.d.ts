@@ -7,7 +7,7 @@ import ToolbarButton from './components/ToolbarButton'
 import ToolbarLink from "./components/ToolbarLink"
 import ToolbarUserPanel from './components/ToolbarUserPanel'
 import {Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,SvgIconProps,ToolbarButtonProps,ToolbarLinkProps} from './typings'
-import type {ContainerMode} from './typings'
+import type {ContainerMode,ContainerStretch} from './typings'
 import { WardenGlobalThis,useBadgeContext,useContainerContext,useConfigContext } from './context'
 import type {SchemeConfig} from './context'
 import {hexToRgb,hexToRgbaString} from './utils/stringUtil'
@@ -15,4 +15,4 @@ import MainLayout from "./components/layouts/WardenLayout/MainLayout"
 import LeftPanel from "./components/layouts/WardenLayout/LeftPanel"
 import HeadPanel from "./components/layouts/WardenLayout/HeadPanel"
 export default WardenLayout
-export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,SchemeConfig,SvgIconProps,ToolbarButtonProps,ToolbarLinkProps,useBadgeContext,useContainerContext,useConfigContext,hexToRgb,hexToRgbaString}
+export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,ContainerStretch,SchemeConfig,SvgIconProps,ToolbarButtonProps,ToolbarLinkProps,useBadgeContext,useContainerContext,useConfigContext,hexToRgb,hexToRgbaString}

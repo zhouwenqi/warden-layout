@@ -73,23 +73,23 @@ export declare namespace Warden {
         content?:JSX.Element
     }
 }
-/** 主体布局参数类型 */
+/** main layout type */
 export declare type LayoutGroupProps = {
     layout: Warden.LayoutType;
     onSelect: Function;
 }
-/** 主题色选择组件列表参数 */
+/** color box props */
 declare type ColorBoxGroupProps = {
     onSelect: Function;
     color: string;
 }
-/** 颜色选择组件参数 */
+/** colorbox props */
 export declare interface ColorBoxProps extends Warden.IColor {
     selected?: boolean;
     onSelectItem: Function;
 }
 
-/** 国际化语言参数 */
+/** language group props */
 export declare type LanguageGroupProps = {
     onChange: Function;
     value: string;
@@ -157,10 +157,12 @@ export declare namespace LayoutProps {
       hideBreadcrumb?:boolean,
       hideFooter?:boolean,
       transparent?:boolean,
-      menuByBackground?:boolean
+      menuByBackground?:boolean,
+      stretch?:ContainerStretch
   }
 }
 export declare type ContainerMode = "none" | "box" | "panel"
+export declare type ContainerStretch = "none" | "auto" | "fill"
 /** menu - model */
 export declare interface IMenuData {
     key:string;

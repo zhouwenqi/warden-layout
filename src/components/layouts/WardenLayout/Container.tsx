@@ -64,9 +64,14 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
     }
 
     // Internal style of container
-    let contentStyle:React.CSSProperties = {        
+    let bodyStyle:React.CSSProperties = {        
         borderRadius: token.borderRadiusLG
     }  
+
+    // Container style
+    let contentStyle:React.CSSProperties = {
+        flex:"none"
+    }
 
     // Container exterior style
     let layoutStyle:React.CSSProperties = {}
@@ -77,27 +82,39 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
             ...layoutStyle,
             padding: config.compact ? '18px' : '24px'
         }
-        contentStyle = {
-            ...contentStyle,
-            padding:config.compact ? 16 : 20,
-        }
+        
         if(props.mode == "panel"){
-            contentStyle = {
-                ...contentStyle,
+            bodyStyle = {
+                ...bodyStyle,
+                padding:config.compact ? '16px' : '20px',
                 background: menuByBackground && (config.headTransparent || config.leftTransparent) ? hexToRgbaString(token.colorBgContainer,0.6) : token.colorBgContainer
             }
             clsName += (menuByBackground && config.backgroundBlur ? " warden-layout-blur" : "")
         }
     }    
 
+    // container height stretch
+    if(props.stretch == "auto" || props.stretch=="fill"){
+        contentStyle = {
+            flex:"auto"
+        }
+        if(props.stretch == "fill"){
+            bodyStyle = {
+                ...bodyStyle,
+                minHeight:"100%"
+            }
+        }
+    }
+
+    // container background style
     if(config.containerTransparent || props.transparent){
         layoutStyle = {
             ...layoutStyle,background:"transparent"
         }
     }
 
-    contentStyle = {
-        ...contentStyle,
+    bodyStyle = {
+        ...bodyStyle,
         ...props.style
     }
 
@@ -107,7 +124,9 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
             {BreadcrumbPanel}
             {titlePanel}
             <Content style={contentStyle} className={clsName}>
-                {props.children}
+                <div style={bodyStyle}>
+                    {props.children}
+                </div>
             </Content>
             {FooterPanel}
         </Layout>

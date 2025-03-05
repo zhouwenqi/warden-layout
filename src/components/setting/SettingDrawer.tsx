@@ -335,9 +335,11 @@ const SkinGroupBox=()=>{
     items.push(<SkinBox onSelect={onSelectHandler} key={"skin"+i} skin={item} selected={item.name == config.menuSkin} />)
   })
   return(
-    <Space wrap>
-      {items}
-    </Space>
+    <div>
+      <Space wrap>
+        {items}
+      </Space>
+    </div>
   )
 }
 

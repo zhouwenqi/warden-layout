@@ -16,7 +16,7 @@ function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
         const route = item.isWrapper ? item.routes[0] : item
         const path = route.path == '' ? route.originPath : route.path        
         const mkey = getPathToKey(path)
-        if(!route.redirect && route.name){
+        if(!route.redirect && route.name && route.hideInMenu !== true){
             const menuItemData:IMenuData = {
                 name:intl ? intl.formatMessage({id:mkey}) || route.name : route.name,
                 locale:false,

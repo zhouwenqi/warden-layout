@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-import { useLocation,useRouteData,Outlet} from 'umi';
+import { useLocation,useRouteData,useSelectedRoutes,Outlet} from 'umi';
 import './MainLayout.less';
 import LeftPanel from './LeftPanel';
 import HeadPanel from './HeadPanel';
@@ -19,6 +19,7 @@ const MainLayout=()=>{
     const location = useLocation()
     
     const {config} = useConfigContext()
+    const currentRoute = useSelectedRoutes()
     const configKey= getAppRoutePathKey(useRouteData().route)
     const menuKeys = matchPathKeys(location.pathname,configKey) 
 
@@ -29,7 +30,7 @@ const MainLayout=()=>{
     // Retrieve menu and route selection data
     let selectLeftKeys:string[] = []
     let selectTopKeys:string[] = []
-    const antdMenuData = getAntdMenus(WardenGlobalThis.menuData[configKey])
+    const antdMenuData = getAntdMenus(WardenGlobalThis.menuData[configKey],menuKeys)
     let headMenus:IAntMenuData[] = []
     let leftMenus:IAntMenuData[] = []
 
@@ -72,6 +73,11 @@ const MainLayout=()=>{
     // sidebar menu
     const SiderPanel = leftPanelHidden ? <></> : <LeftPanel selectedKeys={selectLeftKeys} menuData={leftMenus} openerKeys={operLeftKeys} />
 
+    // The menu and layout are not used in the current route
+    const lastRoute = currentRoute.findLast((r)=>r.route)?.route as any
+    if(lastRoute.menuRender == false){
+        return <Outlet />
+    }
     return(
         <div className='warden-layout-box'>
             <BackgroundPanel />

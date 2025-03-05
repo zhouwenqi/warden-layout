@@ -24,13 +24,15 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   const {clientRoutes} = useAppData()
   const ConfigContext = createConfigContext()
   const intl = useIntl()
-  const [load,setLoad]=useState<boolean>(true)
   const [authorize,setAuthorize]=useState<boolean>(true)
   const {initialState} = useModel('@@initialState')
   const umiAccess = useAccess()
 
   // Get layout configuration
-  let layoutConfig = getStorageConfig(configKey) || props.config 
+  let layoutConfig = props.config
+  if(process.env.ENABLE_CONFIG_STORAGE){
+    layoutConfig =  getStorageConfig(configKey) || props.config
+  }
   if(!layoutConfig){
     layoutConfig = WardenGlobalThis.configMap[configKey] || defaultConfig
     setStorageConfig(layoutConfig)
@@ -49,6 +51,14 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     const menuRoutes = getLayoutRootRoutes(clientRoutes,configKey!)
     WardenGlobalThis.menuData[configKey] = getMenuData(menuRoutes, config.localeEnabled? intl : undefined)
   }   
+
+  // init userinfo and skins   
+  WardenGlobalThis.currentUser =  initialState?.currentUser
+  if(initialState?.skins && initialState.skins.length > 0){
+    initialState.skins.forEach((item,index)=>{
+      WardenGlobalThis.skinsMap[item.name] = item
+    })
+  }
 
   // Monitoring system theme change
   const scheme = window.matchMedia("(prefers-color-scheme: dark)")
@@ -71,18 +81,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
 
   const currentMenuData = getCurrentPathMenuData(useLocation().pathname)
   useEffect(()=>{
-    // init userinfo and skins
-    (async()=>{  
-      setLoad(true)    
-      WardenGlobalThis.currentUser =  await initialState?.getUserInfo!()
-      if(initialState?.skins && initialState.skins.length > 0){
-        initialState.skins.forEach((item,index)=>{
-          WardenGlobalThis.skinsMap[item.name] = item
-        })
-      }
-      setLoad(false)
-    })()
-    
+        
     const schemeTheme = scheme.matches ? 'dark' : 'light'
     if(config.systemTheme && schemeTheme != config.theme){
       setConfig({
@@ -145,26 +144,25 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
 
   if(config.menuByPrimary) {
-    if(config.layoutType=="leftMenu"){
-      menuStyle = {
-        ...menuStyle,
-        darkItemBg:primaryColors[1],
-        darkSubMenuItemBg:primaryColors[7],
-        darkItemSelectedBg:primaryColors[6],
-        darkPopupBg:primaryColors[5],
-        subMenuItemSelectedColor:"white"
-      } 
-    }else{
-      layoutStyle = {...layoutStyle, headerColor:"white"}
-      menuStyle = {
-        ...menuStyle,
-        darkItemBg:primaryColors[1],
-        darkSubMenuItemBg:primaryColors[7],
-        darkItemSelectedBg:primaryColors[6],
-        darkPopupBg:primaryColors[5]
-      } 
+    if(config.layoutType=="headMenu"){
+      layoutStyle = {...layoutStyle, headerColor:"white"} 
+    }
+    menuStyle = {
+      ...menuStyle,
+      darkItemBg:primaryColors[1],
+      darkSubMenuItemBg:primaryColors[7],
+      darkItemSelectedBg:primaryColors[6],        
+      darkPopupBg:primaryColors[5]
+    }
+    if(!config.menuSplit){
+        menuStyle = {
+          ...menuStyle, 
+          subMenuItemSelectedColor:"white"
+      }
     }
   }
+
+  
 
   if(config.subItemMenuTransparent){
     menuStyle = {
@@ -191,7 +189,9 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
       value.theme = scheme.matches ? 'dark' : 'light'
     }
     setConfig(value)
-    setStorageConfig(value,configKey)
+    if(process.env.ENABLE_CONFIG_STORAGE){
+      setStorageConfig(value,configKey)
+    }
   }
 
   const getDynamicProps=():LayoutProps.DynamicProps => {
@@ -201,16 +201,10 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   }
 
-  const settingDrawer = process.env.NODE_ENV == "development" || process.env.ENABLE_SETTING ? <SettingDrawer /> : <></>
-
-  // loading status...
-  if(load){
-      const spinPanel = initialState?.spin || <Spin delay={500} fullscreen />
-      return(
-        spinPanel
-      )
-  }
-  
+  // enabled settingdrawer component
+  const settingDrawer = process.env.NODE_ENV == "development" || process.env.ENABLE_SETTING ? <SettingDrawer /> : <></> 
+   
+  // refresh skins locale...
   refreshSkinsLocale()
 
   if(!authorize){

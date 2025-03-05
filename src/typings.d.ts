@@ -29,6 +29,7 @@ export declare namespace Warden {
         logoNavigateRoute?:string
         avatarNavigateRoute?:string
         avatarReplaceBrand?:boolean
+        menuIconVariant?:boolean | string[]
         page403?:string
         page404?:string
         pageLogin?:string

@@ -6,7 +6,7 @@ import { hasAuthority,hasAccess } from './securityUtil';
 import { Badge,Tag } from 'antd';
 import {Icon} from 'umi';
 import {IMenuData,IAntMenuData,IconType} from '../typings';
-import { WardenGlobalThis } from '../context';
+import { WardenGlobalThis,useConfigContext } from '../context';
 import SvgIcon from '@/components/SvgIcon';
 
 /**
@@ -14,7 +14,7 @@ import SvgIcon from '@/components/SvgIcon';
  * @param menuData menu data
  * @returns ant menu
  */
-const getAntdMenus=(menuData:IMenuData[])=>{ 
+const getAntdMenus=(menuData:IMenuData[],menuKeys:string[])=>{ 
   let antdMenuItemDatas:IAntMenuData[]=[]
   if(menuData == undefined || menuData.length <= 0){
     return undefined
@@ -26,8 +26,8 @@ const getAntdMenus=(menuData:IMenuData[])=>{
         authory = hasAuthority(item.authorities)
       }
       if(access && authory){ 
-        const menuItemData = getAntdMenuItem(item)
-        menuItemData.children = getAntdMenus(item.items!)
+        const menuItemData = getAntdMenuItem(item,menuKeys)
+        menuItemData.children = getAntdMenus(item.items!,menuKeys)
         antdMenuItemDatas.push(menuItemData)
       }
   })
@@ -39,7 +39,7 @@ const getAntdMenus=(menuData:IMenuData[])=>{
 * @param menuData Single menu data
 * @returns ant menu
 */
-const getAntdMenuItem=(menuData:IMenuData) => {   
+const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {   
   let menuItem:any = menuData.name;
   if(menuData.badge){
     menuItem = (<label>{menuData.name} <Badge count={menuData.badge} /></label>)
@@ -50,7 +50,7 @@ const getAntdMenuItem=(menuData:IMenuData) => {
       label:menuData.name,
       key:menuData.path,
       children:undefined,
-      icon:getMenuIcon(menuData)
+      icon:getMenuIcon(menuData,menuKeys)
   }
   return antdMenu
 }
@@ -127,7 +127,8 @@ const getBreadcrumbData=(keys:string[])=>{
  * @param item 单个菜单数据
  * @returns 
  */
-const getMenuIcon=(item:IMenuData)=> {
+const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
+  const {config} = useConfigContext()
   let icon: React.ReactNode = undefined;
   if(!item || !item.iconName){
     return icon
@@ -143,6 +144,29 @@ const getMenuIcon=(item:IMenuData)=> {
     iconName = iconArr[1];
   } else if (iconArr.length == 1) {
     iconName = iconArr[0];
+  }
+
+  if(config.menuIconVariant){
+    const variantType = typeof config.menuIconVariant
+    let iconFilled = "Filled"
+    let iconOutlined = "Outlined"
+    if(variantType == "object"){
+      const menuIconVariant = config.menuIconVariant as string[]
+      if(menuIconVariant.length>0){
+        iconOutlined = menuIconVariant[0]
+      }
+      if(menuIconVariant.length>1){
+        iconFilled = menuIconVariant[1]
+      }
+    }   
+    if(menuKeys.includes(item.path)){
+      iconName += iconFilled
+    }else{
+      iconName += iconOutlined
+    }
+    if(iconPrefix=="svg"){
+      iconName+=".svg"
+    }      
   }
   
   if (iconName) {

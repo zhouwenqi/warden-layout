@@ -25,7 +25,9 @@ function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
                 title:route.title,
                 iconName: route.icon,
                 access:route.access,
-                authorities:route.authorities
+                authorities:route.authorities,
+                badge:route.badge,
+                tag:route.tag,
             } 
             WardenGlobalThis.menuMap[mkey] = menuItemData
             menuItemData.items = getMenuData(route.routes,intl)

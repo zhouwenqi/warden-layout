@@ -30,12 +30,14 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
 
   // Get layout configuration
   let layoutConfig = props.config
-  if(process.env.ENABLE_CONFIG_STORAGE){
+  if(process.env.UMI_APP_ENABLE_CONFIG_STORAGE){
     layoutConfig =  getStorageConfig(configKey) || props.config
   }
   if(!layoutConfig){
     layoutConfig = WardenGlobalThis.configMap[configKey] || defaultConfig
-    setStorageConfig(layoutConfig)
+    if(process.env.UMI_APP_ENABLE_CONFIG_STORAGE){
+      setStorageConfig(layoutConfig)
+    }
   }
   // global config
   const [config,setConfig] = useState<Warden.IConfig>(layoutConfig)
@@ -44,7 +46,15 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   // global avatar popover
   const [avatarPopoverOpen,setAvatarPopoverOpen] = useState<boolean>(false)
   // global bubble
-  const [badge,setBadge] = useState(0)
+  const [menuBadge,setMenuBadge] = useState<Record<string,number>>({})
+  const setMenuBadgeCount=(key:string,value:number)=>{
+    setMenuBadge((badge)=>({...badge,[key]:value}))
+  }  
+  // global menu tag
+  const [menuTag,setMenuTag] = useState<Record<string,any>>({})
+  const setMenuTagValue=(key:string,value:any)=>{
+    setMenuTag((tag)=>({...tag,[key]:value}))
+  }
 
   // Retrieve menu data
   if(!WardenGlobalThis.menuData[configKey] || WardenGlobalThis.menuData[configKey].length <= 0){
@@ -88,6 +98,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
         ...config, theme:schemeTheme
       })      
     } 
+    WardenGlobalThis.userMap["primaryColor"] = config.primaryColor
 
     if(currentMenuData && (!hasAuthority(currentMenuData.authorities!) || (currentMenuData.access && !matchAccess(umiAccess,currentMenuData.access)))){
       setAuthorize(false)
@@ -189,7 +200,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
       value.theme = scheme.matches ? 'dark' : 'light'
     }
     setConfig(value)
-    if(process.env.ENABLE_CONFIG_STORAGE){
+    WardenGlobalThis.userMap["primaryColor"] = config.primaryColor
+    if(process.env.UMI_APP_ENABLE_CONFIG_STORAGE){
       setStorageConfig(value,configKey)
     }
   }
@@ -234,8 +246,12 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           config,
           setConfig:onConfigChange,
           getDynamicProps,
-          badgeCount:badge,
-          setBadgeCount:setBadge,
+          menuBadge,   
+          setMenuBadge,       
+          setMenuBadgeCount,
+          menuTag,
+          setMenuTag,
+          setMenuTagValue,
           logoPopoverOpen,
           setLogoPopoverOpen,
           avatarPopoverOpen,

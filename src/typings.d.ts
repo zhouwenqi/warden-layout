@@ -176,8 +176,8 @@ export declare interface IMenuData {
     title?:string;
     access?:string;
     authorities?:string[];
-    badge?:any;
-    tag?:string;
+    badge?:IMenuBadge;
+    tag?:IMenuTag;
 }
 /** ant-menu model */
 export declare interface IAntMenuData {    
@@ -188,9 +188,24 @@ export declare interface IAntMenuData {
     icon?: React.ReactNode;
     children?:IAntMenuData[];
     title?:string;
+    extra?:React.ReactNode;
 }
 /** icon type */
 export declare type IconType = 'ant' | 'warden' | 'svg' | 'umi';
+
+declare interface IMenuBadge {
+    position?:"left" | "right";
+    status?:"success" | "processing" | "default" | "error" | "warning";
+    count?:number;
+    text?:string;
+    dot:boolean;
+    color:color;
+}
+declare interface IMenuTag{
+    color?:string;
+    bordered?:boolean;
+    text?:string;
+}
 
 export declare type ToolbarButtonProps = {
     icon?:string

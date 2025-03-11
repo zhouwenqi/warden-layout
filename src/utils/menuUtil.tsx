@@ -3,10 +3,10 @@ import * as AntIcon from '@ant-design/icons';
 import { getPathToKey } from './routeUtil';
 import AppIcon from '@/components/AppIcon';
 import { hasAuthority,hasAccess } from './securityUtil';
-import { Badge,Tag } from 'antd';
+import { Badge,Tag,Space } from 'antd';
 import {Icon} from 'umi';
 import {IMenuData,IAntMenuData,IconType} from '../typings';
-import { WardenGlobalThis,useConfigContext } from '../context';
+import { WardenGlobalThis,useConfigContext, useSingleMenuBadge, useSingleMenuTag } from '../context';
 import SvgIcon from '@/components/SvgIcon';
 
 /**
@@ -39,17 +39,41 @@ const getAntdMenus=(menuData:IMenuData[],menuKeys:string[])=>{
 * @param menuData Single menu data
 * @returns ant menu
 */
-const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {   
+const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {     
+  const {badgeCount} = useSingleMenuBadge(menuData.path)
+  const {tagValue} = useSingleMenuTag(menuData.path)  
+
   let menuItem:any = menuData.name;
+  let extraItems:React.ReactNode[] = []
   if(menuData.badge){
-    menuItem = (<label>{menuData.name} <Badge count={menuData.badge} /></label>)
-  }else if(menuData.tag){
-    menuItem = (<label>{menuData.name} <Tag>{menuData.tag}</Tag></label>)
+    if(typeof menuData.badge === "string"){       
+      extraItems.push(<Badge key="badge" count={badgeCount || menuData.badge} />)
+    }else{
+      const {position="right", count, dot=false, status, text} = menuData.badge    
+      if(position == "left"){
+        menuItem = <Badge dot={dot} text={text} status={status} count={badgeCount || count!}>{menuData.name}</Badge>
+      }else{
+        extraItems.push(<Badge key="badge" dot={dot} text={text} status={status} count={badgeCount || count!} />)
+      }
+    }
   }
+  if(menuData.tag){
+    const tagObject = tagValue || menuData.tag
+    if(typeof tagObject === "string"){  
+      extraItems.push(<Tag key="tag">{tagObject}</Tag>)
+    }else{
+      const {color,text,bordered} = tagObject
+      extraItems.push(<Tag key="tag" color={color} bordered={bordered} >{text || menuData.tag}</Tag>)
+    }
+    
+  }
+  
+  const extraPanel = extraItems.length > 0 ? <Space style={{margin:"0px 2px"}}>{extraItems}</Space> : undefined
   const antdMenu:IAntMenuData = {
-      label:menuData.name,
+      label:menuItem,
       key:menuData.path,
       children:undefined,
+      extra:extraPanel,
       icon:getMenuIcon(menuData,menuKeys)
   }
   return antdMenu

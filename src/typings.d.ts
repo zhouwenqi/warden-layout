@@ -129,7 +129,8 @@ export declare namespace LayoutProps {
     logoPopover?:JSX.Element,
     toolbarButtons?:JSX.Element[],
     screenIcons?:JSX.Element[],
-    leftExpandPanel?:JSX.Element
+    leftExpandPanel?:JSX.Element,
+    frameElements?:JSX.Element[]
   }
   type MainLayoutProps = {
     children: React.ReactElement
@@ -207,16 +208,13 @@ declare interface IMenuTag{
     text?:string;
 }
 
-export declare type ToolbarButtonProps = {
+export declare interface ToolbarButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
     icon?:string
     children?:JSX.Element
-    onClick?:Function
-    toolTipop?:string
 }
-declare type ToolbarLinkProps = {
-    icon?:string
-    children:JSX.Element | string
-    href?:string
+export declare interface ToolbarLinkProps extends React.HTMLAttributes<HTMLAnchorElement> {
+    icon?:string;
+    children:JSX.Element | string;
+    href?:string;
     target?:HTMLAttributeAnchorTarget | undefined;
-    toolTipop?:string
 }

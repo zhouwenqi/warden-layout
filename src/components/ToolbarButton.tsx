@@ -1,4 +1,4 @@
-import { Button } from "antd"
+import { Button,Tooltip } from "antd"
 import { useConfigContext } from "@/context"
 import { ToolbarButtonProps } from "@/typings"
 import SvgIcon from "./SvgIcon"
@@ -25,7 +25,7 @@ const ToolbarButton = (props:ToolbarButtonProps) => {
     }
 
     return(
-        <Button type="text" style={btnStyle} onClick={(e)=>{if(props.onClick){props.onClick!(e)}}}>{props.children || element}</Button>
+        <Button type="text" style={btnStyle} onClick={props.onClick}>{props.children || element}</Button>
     )
 }
 

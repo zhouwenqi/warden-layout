@@ -51,7 +51,7 @@ const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {
     }else{
       const {position="right", count, dot=false, status, text} = menuData.badge    
       if(position == "left"){
-        menuItem = <Badge dot={dot} text={text} status={status} count={badgeCount || count!}>{menuData.name}</Badge>
+        menuItem = <Badge styles={{root:{color:"inherit"}}} dot={dot} text={text} status={status} count={badgeCount || count!}>{menuData.name}</Badge>
       }else{
         extraItems.push(<Badge key="badge" dot={dot} text={text} status={status} count={badgeCount || count!} />)
       }

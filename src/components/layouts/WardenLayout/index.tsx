@@ -165,15 +165,13 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
       darkItemSelectedBg:primaryColors[6],        
       darkPopupBg:primaryColors[5]
     }
-    if(!config.menuSplit){
+    if(!config.menuSplit || config.layoutType=="leftMenu"){
         menuStyle = {
           ...menuStyle, 
           subMenuItemSelectedColor:"white"
       }
     }
   }
-
-  
 
   if(config.subItemMenuTransparent){
     menuStyle = {
@@ -229,6 +227,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
       )
     }
   }
+  // global form struct
+  let framesetPanel = props.frameElements ?? <></> 
 
   // antd locale config
   const locale = getLocale()
@@ -264,6 +264,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           screenIcons:props.screenIcons}}>           
             <MainLayout />
             {settingDrawer}
+            {framesetPanel}
         </ConfigContext.Provider>
       </App>
     </ConfigProvider>

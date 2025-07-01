@@ -15,10 +15,11 @@ function getMenuData(routes:any[],intl?:IntlShape):IMenuData[]{
     routes.forEach((item,index)=>{
         const route = item.isWrapper ? item.routes[0] : item
         const path = route.path == '' ? route.originPath : route.path        
+        const msgId = path.replace(/-|:[^/]*/g, '');    
         const mkey = getPathToKey(path)
         if(!route.redirect && route.name && route.hideInMenu !== true){
             const menuItemData:IMenuData = {
-                name:intl ? intl.formatMessage({id:mkey}) || route.name : route.name,
+                name:intl ? intl.formatMessage({id:getPathToKey(msgId)}) || route.name : route.name,
                 locale:false,
                 path:path,                
                 key:mkey,
@@ -70,9 +71,10 @@ function getPathToKey(path:string){
  * Convert matching path to key
  * @param path path
  * @param rootPath root path
+ * @param params route variables
  * @returns key array
  */
-function matchPathAllKeys(path:string,rootPath:string){
+function matchPathAllKeys(path:string,rootPath:string,params:any){
     let keys:string[] = []
     if(path==rootPath){
         keys.push(rootPath)
@@ -91,7 +93,7 @@ function matchPathAllKeys(path:string,rootPath:string){
     }else{
         keys.push(path)
     }
-    return keys;
+    return keys.map(key=>reverseFillRoute(key,params));
 }
 
 /**
@@ -106,7 +108,10 @@ function matchPathKeys(path:string,rootPath:string){
         keys.push(rootPath)
         return keys
     }
-    const paths = path.substring(rootPath.length).split("/").filter((s)=>{return s && s.trim()})
+    // const paths = path.substring(rootPath.length).split("/").filter((s)=>{return s && s.trim()})
+    const regexPattern = rootPath.replace(/:[^/]+/, '([^/]+)')
+    const regex = new RegExp(`^${regexPattern}`)
+    const paths = path.replace(regex, '').split('/').filter(Boolean)
 
     let strs = rootPath;
     if(rootPath != "/"){
@@ -138,4 +143,39 @@ function getCurrentPathMenuData(path:string):IMenuData{
     const pathKey = getPathToKey(path)
     return WardenGlobalThis.menuMap[pathKey]
 }
-export {getMenuData,getPathToKey,matchPathKeys,matchPathAllKeys,getLayoutRootRoutes,getAppRoutePathKey,getCurrentPathMenuData}
+
+/**
+ * Fill variables to dynamic routing
+ * @param key route
+ * @param params variables
+ * @returns 
+ */
+function getFillRoute(key:string,params:any){
+    let route = key
+    if(params){
+        route = route.replace(/:(\w+)/g, (match: string, key: string) => {
+        return params[key as keyof typeof params] || match
+        })
+    }
+    return route
+}
+/**
+ * Reverse fill variables to routeing
+ * @param key route
+ * @param params variables
+ * @returns 
+ */
+function reverseFillRoute(key: string, params: Record<string, string | number>): string {
+  if (!params) return key;
+  let result = key;
+  for (const [k, v] of Object.entries(params)) {
+    const paramValue = String(v);
+    result = result.replace(
+      new RegExp(`(/tenant-)${paramValue}(/|$)`, 'g'),
+      `$1:${k}$2`
+    );
+  }
+
+  return result;
+}
+export {getMenuData,getPathToKey,matchPathKeys,matchPathAllKeys,getLayoutRootRoutes,getAppRoutePathKey,getCurrentPathMenuData,getFillRoute,reverseFillRoute}

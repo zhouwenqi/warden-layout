@@ -6,11 +6,12 @@ import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData,getCurrentPathMenu
 import SettingDrawer from '@/components/setting/index';
 import { getStorageConfig, setStorageConfig } from '@/utils/configUtil';
 import { generate } from '@ant-design/colors';
-import {LayoutProps,Warden} from '@/typings';
+import {LayoutProps,Warden,IExtraTagProps,IExtraBadgeProps,IMenuMessageEvent,IMenuData} from '@/typings';
 import MainLayout from './MainLayout';
 import { hexToRgbaString } from '@/utils/stringUtil';
 import { hasAuthority,matchAccess } from '@/utils/securityUtil';
 import dayjs from 'dayjs';
+import { modifyMenuExtras } from '@/utils/menuUtil';
 
 /**
  * Layout main
@@ -62,6 +63,8 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     WardenGlobalThis.menuData[configKey] = getMenuData(menuRoutes, config.localeEnabled? intl : undefined)
   }   
 
+  const [wardenMenuData,setWardenMenuData]=useState<IMenuData[]>(WardenGlobalThis.menuData[configKey])
+
   // init userinfo and skins   
   WardenGlobalThis.currentUser =  initialState?.currentUser
   if(initialState?.skins && initialState.skins.length > 0){
@@ -103,7 +106,23 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     if(currentMenuData && (!hasAuthority(currentMenuData.authorities!) || (currentMenuData.access && !matchAccess(umiAccess,currentMenuData.access)))){
       setAuthorize(false)
     } 
+
+    // menu message listener
+    window.addEventListener("menu-message",onMenuMessageEventHandler)
+    return()=>{
+      window.removeEventListener("menu-message",onMenuMessageEventHandler)
+    }
   },[])
+
+  // menu message event handler
+  const onMenuMessageEventHandler = (e:any) => {  
+    const event = e as CustomEvent<IMenuMessageEvent>; 
+      if(event.detail.id=="tag"){
+        onSetExtraTagChange(event.detail.data)
+      }else if(event.detail.id=="badge"){
+        onSetExtraBadgeChange(event.detail.data);
+      }
+  } 
 
   // refresh skins locale...
   const refreshSkinsLocale=()=>{
@@ -204,6 +223,22 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }
   }
 
+  // Set menu extension (tag)
+  const onSetExtraTagChange=(props:IExtraTagProps)=>{
+    const {filterKey,filterValue,data} = props
+    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> item.tag = data )
+    setWardenMenuData(menuData)
+
+  }
+  // Set menu extension (badge)
+  const onSetExtraBadgeChange=(props:IExtraBadgeProps)=>{
+    const {filterKey,filterValue,data} = props
+    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> item.badge = data )
+    setWardenMenuData(menuData)
+  }
+  
+
+  // Obtain dynamic parameters of layout components
   const getDynamicProps=():LayoutProps.DynamicProps => {
     return {
       headerHeight:headerHeight,
@@ -212,7 +247,7 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
 
   // enabled settingdrawer component
-  const settingDrawer = process.env.NODE_ENV == "development" || process.env.ENABLE_SETTING ? <SettingDrawer /> : <></> 
+  const settingDrawer = process.env.NODE_ENV == "development" || process.env.ENABLE_SETTING == "true" ? <SettingDrawer /> : <></> 
    
   // refresh skins locale...
   refreshSkinsLocale()
@@ -246,17 +281,15 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
           config,
           setConfig:onConfigChange,
           getDynamicProps,
-          menuBadge,   
-          setMenuBadge,       
-          setMenuBadgeCount,
-          menuTag,
-          setMenuTag,
-          setMenuTagValue,
           logoPopoverOpen,
           setLogoPopoverOpen,
           avatarPopoverOpen,
           setAvatarPopoverOpen,
           footer:props.footer,
+          wardenMenuData,
+          setWardenMenuData,
+          setMenuExtraTag:onSetExtraTagChange,
+          setMenuExtraBadge:onSetExtraBadgeChange,
           toolbarButtons:props.toolbarButtons,
           avatarPopover:props.avatarPopover,
           logoPopover:props.logoPopover,

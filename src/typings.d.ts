@@ -194,18 +194,32 @@ export declare interface IAntMenuData {
 /** icon type */
 export declare type IconType = 'ant' | 'warden' | 'svg' | 'umi';
 
-declare interface IMenuBadge {
+export declare interface IMenuBadge {
     position?:"left" | "right";
     status?:"success" | "processing" | "default" | "error" | "warning";
     count?:number;
     text?:string;
-    dot:boolean;
-    color:color;
+    dot?:boolean;
+    color?:string;
 }
-declare interface IMenuTag{
+export declare interface IMenuTag{
     color?:string;
     bordered?:boolean;
     text?:string;
+}
+export declare interface IExtraTagProps {
+    filterKey:"key"|"path"|"name";
+    filterValue:string;   
+    data:IMenuTag | undefined;
+}
+export declare interface IExtraBadgeProps {
+    filterKey:"key"|"path"|"name";
+    filterValue:string;   
+    data:IMenuBadge | undefined;
+}
+declare interface IMenuMessageEvent {
+    id: "tag" | "badge";
+    data:any | undefined;
 }
 
 export declare interface ToolbarButtonProps extends React.HTMLAttributes<HTMLButtonElement> {

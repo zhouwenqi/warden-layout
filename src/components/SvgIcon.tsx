@@ -8,7 +8,7 @@ import { SvgIconProps } from "@/typings"
  */
 const SvgIcon=(props:SvgIconProps)=>{
     const {src,width,height,fill,color,style} = props
-    const loadHandler =(svg: SVGSVGElement)=>{
+    const loadHandler = async(svg: SVGSVGElement)=>{
         if(width)
             svg.setAttribute("width",width as string)
         if(height)

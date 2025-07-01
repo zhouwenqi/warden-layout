@@ -6,8 +6,9 @@ import { hasAuthority,hasAccess } from './securityUtil';
 import { Badge,Tag,Space } from 'antd';
 import {Icon} from 'umi';
 import {IMenuData,IAntMenuData,IconType} from '../typings';
-import { WardenGlobalThis,useConfigContext, useSingleMenuBadge, useSingleMenuTag } from '../context';
+import { WardenGlobalThis } from '../context';
 import SvgIcon from '@/components/SvgIcon';
+import { IntlShape } from "react-intl";
 
 /**
  * Convert the entire Antd menu data
@@ -40,35 +41,34 @@ const getAntdMenus=(menuData:IMenuData[],menuKeys:string[])=>{
 * @returns ant menu
 */
 const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {     
-  const {badgeCount} = useSingleMenuBadge(menuData.path)
-  const {tagValue} = useSingleMenuTag(menuData.path)  
-
-  let menuItem:any = menuData.name;
-  let extraItems:React.ReactNode[] = []
-  if(menuData.badge){
-    if(typeof menuData.badge === "string"){       
-      extraItems.push(<Badge key="badge" count={badgeCount || menuData.badge} />)
-    }else{
-      const {position="right", count, dot=false, status, text} = menuData.badge    
-      if(position == "left"){
-        menuItem = <Badge styles={{root:{color:"inherit"}}} dot={dot} text={text} status={status} count={badgeCount || count!}>{menuData.name}</Badge>
+    let menuItem:any = menuData.name;
+    let extraItems:React.ReactNode[] = []
+    if(menuData.badge){
+      if(typeof menuData.badge === "string"){       
+        extraItems.push(<Badge key="badge" count={ menuData.badge} />)        
       }else{
-        extraItems.push(<Badge key="badge" dot={dot} text={text} status={status} count={badgeCount || count!} />)
+        const {position="right", count, dot=false, status, text} = menuData.badge    
+        if(position == "left"){
+          menuItem = <Badge styles={{root:{color:"inherit"}}} dot={dot} text={text} status={status} count={count!}>{menuData.name}</Badge>
+        }else{
+          extraItems.push(<Badge key="badge" dot={dot} text={text} status={status} count={ count!} />)
+        }
+       
       }
+      
     }
-  }
-  if(menuData.tag){
-    const tagObject = tagValue || menuData.tag
-    if(typeof tagObject === "string"){  
-      extraItems.push(<Tag key="tag">{tagObject}</Tag>)
-    }else{
-      const {color,text,bordered} = tagObject
-      extraItems.push(<Tag key="tag" color={color} bordered={bordered} >{text || menuData.tag}</Tag>)
+    if(menuData.tag){
+      const tagObject = menuData.tag
+      if(typeof tagObject === "string"){  
+        extraItems.push(<Tag key="tag">{tagObject}</Tag>)
+      }else{
+        const {color,text,bordered} = tagObject
+        extraItems.push(<Tag key="tag" color={color} bordered={bordered} >{text}</Tag>)
+      }
+      
     }
-    
-  }
   
-  const extraPanel = extraItems.length > 0 ? <Space style={{margin:"0px 2px"}}>{extraItems}</Space> : undefined
+  const extraPanel = extraItems.length > 0 ? <Space style={{margin:"0px 2px",height:"inherit",display:"flex"}}>{extraItems}</Space> : undefined
   const antdMenu:IAntMenuData = {
       label:menuItem,
       key:menuData.path,
@@ -152,7 +152,8 @@ const getBreadcrumbData=(keys:string[])=>{
  * @returns 
  */
 const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
-  const {config} = useConfigContext()
+  const useMenuIconVariant = WardenGlobalThis.userMap["config.menuIconVariant"]
+  
   let icon: React.ReactNode = undefined;
   if(!item || !item.iconName){
     return icon
@@ -170,12 +171,13 @@ const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
     iconName = iconArr[0];
   }
 
-  if(config.menuIconVariant){
-    const variantType = typeof config.menuIconVariant
+
+  if(useMenuIconVariant){
+    const variantType = typeof useMenuIconVariant
     let iconFilled = "Filled"
     let iconOutlined = "Outlined"
     if(variantType == "object"){
-      const menuIconVariant = config.menuIconVariant as string[]
+      const menuIconVariant = useMenuIconVariant as string[]
       if(menuIconVariant.length>0){
         iconOutlined = menuIconVariant[0]
       }
@@ -218,4 +220,45 @@ const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
   return icon
 }
 
-export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData}
+// Traverse and modify menu extensions
+function modifyMenuExtras(
+  tree: IMenuData[],
+  key: "key"|"path"|"name",
+  value: string,
+  modifier: (node: IMenuData) => void
+): IMenuData[] {
+  const newTree = [...tree];
+
+  for (const node of newTree) {
+    if (node[key] === value) {
+      modifier(node);
+      console.log(node);
+      return newTree;
+    }
+
+    if (node.items && node.items.length > 0) {
+      const modifiedItems = modifyMenuExtras(node.items, key, value, modifier);
+      if (modifiedItems !== node.items) {
+        node.items = modifiedItems;
+        return newTree;
+      }
+    }
+  }
+  return newTree;
+}
+
+/**
+ * menu locale
+ * @param menuData  menu data
+ * @param intl intlShape
+ * @returns 
+ */
+function getMenuLocale(menuData:IMenuData[],intl?:IntlShape):IMenuData[]{
+    
+    return menuData.map(menu=>({
+      ...menu,
+      name:intl ? intl.formatMessage({id:getPathToKey(menu.path.replace(/-|:[^/]*/g, ''))}) || menu.name : menu.name,
+      items:menu.items ? getMenuLocale(menu.items,intl) : undefined
+    }))
+}
+export {getAntdMenus,getAntdMenuItem,getSplitAntdMenus,getMapMenus,getBreadcrumbData,modifyMenuExtras,getMenuLocale}

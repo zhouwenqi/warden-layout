@@ -39,13 +39,13 @@ const TopLogo=()=>{
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }
     else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} style={imgStyle} />
+        logoImage = <Avatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
-    const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
+    const brandTitle = config.localeEnabled && config.brandTitle!.startsWith("app.") ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
         <div style={{display:"flex",color:topDark ? "white" : token.colorPrimary,alignItems:"center", alignContent:"center", width: getDynamicProps().leftWidth + "px"}}>            
             <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
-            <a style={{color:"currentcolor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
+            <a style={{color:"currentcolor",display:"flex",justifyContent:"center",alignItems:"center"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
             </Popover>
             <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>           
         </div>
@@ -105,9 +105,9 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }else{
-        logoImage = <Avatar src={config.brandLogo} size={imgSize} style={imgStyle} />
+        logoImage = <Avatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
-    const brandTitle = config.localeEnabled ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
+    const brandTitle = config.localeEnabled && config.brandTitle!.startsWith("app.")  ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
 
     // user panel
     let avatarPanel = (
@@ -121,7 +121,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
 
     // logo panel
     const panel = (<><Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
-        <a style={{color:"currentColor"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
+        <a style={{color:"currentcolor",display:"flex",justifyContent:"center",alignItems:"center"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
     </Popover>
     {props.collapsed ? <></> : <Link to={config.logoNavigateRoute || '/'} style={txtStyle}>{brandTitle}</Link>}</>)
 

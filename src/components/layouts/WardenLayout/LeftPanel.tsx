@@ -1,6 +1,6 @@
 import { Menu,Layout, theme } from "antd";
 import type { MenuProps, MenuTheme } from "antd";
-import {history,useRouteData} from "umi";
+import {history,useRouteData,useParams} from "umi";
 import Icon,{
   } from '@ant-design/icons';
 import { useRef, useEffect, useState} from "react";
@@ -9,7 +9,7 @@ import { IconLeft, IconRight } from "@/components/SvgIcon";
 import {LeftLogo} from "./LogoPanel";
 import { generate } from '@ant-design/colors';
 import {LayoutProps} from '@/typings'
-import { getAppRoutePathKey } from "@/utils/routeUtil";
+import { getAppRoutePathKey, getFillRoute } from "@/utils/routeUtil";
 import {hexToRgbaString} from '@/utils/stringUtil';
 const {Sider} = Layout;
 const {useToken} = theme;
@@ -30,6 +30,7 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   const [collapsed, setCollapsed] = useState(false);
   const configKey= getAppRoutePathKey(useRouteData().route)  
   const dynamicProps = getDynamicProps()
+  const params = useParams()
 
   // Silding menu bar width
   const siderWidth = dynamicProps.leftWidth
@@ -82,8 +83,8 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
   },[openKeys])
   
   // menu click event
-  const onMenuClick: MenuProps['onClick'] = (e) => {   
-      history.push(e.key) 
+  const onMenuClick: MenuProps['onClick'] = (e) => {
+      history.push(getFillRoute(e.key,params)) 
   } 
   // window change size event
   const windowResizeHandler=()=>{    

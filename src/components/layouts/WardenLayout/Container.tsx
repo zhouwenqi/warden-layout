@@ -1,7 +1,7 @@
 import { useContainerContext,useConfigContext,WardenGlobalThis } from '@/context';
 import {theme,Breadcrumb,Layout} from 'antd';
-import {Link,useRouteData} from 'umi';
-import { getAppRoutePathKey } from '@/utils/routeUtil';
+import {Link,useRouteData,useParams} from 'umi';
+import { getAppRoutePathKey, getFillRoute } from '@/utils/routeUtil';
 import {LayoutProps} from '@/typings';
 import { hexToRgbaString } from '@/utils/stringUtil';
 const {useToken} = theme;  
@@ -21,6 +21,7 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
     const {token} = useToken()
     const {menuByBackground=true} = props
     const configKey= getAppRoutePathKey(useRouteData().route)  
+    const params = useParams()
 
     let titlePanel = <></>
     if(!props.hideTitle && !config.hideTitleBar){
@@ -45,7 +46,7 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
         breadcrumbData.forEach((menu,index)=>{
             items.push({
                 title:menu.name,
-                path:menu.path
+                path:getFillRoute(menu.path,params)
             })
         })
         BreadcrumbPanel = (<Breadcrumb style={{marginBottom: config.compact ? "14px" : "16px"}} items={items} itemRender={itemRender} />)

@@ -1,5 +1,4 @@
 import { WardenGlobalThis } from '../context';
-import { useAccess } from 'umi';
 
 const matchArray = (matchArray: string[], userArray: string[]) => {
   if (!matchArray || matchArray.length < 1) {
@@ -56,7 +55,8 @@ const matchAccess=(accessObject:any,access?:string)=>{
   if(keys.length < 1){
     return false
   }
-  return accessObject[access] == true
+
+  return typeof accessObject[access] === 'function' ? accessObject[access]() : false;
 }
 
 /**
@@ -65,7 +65,7 @@ const matchAccess=(accessObject:any,access?:string)=>{
  * @returns
  */
 const hasAccess = (access?: string) => {
-  const umiAccess = useAccess()
+  const umiAccess = WardenGlobalThis.userMap["access"]
   return matchAccess(umiAccess,access)
 };
 

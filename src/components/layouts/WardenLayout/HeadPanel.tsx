@@ -1,6 +1,6 @@
 import { Layout, Menu, theme, Tooltip, Button, MenuTheme} from 'antd';
 import type { MenuProps } from 'antd';
-import {history} from 'umi';
+import {history,useParams} from 'umi';
 import {CompressOutlined,ExpandOutlined} from '@ant-design/icons'
 import {TopLogo} from './LogoPanel';
 import { useEffect,  useState } from 'react';
@@ -9,6 +9,7 @@ import { generate } from '@ant-design/colors';
 import {LayoutProps} from '@/typings';
 import ToolbarUserPanel from '@/components/ToolbarUserPanel';
 import {hexToRgbaString} from '@/utils/stringUtil';
+import { getFillRoute } from '@/utils/routeUtil';
 
 const { Header} = Layout;
 const {useToken} = theme;  
@@ -21,13 +22,14 @@ const {useToken} = theme;
  * @descriptionThe head surface of the layout
  */
 const HeadPanel=(props:LayoutProps.HeadProps)=>{  
-    
+  
   const {config,getDynamicProps} = useConfigContext()
   const menuTheme:MenuTheme = config.menuByPrimary && config.layoutType=="headMenu" ? "dark" : "light"
+  const params = useParams()
 
   // menu click event
   const onMenuClick: MenuProps['onClick'] = (e) => {
-      history.push(e.key) 
+      history.push(getFillRoute(e.key,params)) 
   } 
   const {token} = useToken()
   const borderBottom = menuTheme == "light" ? ( !config.hideBorder ? "solid 1px " +  hexToRgbaString(token.colorBorder,0.4) : "0") : " 0"

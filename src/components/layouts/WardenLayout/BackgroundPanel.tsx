@@ -1,5 +1,5 @@
-import { theme } from 'antd'
-import { useConfigContext,WardenGlobalThis } from "@/context"
+import { theme } from 'antd';
+import { useConfigContext,WardenGlobalThis } from "@/context";
 
 const {useToken} = theme;
 

@@ -1,10 +1,10 @@
 import { Layout } from 'antd';
-import { useLocation,useRouteData,useSelectedRoutes,Outlet,useParams,useAccess,getLocale,useIntl} from 'umi';
+import { useLocation,useRouteData,useSelectedRoutes,Outlet,useParams,useAccess} from 'umi';
 import './MainLayout.less';
 import LeftPanel from './LeftPanel';
 import HeadPanel from './HeadPanel';
 import { getAppRoutePathKey,matchPathKeys,matchPathAllKeys } from '@/utils/routeUtil';
-import { getAntdMenus, getMapMenus, getMenuLocale, getSplitAntdMenus } from '@/utils/menuUtil';
+import { getAntdMenus, getMapMenus, getSplitAntdMenus } from '@/utils/menuUtil';
 import {IAntMenuData} from '@/typings';
 import { useConfigContext,WardenGlobalThis } from '@/context';
 import BackgroundPanel from './BackgroundPanel';
@@ -24,7 +24,6 @@ const MainLayout=()=>{
     const menuKeys = matchPathKeys(location.pathname,configKey) 
     const params = useParams()
     const access = useAccess()
-    const intl = useIntl()
 
     // Obtain breadcrumb data
     const breadMenuKeys = matchPathAllKeys(location.pathname,configKey,params)
@@ -32,18 +31,13 @@ const MainLayout=()=>{
 
     // Retrieve menu and route selection data
     WardenGlobalThis.userMap["access"] = access
-    WardenGlobalThis.userMap["config.menuIconVariant"] = config.menuIconVariant
+    WardenGlobalThis.userMap["config.menuIconVariant"] = config.menuIconVariant  
+
     let selectLeftKeys:string[] = []
     let selectTopKeys:string[] = []
-    // menu locale
-    const locale = getLocale()
-    let menuData = wardenMenuData
-    if(WardenGlobalThis.userMap["locale"]!=locale){
-        WardenGlobalThis.userMap["locale"]=locale        
-        menuData = getMenuLocale(wardenMenuData!,intl);
-    }
+    
     // const antdMenuData = getAntdMenus(WardenGlobalThis.menuData[configKey],menuKeys)
-    const antdMenuData = getAntdMenus(menuData!,menuKeys)
+    const antdMenuData = getAntdMenus(wardenMenuData!,menuKeys)
     let headMenus:IAntMenuData[] = []
     let leftMenus:IAntMenuData[] = []
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {ConfigProvider,App,Spin,theme} from 'antd';
+import {ConfigProvider,App,theme} from 'antd';
 import {useIntl, getLocale, useRouteData,useAppData,useModel,useLocation,Navigate,useAccess} from 'umi';
 import { createConfigContext, defaultConfig,WardenGlobalThis} from '@/context';
 import { getAppRoutePathKey, getLayoutRootRoutes, getMenuData,getCurrentPathMenuData } from '@/utils/routeUtil';
@@ -11,7 +11,7 @@ import MainLayout from './MainLayout';
 import { hexToRgbaString } from '@/utils/stringUtil';
 import { hasAuthority,matchAccess } from '@/utils/securityUtil';
 import dayjs from 'dayjs';
-import { modifyMenuExtras } from '@/utils/menuUtil';
+import { getMenuLocale, modifyMenuExtras } from '@/utils/menuUtil';
 
 /**
  * Layout main
@@ -73,11 +73,24 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     })
   }
 
+  // locale listener
+  const locale = getLocale()
+  useEffect(()=>{    
+    setWardenMenuData(getMenuLocale(wardenMenuData!,intl));
+  }, [locale])
+
   // Monitoring system theme change
   const scheme = window.matchMedia("(prefers-color-scheme: dark)")
   scheme.onchange=(event)=>{
     setConfig({...config, theme:event.matches ? 'dark' : 'light'})
   }
+
+  // umi locale event
+  useEffect(()=>{
+     let menuData = getMenuLocale(wardenMenuData!,intl)
+     setWardenMenuData(menuData)
+  },[getLocale])
+
   useEffect(()=>{    
     
     scheme.addEventListener("change", prefersChangeThemeEvent)
@@ -266,7 +279,6 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   let framesetPanel = props.frameElements ?? <></> 
 
   // antd locale config
-  const locale = getLocale()
   const antdLocale = require("antd/locale/"+locale.replace("-","_")).default
   require("dayjs/locale/"+antdLocale.locale)
   // date-time component locale

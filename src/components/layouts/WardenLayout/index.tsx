@@ -239,14 +239,14 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   // Set menu extension (tag)
   const onSetExtraTagChange=(props:IExtraTagProps)=>{
     const {filterKey,filterValue,data} = props
-    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> item.tag = data )
+    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> !data ? item.tag = undefined : (typeof item.tag == "string" ? item.tag = data : item.tag = {...item.tag,...data}) )
     setWardenMenuData(menuData)
 
   }
   // Set menu extension (badge)
   const onSetExtraBadgeChange=(props:IExtraBadgeProps)=>{
     const {filterKey,filterValue,data} = props
-    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> item.badge = data )
+    const menuData = modifyMenuExtras(wardenMenuData,filterKey,filterValue,(item)=> !data ? item.badge = undefined : (typeof item.badge == "string" ? item.badge = data : item.badge = {...item.badge,...data}) )
     setWardenMenuData(menuData)
   }
   

@@ -68,7 +68,7 @@ const getAntdMenuItem=(menuData:IMenuData,menuKeys:string[]) => {
       
     }
   
-  const extraPanel = extraItems.length > 0 ? <Space style={{margin:"0px 2px",height:"inherit",display:"flex"}}>{extraItems}</Space> : undefined
+  const extraPanel = extraItems.length > 0 ? <Space style={{margin:"0px 2px",height:"inherit"}}>{extraItems}</Space> : undefined
   const antdMenu:IAntMenuData = {
       label:menuItem,
       key:menuData.path,

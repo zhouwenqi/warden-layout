@@ -1,7 +1,7 @@
-import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,Radio,App } from "antd"
+import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,Radio,App,Spin } from "antd"
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
 import type {RadioChangeEvent} from 'antd'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {useIntl} from 'react-intl'
 import {getLocale,setLocale} from 'umi'
 import './SettingDrawer.less'
@@ -344,7 +344,7 @@ const SkinGroupBox=()=>{
 }
 
 /**
- * skin
+ * skin - item
  * @param props 
  * @returns 
  */
@@ -358,11 +358,42 @@ const SkinBox=(props:{skin:Warden.IMenuSkin,selected:boolean,onSelect:(value:War
 
   return(
     <div onClick={()=>{props.onSelect(props.skin)}} style={boxStyle} className="layoutSkinBoxItem">
-      <img src={props.skin.icon} alt={props.skin.name} /><br />
+      <SkinImage skin={props.skin} /><br />
       <span>
         {props.skin.label || props.skin.name}
       </span>
     </div>)
+}
+
+/**
+ * skin - image
+ * @param props 
+ * @returns 
+ */
+const SkinImage=(props:{skin:Warden.IMenuSkin})=>{  
+    const {skin} = props;
+    const [displaySrc, setDisplaySrc] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(true);
+        setDisplaySrc(null);
+        const img = new Image();
+        img.src = skin.icon!;
+        img.onload = () => {
+            setDisplaySrc(skin.icon!);
+            setLoading(false);
+        };
+        return () => {
+            img.onload = null;
+            setLoading(false)
+        };
+    }, [skin]);
+
+    return(
+      <>
+      {loading ? <label><Spin size="small" /></label> : <img src={skin.icon} alt={skin.name} />}
+      </>
+    )
 }
 
 export default SettingDrawer

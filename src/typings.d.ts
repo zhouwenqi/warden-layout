@@ -71,6 +71,7 @@ export declare namespace Warden {
         layoutType?:LayoutType
         menuByPrimary?:boolean        
         icon?:string
+        backgroundImage?:string
         content?:JSX.Element
     }
 }

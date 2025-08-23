@@ -81,6 +81,12 @@ const SettingDrawer=()=>{
       onSelect={onSelectColorHandler}
     /></Space>)
   
+  // main menu style options
+  const menuBackgroundStyleOptions:any[] = [
+    {label:intl.formatMessage({id:'config.option.menuBackgroundStyle.normal'}),value:'normal'},
+    {label:intl.formatMessage({id:'config.option.menuBackgroundStyle.black'}),value:'black',disabled:config.theme=="dark"},
+    {label:intl.formatMessage({id:'config.option.menuBackgroundStyle.primary'}),value:'primary'}
+  ]
 
   return(
       <>
@@ -128,6 +134,14 @@ const SettingDrawer=()=>{
               options={languages}
               />            
       </div>
+      <div className="wardenSettingLabelBox">            
+          <label>{intl.formatMessage({id:"config.setting.menuBackgroundStyle.title"})}</label>
+          <Segmented
+              defaultValue={config.menuBackgroundStyle || "normal"}
+              options={menuBackgroundStyleOptions} 
+              onChange={(value:Warden.MenuBackgroundStyle)=>{setConfig({...config,menuBackgroundStyle:value})}} 
+              />            
+      </div>  
       <Space className="wardenSettingSwitchBox">
           <label>{intl.formatMessage({id:"config.setting.headTransparent.title"})}</label>
           <Switch defaultChecked={config.headTransparent} checked={config.headTransparent} onChange={(value:boolean)=>{setConfig({...config,headTransparent:value})}} />    
@@ -144,11 +158,7 @@ const SettingDrawer=()=>{
           <label>{intl.formatMessage({id:"config.setting.backgroundBlur.title"})}</label>
           <Switch defaultChecked={config.backgroundBlur} checked={config.backgroundBlur} onChange={(value:boolean)=>{setConfig({...config,backgroundBlur:value})}} />   
       </Space>
-      <Divider />
-        <Space className="wardenSettingSwitchBox">
-            <label>{intl.formatMessage({id:"config.setting.menuPrimaryColor.title"})}</label>
-            <Switch defaultChecked={config.menuByPrimary} checked={config.menuByPrimary} onChange={(value:boolean)=>{setConfig({...config,menuByPrimary:value})}} />   
-        </Space>        
+      <Divider />                
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.splitmenu.title"})}</label>
             <Switch checked={config.menuSplit} defaultChecked={config.menuSplit} onChange={(value:boolean)=>{setConfig({...config,menuSplit:value})}} />   
@@ -324,7 +334,7 @@ const SkinGroupBox=()=>{
       headTransparent:true,
       leftTransparent:true,
       containerTransparent:true,
-      menuByPrimary:e.menuByPrimary ?? config.menuByPrimary
+      menuBackgroundStyle:e.menuBackgroundStyle || config.menuBackgroundStyle
     })
   }
 

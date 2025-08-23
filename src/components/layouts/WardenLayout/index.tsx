@@ -175,10 +175,11 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
   }
   
   if(config.theme == "dark"){
+    const selectBg = config.menuBackgroundStyle == "black" ? "#222222" : config.primaryColor
     menuStyle = {...menuStyle,
-        "itemSelectedBg": config.headTransparent ? hexToRgbaString(config.primaryColor,0.7) : config.primaryColor,        
+        "itemSelectedBg": config.headTransparent ? hexToRgbaString(selectBg,0.7) : selectBg,
         "itemSelectedColor": "white",
-        "itemColor": "rgba(255,255,255,0.6)"
+        "itemColor": "rgba(255,255,255,0.6)",
     }
   }else{
     menuStyle = {...menuStyle,
@@ -186,16 +187,20 @@ export default function IndexPanel(props:LayoutProps.IndexProps) {
     }    
   }
 
-  if(config.menuByPrimary) {
+  if(config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary") {
     if(config.layoutType=="headMenu"){
       layoutStyle = {...layoutStyle, headerColor:"white"} 
     }
+    if(config.menuBackgroundStyle == "black"){
+      
+    }
+    const blackColors = generate("#222222")
     menuStyle = {
       ...menuStyle,
       darkItemBg:primaryColors[1],
-      darkSubMenuItemBg:primaryColors[7],
+      darkSubMenuItemBg: config.menuBackgroundStyle == "black" ? blackColors[7] : primaryColors[7],
       darkItemSelectedBg:primaryColors[6],        
-      darkPopupBg:primaryColors[5]
+      darkPopupBg: config.menuBackgroundStyle == "black" ? blackColors[5] : primaryColors[5],
     }
     if(!config.menuSplit || config.layoutType=="leftMenu"){
         menuStyle = {

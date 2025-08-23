@@ -25,9 +25,16 @@ const TopLogo=()=>{
         imgStyle = {...imgStyle,marginLeft:"6px"}
         txtStyle = {...txtStyle,fontSize:"16px",margin:"0px 8px 0px 6px"}
     }
-    const topDark = config.menuByPrimary && config.layoutType == "headMenu"
+    const topDark = (config.menuBackgroundStyle == "primary" || config.menuBackgroundStyle=="black") && config.layoutType == "headMenu"
     if(topDark){
         txtStyle = {...txtStyle,color:"white"}
+    }
+    let boxStyle:React.CSSProperties = {
+        display:"flex",
+        color:config.menuBackgroundStyle == "primary" ? "white" : token.colorPrimary,
+        alignItems:"center", 
+        alignContent:"center", 
+        width: getDynamicProps().leftWidth + "px"
     }
 
     let logoImage = <></>    
@@ -43,7 +50,7 @@ const TopLogo=()=>{
     }
     const brandTitle = config.localeEnabled && config.brandTitle!.startsWith("app.") ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
-        <div style={{display:"flex",color:topDark ? "white" : token.colorPrimary,alignItems:"center", alignContent:"center", width: getDynamicProps().leftWidth + "px"}}>            
+        <div style={boxStyle}>            
             <Popover open={logoPopoverOpen} onOpenChange={setLogoPopoverOpen} placement="rightTop" content={logoPopover}>       
             <a style={{color:"currentcolor",display:"flex",justifyContent:"center",alignItems:"center"}} onClick={()=>{history.push(config.logoNavigateRoute || '/')}}>{logoImage}</a>
             </Popover>
@@ -87,9 +94,12 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         color: token.colorPrimary
     }
 
-    if(config.menuByPrimary){
+    if(config.menuBackgroundStyle=="primary"){
+        boxStyle = {...boxStyle,color:"white",borderRight:"0"} 
+    }
+
+    if(config.menuBackgroundStyle == "primary" || config.menuBackgroundStyle=="black"){
         txtStyle = {...txtStyle,color:"white"}
-        boxStyle = {...boxStyle,color:"white",borderRight:"0"}
     }
 
     let imgStyle:React.CSSProperties={

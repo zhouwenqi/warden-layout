@@ -17,7 +17,8 @@ const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
 
     const user = WardenGlobalThis.currentUser
 
-    const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")
+    const menuBgDark = config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary"
+    const topDark = menuBgDark && (config.theme == "dark" || config.layoutType == "headMenu")
     return(
         <Popover placement="bottomRight" open={avatarPopoverOpen} onOpenChange={setAvatarPopoverOpen} content={popoverPanel}>
             <div style={{display:"flex",alignItems:"center",cursor:"pointer"}}>

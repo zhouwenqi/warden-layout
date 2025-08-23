@@ -20,6 +20,7 @@ export default {
   'config.theme.color.purple': '紫色',
   'config.setting.alert.title': '配置说明',
   'config.setting.menuPrimaryColor.title':'菜单主题色背景',
+  'config.setting.menuBackgroundStyle.title':'主菜单背景样式',
   'config.setting.backgroundBlur.title':'背景模糊',
   'config.setting.menuTransparent.title':'菜单透明',
   'config.setting.headTransparent.title':'头部菜单透明',
@@ -43,6 +44,9 @@ export default {
   'config.setting.button.copy': '拷贝配置',
   'config.setting.copy.success':
     '配置已拷贝成功',
+  'config.option.menuBackgroundStyle.normal':'简洁',
+  'config.option.menuBackgroundStyle.black':'黑色',
+  'config.option.menuBackgroundStyle.primary':'随主题',
   'head.button.tooltip.fullscreen':'全屏模式',
   'head.button.tooltip.exitFullscreen':'退出全屏模式',
   'error.page.404.message': '很抱歉，您访问的页面不存在。',

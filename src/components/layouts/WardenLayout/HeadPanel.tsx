@@ -24,7 +24,8 @@ const {useToken} = theme;
 const HeadPanel=(props:LayoutProps.HeadProps)=>{  
   
   const {config,getDynamicProps} = useConfigContext()
-  const menuTheme:MenuTheme = config.menuByPrimary && config.layoutType=="headMenu" ? "dark" : "light"
+  const menuBgDark = config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary"
+  const menuTheme:MenuTheme = menuBgDark && config.layoutType=="headMenu" ? "dark" : "light"
   const params = useParams()
 
   // menu click event
@@ -59,10 +60,10 @@ const HeadPanel=(props:LayoutProps.HeadProps)=>{
   let boxBgColor = token.colorBgContainer
   if(menuTheme == "dark"){
     const primaryColors = generate(config.primaryColor)
-    boxBgColor = primaryColors[5]
+    boxBgColor = config.menuBackgroundStyle == "black" ? "#222222" : primaryColors[5]
   }
   
-  if(config.hideBorder && !config.menuByPrimary && config.layoutType=="leftMenu"){
+  if(config.hideBorder && config.menuBackgroundStyle=="normal" && config.layoutType=="leftMenu"){
     boxStyle = {...boxStyle,marginLeft:"1px"}
   }
 
@@ -150,7 +151,8 @@ const FullscreenButton=(props:{items?:JSX.Element[]})=>{
       }
     }
     let btnStyle:React.CSSProperties = {padding:"8px",height:"inital","lineHeight":"inital"}
-    if(config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")){
+    const menuBgDark = config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary"
+    if(menuBgDark && (config.theme == "dark" || config.layoutType == "headMenu")){
       btnStyle = {...btnStyle,"color":"white"}
     }
 

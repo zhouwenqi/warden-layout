@@ -118,14 +118,14 @@ const LeftPanel=(props:LayoutProps.LeftProps)=>{
 
   // menu style
   let collapseStyle:React.CSSProperties = { display: 'block', textAlign: 'right', paddingRight: '16px', borderRight:'solid 1px '+ (config.hideBorder ? hexToRgbaString(token.colorBgContainer,0.06) : hexToRgbaString(token.colorBorderSecondary,0.06)), background: "transparent"}
-  let menuTheme:MenuTheme = config.menuByPrimary && config.layoutType == "leftMenu" ? "dark" : "light"
+  let menuTheme:MenuTheme = (config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary") && config.layoutType == "leftMenu" ? "dark" : "light"
   let menuStyle:React.CSSProperties = {border:"0",background:"transparent"}
   let borderRight = menuTheme == "light" ? ( !config.hideBorder ? "solid 1px " +  hexToRgbaString(token.colorBorder,0.4) : "0") : " 0"
 
   if(menuTheme == "dark"){
-    const primaryColros = generate(config.primaryColor)
+    const primaryColors = generate(config.primaryColor)
     siderTheme="dark"
-    siderBgColor = primaryColros[5]      
+    siderBgColor =  config.menuBackgroundStyle == "black" ? "#222222" : primaryColors[5]         
     collapseStyle = {...collapseStyle, borderRight:"0"}
   }
 

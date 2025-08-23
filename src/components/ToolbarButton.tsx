@@ -14,7 +14,8 @@ import SvgIcon from "./SvgIcon"
 const ToolbarButton = (props:ToolbarButtonProps) => {
     const {config} = useConfigContext()  
     let btnStyle:React.CSSProperties = {padding:"8px"}
-    const topDark = config.menuByPrimary && (config.theme == "dark" || config.layoutType == "headMenu")
+    const menuBgDark = config.menuBackgroundStyle == "black" || config.menuBackgroundStyle == "primary"
+    const topDark = menuBgDark && (config.theme == "dark" || config.layoutType == "headMenu")
     if(topDark){
       btnStyle = {...btnStyle,"color":"white"}
     }

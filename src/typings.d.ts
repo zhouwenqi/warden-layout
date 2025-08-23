@@ -2,12 +2,12 @@
 export declare namespace Warden {
     type Theme = 'light' | 'dark'
     type LayoutType = 'headMenu' | 'leftMenu'
+    type MenuBackgroundStyle = 'normal' | 'black' | 'primary'
     interface IConfig {
         theme:Theme        
         layoutType:LayoutType
         primaryColor:string
         compact?:boolean
-        menuByPrimary?:boolean
         leftTransparent?:boolean
         headTransparent?:boolean
         containerTransparent?:boolean
@@ -29,7 +29,8 @@ export declare namespace Warden {
         logoNavigateRoute?:string
         avatarNavigateRoute?:string
         avatarReplaceBrand?:boolean
-        menuIconVariant?:boolean | string[]
+        menuIconVariant?:boolean | string[]        
+        menuBackgroundStyle?:MenuBackgroundStyle
         page403?:string
         page404?:string
         pageLogin?:string
@@ -68,8 +69,8 @@ export declare namespace Warden {
         primaryColor:string
         label?:string
         theme?:Theme
-        layoutType?:LayoutType
-        menuByPrimary?:boolean        
+        layoutType?:LayoutType        
+        menuBackgroundStyle?:MenuBackgroundStyle      
         icon?:string
         backgroundImage?:string
         content?:JSX.Element

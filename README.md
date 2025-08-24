@@ -11,7 +11,7 @@ warden-layout是一款基于antd和umi开发的强大且灵活的布局组件，
 ## 安装
 npm 安装
 ```bash
-yarn add warden-layout
+$ yarn add warden-layout
 ```
 源码安装
 ```bash

@@ -23,12 +23,6 @@ yarn
 ```bash
 $ yarn build
 ```
-## 发布
-
-yarn
-```bash
-$ npm publish
-```
 
 ## LICENSE
 

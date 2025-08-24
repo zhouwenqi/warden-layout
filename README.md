@@ -9,7 +9,11 @@ warden-layout是一款基于antd和umi开发的强大且灵活的布局组件，
 > demo仓库：[https://github.com/zhouwenqi/warden-layout-demo](https://github.com/zhouwenqi/warden-layout-demo)
 
 ## 安装
-yarn
+npm 安装
+```bash
+yarn add warden-layout
+```
+源码安装
 ```bash
 $ yarn install
 ```

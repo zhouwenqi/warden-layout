@@ -15,5 +15,6 @@ import {getFillRoute,reverseFillRoute} from './utils/routeUtil';
 import MainLayout from "./components/layouts/WardenLayout/MainLayout"
 import LeftPanel from "./components/layouts/WardenLayout/LeftPanel"
 import HeadPanel from "./components/layouts/WardenLayout/HeadPanel"
+import AppAvatar from "./components/AppAvatar"
 export default WardenLayout
-export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,ContainerStretch,SchemeConfig,SvgIconProps,ToolbarButtonProps,ToolbarLinkProps,IMenuBadge,IMenuTag,IExtraBadgeProps,IExtraTagProps,IMenuMessageEvent,useContainerContext,useConfigContext,hexToRgb,hexToRgbaString,getFillRoute,reverseFillRoute}
+export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,ToolbarButton,ToolbarLink,ToolbarUserPanel,AppAvatar,WardenGlobalThis,Warden,LayoutProps,AppIconProps,IMenuData,IAntMenuData,ContainerProps,ContainerMode,ContainerStretch,SchemeConfig,SvgIconProps,ToolbarButtonProps,ToolbarLinkProps,IMenuBadge,IMenuTag,IExtraBadgeProps,IExtraTagProps,IMenuMessageEvent,useContainerContext,useConfigContext,hexToRgb,hexToRgbaString,getFillRoute,reverseFillRoute}

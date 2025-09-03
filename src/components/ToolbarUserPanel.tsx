@@ -1,5 +1,6 @@
-import { Avatar, theme, Popover } from "antd"
+import { theme, Popover } from "antd"
 import { useConfigContext, WardenGlobalThis } from "@/context";
+import AppAvatar from "./AppAvatar";
 const {useToken} = theme;  
 
 /**
@@ -22,9 +23,9 @@ const ToolbarUserPanel = (props:{popover?:JSX.Element})=>{
     return(
         <Popover placement="bottomRight" open={avatarPopoverOpen} onOpenChange={setAvatarPopoverOpen} content={popoverPanel}>
             <div style={{display:"flex",alignItems:"center",cursor:"pointer"}}>
-                <Avatar style={{verticalAlign:'middle',background:token.colorBgLayout,lineHeight:"1rem"}} src={user?.headImgUrl} >
+                <AppAvatar style={{verticalAlign:'middle',background:token.colorBgLayout,lineHeight:"1rem"}} src={user?.headImgUrl} >
                     {user?.username}
-                </Avatar>
+                </AppAvatar>
                 <label style={{color:topDark ? 'white' : token.colorTextTertiary,lineHeight:"1rem",marginLeft:"10px"}}>{user?.username}</label>
             </div> 
       </Popover>

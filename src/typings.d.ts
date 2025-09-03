@@ -162,6 +162,7 @@ export declare namespace LayoutProps {
       hideFooter?:boolean,
       transparent?:boolean,
       menuByBackground?:boolean,
+      bordered?:boolean,
       stretch?:ContainerStretch
   }
 }

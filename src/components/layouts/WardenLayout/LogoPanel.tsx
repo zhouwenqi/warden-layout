@@ -5,6 +5,7 @@ import AppIcon from '@/components/AppIcon';
 import {LayoutProps} from '@/typings';
 import SvgIcon from '@/components/SvgIcon';
 import React from 'react';
+import AppAvatar from '@/components/AppAvatar';
 const {useToken} = theme;
 
 /**
@@ -46,7 +47,7 @@ const TopLogo=()=>{
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }
     else{
-        logoImage = <Avatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
+        logoImage = <AppAvatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
     const brandTitle = config.localeEnabled && config.brandTitle!.startsWith("app.") ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
     return(
@@ -115,7 +116,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
         const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }else{
-        logoImage = <Avatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
+        logoImage = <AppAvatar shape="square" src={config.brandLogo} size={imgSize} style={imgStyle} />
     }
     const brandTitle = config.localeEnabled && config.brandTitle!.startsWith("app.")  ? intl.formatMessage({id:config.brandTitle}) : config.brandTitle
 
@@ -123,7 +124,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
     let avatarPanel = (
         <>        
         <Popover open={avatarPopoverOpen} onOpenChange={setAvatarPopoverOpen} placement="rightTop" content={avatarPopover}>
-            <Avatar src={user?.headImgUrl} size={imgSize} style={{cursor:"pointer"}} />
+            <AppAvatar src={user?.headImgUrl} size={imgSize} style={{cursor:"pointer"}} />
         </Popover>
         {props.collapsed ? <></> : <><label style={txtStyle}>{user?.username}</label><label style={{...txtStyle,fontSize:token.fontSizeSM,fontWeight:"initial",opacity:"0.8"}}>{user?.createDate}</label></>}
         </>

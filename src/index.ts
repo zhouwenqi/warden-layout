@@ -12,6 +12,7 @@ import {getFillRoute,reverseFillRoute} from './utils/routeUtil';
 import MainLayout from "./components/layouts/WardenLayout/MainLayout"
 import LeftPanel from "./components/layouts/WardenLayout/LeftPanel"
 import HeadPanel from "./components/layouts/WardenLayout/HeadPanel"
+import AppAvatar from "./components/AppAvatar"
 
 export default WardenLayout
-export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,useContainerContext,useConfigContext,ToolbarButton,ToolbarLink,ToolbarUserPanel,WardenGlobalThis,hexToRgb,hexToRgbaString,getFillRoute,reverseFillRoute}
+export {MainLayout,LeftPanel,HeadPanel,AppIcon,SvgIcon,SettingDrawer,Container,useContainerContext,useConfigContext,ToolbarButton,ToolbarLink,ToolbarUserPanel,AppAvatar,WardenGlobalThis,hexToRgb,hexToRgbaString,getFillRoute,reverseFillRoute}

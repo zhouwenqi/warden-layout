@@ -209,8 +209,8 @@ const SettingDrawer=()=>{
 }
 
 /**
-* 主体布局选择
-* @param props 主体布局参数
+* main layout select
+* @param props layout paramerters
 * @returns
 */
 const MainLayoutGroup = (props: LayoutGroupProps) => {

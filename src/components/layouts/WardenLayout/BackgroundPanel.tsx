@@ -65,7 +65,7 @@ const LazyBackgroundImage=(props:{imgSrc:string})=>{
 }
 
 /**
- * get background iamge
+ * get background image
  * @param imgSrc img src
  * @param layoutType layout type
  * @returns 

@@ -15,7 +15,7 @@ const {Content,Footer} = Layout
  * @author zhouwenqi
  * @description Container component used for laying out sub routing component packages
  */
-const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{    
+const Container=(props:LayoutProps.ContainerProps)=>{    
     const {config,footer} = useConfigContext()    
     const {title, breadcrumbData} = useContainerContext()
     const {token} = useToken()
@@ -74,6 +74,9 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
         flex:"none"
     }
 
+    // Container bordered
+    const bordered:boolean = props.bordered || !config.hideBorder
+
     // Container exterior style
     let layoutStyle:React.CSSProperties = {}
     let clsName = props.className || ""
@@ -89,6 +92,12 @@ const Container=(props:LayoutProps.ContainerProps={menuByBackground:true})=>{
                 ...bodyStyle,
                 padding:config.compact ? '16px' : '20px',
                 background: menuByBackground && (config.headTransparent || config.leftTransparent) ? hexToRgbaString(token.colorBgContainer,0.6) : token.colorBgContainer
+            }
+            if(bordered){
+                bodyStyle = {
+                    ...bodyStyle,
+                    border:"solid 1px " + token.colorBorderSecondary
+                }
             }
             clsName += (menuByBackground && config.backgroundBlur ? " warden-layout-blur" : "")
         }

@@ -195,7 +195,7 @@ export declare interface IAntMenuData {
     extra?:React.ReactNode;
 }
 /** icon type */
-export declare type IconType = 'ant' | 'warden' | 'svg' | 'umi';
+export declare type IconType = 'ant' | 'img' | 'svg' | 'umi';
 
 export declare interface IMenuBadge {
     position?:"left" | "right";

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as AntIcon from '@ant-design/icons';
 import { getPathToKey } from './routeUtil';
-import AppIcon from '@/components/AppIcon';
+import {ImgIcon} from '@/components/AppIcon';
 import { hasAuthority,hasAccess } from './securityUtil';
 import { Badge,Tag,Space } from 'antd';
 import {Icon} from 'umi';
@@ -208,8 +208,8 @@ const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
       case 'umi':        
         icon = (<Icon icon={`local:${iconName}`} width="16" height="16" />)
         break
-      case 'warden':    
-        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><AppIcon size={16} name={iconName} color="currentColor" /></span>)
+      case 'img':    
+        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><ImgIcon width={16} height={16} src={iconName} alt={item.name} color="currentColor" /></span>)
         break;
       case 'svg':
         icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )

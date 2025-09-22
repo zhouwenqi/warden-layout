@@ -61,5 +61,11 @@ const AppIcon=(props : AppIconProps = {color:"currentColor", size:14})=>{
         <svg data-warden-type="svg" {...iconProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">{iconData[name!]}</svg>
     )
 }
-
+const ImgIcon=(props:React.ImgHTMLAttributes<HTMLImageElement>)=>{
+  let {width=16,height=16} = props
+  return(
+    <img {...props} style={{width,height}} />
+  )
+}
+export {ImgIcon}
 export default AppIcon

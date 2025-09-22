@@ -1,7 +1,6 @@
 import {Avatar, theme,Popover} from 'antd'
 import {Link,history,useIntl} from 'umi'
 import { useConfigContext,WardenGlobalThis } from '@/context';
-import AppIcon from '@/components/AppIcon';
 import {LayoutProps} from '@/typings';
 import SvgIcon from '@/components/SvgIcon';
 import React from 'react';
@@ -39,10 +38,7 @@ const TopLogo=()=>{
     }
 
     let logoImage = <></>    
-    if(config.brandLogo.indexOf("warden@") > -1){
-        const iconName = config.brandLogo.split("warden@")[1]
-        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
-    }else if(config.brandLogo.indexOf("svg@") > -1){     
+    if(config.brandLogo.indexOf("svg@") > -1){     
         const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }
@@ -109,10 +105,7 @@ const LeftLogo=(props:LayoutProps.LogoProps)=>{
     }
     const imgSize = props.collapsed ? 30 : 90
     let logoImage = <></>
-    if(config.brandLogo.indexOf("warden@") > -1){
-        const iconName = config.brandLogo.split("warden@")[1]
-        logoImage = <AppIcon color="currentColor" name={iconName} size={imgSize} style={imgStyle} />
-    }else if(config.brandLogo.indexOf("svg@") > -1){     
+    if(config.brandLogo.indexOf("svg@") > -1){     
         const svgSrc = config.brandLogo.split("svg@")[1]
         logoImage = <SvgIcon src={svgSrc} style={{...imgStyle,width:imgSize+"px",height:imgSize+"px"}} width={imgSize} height={imgSize} color="currentColor" fill="currentColor" />
     }else{

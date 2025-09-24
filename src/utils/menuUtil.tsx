@@ -153,6 +153,7 @@ const getBreadcrumbData=(keys:string[])=>{
  */
 const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
   const useMenuIconVariant = WardenGlobalThis.userMap["config.menuIconVariant"]
+  const menuIconSize = WardenGlobalThis.userMap["config.menuIconSize"] || 16
   
   let icon: React.ReactNode = undefined;
   if(!item || !item.iconName){
@@ -201,18 +202,18 @@ const getMenuIcon=(item:IMenuData,menuKeys:string[])=> {
       case 'ant':
         if((AntIcon as any)[iconName]){
             icon = React.createElement(AntIcon && (AntIcon as any)[iconName], {
-              style: { fontSize: '16px' },
+              style: { fontSize: menuIconSize + 'px' },
             });  
         } 
         break;
       case 'umi':        
-        icon = (<Icon icon={`local:${iconName}`} width="16" height="16" />)
+        icon = (<Icon icon={`local:${iconName}`} width={menuIconSize} height={menuIconSize} />)        
         break
       case 'img':    
-        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><ImgIcon width={16} height={16} src={iconName} alt={item.name} color="currentColor" /></span>)
+        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:menuIconSize+"px",width:menuIconSize+"px",height:menuIconSize+"px"}}><ImgIcon width={menuIconSize} height={menuIconSize} src={iconName} alt={item.name} color="currentColor" /></span>)
         break;
       case 'svg':
-        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:"16px",width:"16px",height:"16px"}}><SvgIcon src={iconName} width={16} height={16} /></span> )
+        icon = (<span className='anticon ant-menu-item-icon' style={{fontSize:menuIconSize+"px",width:menuIconSize+"px",height:menuIconSize+"px"}}><SvgIcon src={iconName} width={menuIconSize} height={menuIconSize} /></span> )
         break;
     }
   }

@@ -1,4 +1,4 @@
-import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,Radio,App,Spin } from "antd"
+import { Drawer, FloatButton, Space,Segmented,Tooltip, theme, Divider, Switch,Button,Radio,App,Spin,InputNumber } from "antd"
 import { LayoutOutlined,LaptopOutlined,InfoCircleOutlined,SunOutlined, MoonOutlined } from '@ant-design/icons';
 import type {RadioChangeEvent} from 'antd'
 import { useEffect, useState } from "react"
@@ -202,7 +202,12 @@ const SettingDrawer=()=>{
         <Space className="wardenSettingSwitchBox">
             <label>{intl.formatMessage({id:"config.setting.hideTitle.title"})} <Tooltip title={intl.formatMessage({id:"config.setting.needContainer.alert.message"})}><InfoCircleOutlined /></Tooltip> </label>
             <Switch checked={config.hideTitleBar} defaultChecked={config.hideTitleBar} onChange={(value:boolean)=>{setConfig({...config,hideTitleBar:value})}} />   
-        </Space>          
+        </Space> 
+        <Divider /> 
+          <Space className="wardenSettingSwitchBox">
+              <label>{intl.formatMessage({id:"config.setting.menuIconSize.title"})}</label>              
+              <InputNumber max={24} min={8} defaultValue={16} onChange={(value:any)=>{setConfig({...config,menuIconSize:value})}}  />
+          </Space>         
       </Drawer>
       </>
   )

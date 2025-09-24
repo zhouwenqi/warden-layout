@@ -28,6 +28,7 @@ export default {
   'config.setting.containerTransparent.title':'容器透明',
   'config.setting.skin.title':'主题皮肤',
   'config.setting.splitmenu.title': '分隔菜单',
+  'config.setting.menuIconSize.title':'菜单图标大小',
   'config.setting.hideBreadcrumb.title':'隐藏面包屑',
   'config.setting.hideFooter.title':'隐藏页脚',
   'config.setting.hideBorder.title':'隐藏线条',  

@@ -28,6 +28,7 @@ export default {
   'config.setting.containerTransparent.title':'Container transparent',
   'config.setting.skin.title':'Theme skin',
   'config.setting.splitmenu.title': 'Split menu',
+  'config.setting.menuIconSize.title':'Menu icon size',
   'config.setting.hideBreadcrumb.title':'Hide breadcrumb bar',
   'config.setting.hideFooter.title':'Hide footer',
   'config.setting.hideBorder.title':'Hide border',  

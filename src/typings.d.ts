@@ -14,6 +14,7 @@ export declare namespace Warden {
         menuSkin?:string     
         backgroundBlur?:boolean
         menuSplit?:boolean
+        menuIconSize?:number
         leftEmptyHidden?:boolean
         leftMenuInline?:boolean
         systemTheme?:boolean

@@ -32,6 +32,7 @@ const MainLayout=()=>{
     // Retrieve menu and route selection data
     WardenGlobalThis.userMap["access"] = access
     WardenGlobalThis.userMap["config.menuIconVariant"] = config.menuIconVariant  
+    WardenGlobalThis.userMap["config.menuIconSize"] = config.menuIconSize    
 
     let selectLeftKeys:string[] = []
     let selectTopKeys:string[] = []
